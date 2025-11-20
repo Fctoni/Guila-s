@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validação de Layout v2.0 - Guilas Automação</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Cinzel:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --panel-width: 800px;
+            --panel-height: 480px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #202020;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 { margin-bottom: 5px; }
+        p { color: #aaa; margin-bottom: 20px; }
+
+        /* --- CONTROLES EXTERNOS --- */
+        .controls-wrapper {
+            background: #333;
+            padding: 10px 20px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .tab-btn {
+            padding: 8px 20px;
+            border: none;
+            background: none;
+            color: #888;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+        .tab-btn.active { background: #555; color: white; font-weight: bold; }
+        
+        .color-dot {
+            width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid #555;
+            transition: transform 0.2s;
+        }
+        .color-dot:hover { transform: scale(1.2); }
+        .color-dot.selected { border-color: white; box-shadow: 0 0 10px currentColor; }
+
+        /* --- FRAME DO DISPOSITIVO --- */
+        .device-frame {
+            width: var(--panel-width);
+            height: var(--panel-height);
+            background: #000;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 80px rgba(0,0,0,0.6);
+            border: 8px solid #111;
+            border-radius: 4px;
+        }
+
+        .layout { width: 100%; height: 100%; display: none; }
+        .layout.active { display: flex; }
+
+        /* =========================================
+           LAYOUT 1: MODERNO v2 (Sidebar + Tiles)
+           ========================================= */
+        .modern-v2 {
+            background: #f0f2f5; /* Fundo claro para mudar vibe */
+            color: #333;
+            font-family: 'Inter', sans-serif;
+            flex-direction: row;
+        }
+
+        /* Sidebar */
+        .m-sidebar {
+            width: 200px;
+            background: white;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 2px 0 20px rgba(0,0,0,0.05);
+            z-index: 10;
+        }
+
+        .m-clock { font-size: 2.5rem; font-weight: 800; color: #333; line-height: 1; letter-spacing: -2px; }
+        .m-date { font-size: 0.9rem; color: #888; margin-top: 5px; }
+        
+        .m-scene-list { display: flex; flex-direction: column; gap: 10px; margin-top: 40px; }
+        .m-scene-btn {
+            padding: 15px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #555;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .m-scene-btn:hover, .m-scene-btn.active { background: var(--primary-color); color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+        /* Main Content */
+        .m-content {
+            flex: 1;
+            padding: 30px;
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: 20px;
+            overflow-y: auto;
+        }
+
+        .m-header { display: flex; justify-content: space-between; align-items: center; }
+        .m-header h2 { margin: 0; font-size: 1.5rem; }
+        .m-weather { display: flex; gap: 15px; align-items: center; background: white; padding: 10px 20px; border-radius: 30px; font-weight: 600; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+
+        /* Tiles Grid */
+        .m-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 15px;
+            height: 100%;
+        }
+
+        .m-tile {
+            background: white;
+            border-radius: 16px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid transparent;
+        }
+        .m-tile:hover { transform: translateY(-2px); }
+        .m-tile.active { background: var(--primary-color); color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        
+        .m-tile-icon { font-size: 1.5rem; }
+        .m-tile-label { font-size: 0.9rem; font-weight: 600; }
+        .m-tile-status { font-size: 0.75rem; opacity: 0.6; }
+
+        .m-tile.large { grid-column: span 2; flex-direction: row; align-items: center; }
+        .m-ac-ctrl { display: flex; gap: 15px; align-items: center; }
+        .m-temp { font-size: 2.5rem; font-weight: 700; }
+        
+        /* Vertical Sliders in Tiles */
+        .m-slider-wrapper { height: 100px; display: flex; justify-content: center; align-items: center; }
+        .m-vertical-range {
+            writing-mode: bt-lr; /* IE */
+            -webkit-appearance: slider-vertical;
+            width: 8px;
+            height: 100%;
+            accent-color: var(--primary-color);
+        }
+
+        /* =========================================
+           LAYOUT 2: CLÁSSICO v2 (Switchboard)
+           ========================================= */
+        .classic-v2 {
+            background: #2c2c2c;
+            background-image: radial-gradient(#333 15%, transparent 16%);
+            background-size: 10px 10px;
+            color: #e0e0e0;
+            font-family: 'Cinzel', serif; /* Fonte clássica/elegante */
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        /* Top Panel (LCD) */
+        .c-top-panel {
+            background: #1a1a1a;
+            border: 2px solid #444;
+            border-radius: 4px;
+            height: 100px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 30px;
+            align-items: center;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
+        .c-lcd {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--primary-color);
+            text-shadow: 0 0 5px var(--primary-color);
+            font-size: 1.2rem;
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            border: 1px solid #333;
+            width: 250px;
+        }
+        .c-brand { font-size: 1.5rem; color: #666; letter-spacing: 5px; font-weight: bold; text-shadow: 1px 1px 0 #000; }
+
+        /* Main Board */
+        .c-board {
+            display: flex;
+            gap: 30px;
+            height: 100%;
+        }
+
+        /* Section: Lights (Rocker Switches) */
+        .c-section {
+            background: #222;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 15px;
+            flex: 1;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .c-title { 
+            border-bottom: 1px solid #444; 
+            width: 100%; 
+            text-align: center; 
+            padding-bottom: 10px; 
+            margin-bottom: 15px; 
+            font-size: 0.9rem; 
+            color: #aaa;
+        }
+
+        .c-switch-row { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        
+        /* Rocker Switch CSS */
+        .rocker {
+            display: inline-block;
+            position: relative;
+            width: 40px;
+            height: 70px;
+            background: #111;
+            border-radius: 4px;
+            border: 1px solid #555;
+            cursor: pointer;
+        }
+        .rocker::before {
+            content: ''; position: absolute; top: 2px; left: 2px; right: 2px; bottom: 50%;
+            background: linear-gradient(#444, #222); border-radius: 2px; opacity: 0.5; transition: 0.2s;
+        }
+        .rocker::after {
+            content: ''; position: absolute; top: 50%; left: 2px; right: 2px; bottom: 2px;
+            background: linear-gradient(#222, #444); border-radius: 2px; transition: 0.2s;
+        }
+        .rocker.on::before { opacity: 1; background: linear-gradient(#555, #333); border-bottom: 2px solid var(--primary-color); }
+        .rocker.on::after { opacity: 0.5; background: #111; }
+        
+        .c-label { font-size: 0.7rem; margin-top: 5px; text-align: center; width: 50px; }
+
+        /* Section: Faders (Sliders) */
+        .fader-track {
+            width: 10px;
+            height: 120px;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 5px;
+            position: relative;
+            margin: 0 15px;
+        }
+        .fader-handle {
+            width: 30px;
+            height: 50px;
+            background: linear-gradient(to bottom, #555, #333);
+            border: 1px solid #000;
+            position: absolute;
+            left: -10px;
+            bottom: 0; /* JS vai controlar o bottom */
+            border-radius: 2px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            cursor: ns-resize;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .fader-handle::after { content:''; width: 20px; height: 2px; background: white; }
+
+        /* =========================================
+           LAYOUT 3: FUTURISTA v2 (Orbital HUD)
+           ========================================= */
+        .future-v2 {
+            background: #000;
+            font-family: 'Share Tech Mono', monospace;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Background Grid animado */
+        .f-grid-bg {
+            position: absolute; width: 200%; height: 200%;
+            background: 
+                linear-gradient(transparent 95%, var(--primary-color) 100%), 
+                linear-gradient(90deg, transparent 95%, var(--primary-color) 100%);
+            background-size: 40px 40px;
+            opacity: 0.1;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+            animation: gridMove 10s linear infinite;
+        }
+        @keyframes gridMove { from { transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px); } to { transform: perspective(500px) rotateX(60deg) translateY(40px) translateZ(-200px); } }
+
+        /* Central Core */
+        .f-core {
+            width: 220px;
+            height: 220px;
+            border: 2px dashed var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            background: rgba(0,0,0,0.8);
+            box-shadow: 0 0 30px rgba(33, 150, 243, 0.2);
+        }
+        .f-core::before {
+            content: ''; position: absolute; width: 180px; height: 180px;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 4s linear infinite;
+        }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .f-temp-big { font-size: 4rem; color: white; text-shadow: 0 0 10px var(--primary-color); }
+        .f-mode { color: var(--primary-color); letter-spacing: 2px; }
+
+        /* Orbiting Buttons */
+        .f-orbit {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none; /* deixa clicar através onde não tem botão */
+        }
+        
+        .f-btn {
+            position: absolute;
+            pointer-events: auto;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px 20px;
+            font-family: 'Share Tech Mono';
+            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%); /* Formato angular */
+            transition: 0.2s;
+            cursor: pointer;
+            text-align: center;
+            min-width: 100px;
+        }
+        .f-btn:hover, .f-btn.active {
+            background: var(--primary-color);
+            color: black;
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+        .f-btn small { font-size: 0.7rem; display: block; opacity: 0.7; }
+
+        /* Posicionamento Absoluto dos Botões (Clock face style) */
+        .pos-tl { top: 40px; left: 40px; }
+        .pos-tr { top: 40px; right: 40px; text-align: right; clip-path: polygon(0 0, 90% 0, 100% 30%, 100% 100%, 10% 100%, 0 70%); }
+        .pos-bl { bottom: 40px; left: 40px; }
+        .pos-br { bottom: 40px; right: 40px; text-align: right; clip-path: polygon(0 0, 90% 0, 100% 30%, 100% 100%, 10% 100%, 0 70%); }
+        
+        .pos-left { top: 50%; left: 20px; transform: translateY(-50%); }
+        .pos-right { top: 50%; right: 20px; transform: translateY(-50%); }
+
+        /* Barras de Nível (Sliders) */
+        .f-bar-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 5px;
+        }
+        .f-bar-seg {
+            width: 100%; height: 4px; background: #333;
+        }
+        .f-bar-seg.active { background: var(--primary-color); box-shadow: 0 0 5px var(--primary-color); }
+
+    </style>
+</head>
+<body>
+
+    <h1>Validação de Layout v2.0</h1>
+    <p>Resolução: 800 x 480 px | Novos Conceitos de Navegação</p>
+
+    <div class="controls-wrapper">
+        <span>Estilo:</span>
+        <button class="tab-btn active" onclick="setTheme('modern-v2', this)">Dashboard Moderno</button>
+        <button class="tab-btn" onclick="setTheme('classic-v2', this)">Mesa de Controle</button>
+        <button class="tab-btn" onclick="setTheme('future-v2', this)">HUD Orbital</button>
+
+        <div style="width: 1px; height: 20px; background: #555;"></div>
+
+        <span>Cor:</span>
+        <div class="color-dot selected" style="background: #2196F3;" onclick="setColor('#2196F3', this)"></div>
+        <div class="color-dot" style="background: #00E676;" onclick="setColor('#00E676', this)"></div>
+        <div class="color-dot" style="background: #FFD740;" onclick="setColor('#FFD740', this)"></div>
+        <div class="color-dot" style="background: #E040FB;" onclick="setColor('#E040FB', this)"></div>
+    </div>
+
+    <div class="device-frame">
+
+        <!-- ==========================
+             MODERNO v2
+             ========================== -->
+        <div id="modern-v2" class="layout modern-v2 active">
+            <!-- Sidebar -->
+            <div class="m-sidebar">
+                <div>
+                    <div class="m-clock">19:45</div>
+                    <div class="m-date">Quarta, 20 Nov</div>
+                </div>
+                
+                <div class="m-scene-list">
+                    <button class="m-scene-btn active">🏠 Home</button>
+                    <button class="m-scene-btn">🎬 Cinema</button>
+                    <button class="m-scene-btn">💤 Noite</button>
+                    <button class="m-scene-btn">⚡ Geral Off</button>
+                </div>
+
+                <div style="font-size:0.8rem; color:#aaa;">Guilas v2.0</div>
+            </div>
+
+            <!-- Content -->
+            <div class="m-content">
+                <div class="m-header">
+                    <h2>Sala de Estar</h2>
+                    <div class="m-weather">
+                        <span>☁️ 22°C</span>
+                    </div>
+                </div>
+
+                <div class="m-grid">
+                    <!-- AC Card (Largo) -->
+                    <div class="m-tile large" style="background: var(--primary-color); color: white; border:none;">
+                        <div style="flex:1;">
+                            <div style="opacity:0.8; font-size:0.9rem;">Ar Condicionado</div>
+                            <div class="m-temp">22°</div>
+                            <div style="font-size:0.8rem;">Refrigerando • Auto</div>
+                        </div>
+                        <div class="m-ac-ctrl">
+                            <button style="background:rgba(255,255,255,0.2); border:none; color:white; width:40px; height:40px; border-radius:50%; font-size:1.2rem;">-</button>
+                            <button style="background:rgba(255,255,255,0.2); border:none; color:white; width:40px; height:40px; border-radius:50%; font-size:1.2rem;">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Sensor Janela -->
+                    <div class="m-tile">
+                        <div class="m-tile-icon">🪟</div>
+                        <div>
+                            <div class="m-tile-label">Janelas</div>
+                            <div class="m-tile-status">Fechadas</div>
+                        </div>
+                    </div>
+
+                    <!-- Persiana -->
+                    <div class="m-tile">
+                        <div class="m-tile-icon">🪜</div>
+                        <div>
+                            <div class="m-tile-label">Persiana</div>
+                            <div class="m-tile-status">50%</div>
+                        </div>
+                    </div>
+
+                    <!-- Luzes (Tiles clicáveis) -->
+                    <div class="m-tile active" onclick="this.classList.toggle('active')">
+                        <div class="m-tile-icon">💡</div>
+                        <div class="m-tile-label">Geral</div>
+                    </div>
+                    <div class="m-tile" onclick="this.classList.toggle('active')">
+                        <div class="m-tile-icon">🛋️</div>
+                        <div class="m-tile-label">Abajur</div>
+                    </div>
+
+                    <!-- Dimmers (Vertical) -->
+                    <div class="m-tile" style="grid-row: span 1;">
+                        <div class="m-tile-label" style="text-align:center; margin-bottom:5px;">Sanca</div>
+                        <div class="m-slider-wrapper">
+                            <input type="range" orient="vertical" class="m-vertical-range" value="80">
+                        </div>
+                    </div>
+                    <div class="m-tile" style="grid-row: span 1;">
+                        <div class="m-tile-label" style="text-align:center; margin-bottom:5px;">Rack</div>
+                        <div class="m-slider-wrapper">
+                            <input type="range" orient="vertical" class="m-vertical-range" value="30">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================
+             CLÁSSICO v2
+             ========================== -->
+        <div id="classic-v2" class="layout classic-v2">
+            <div class="c-top-panel">
+                <div class="c-brand">GUILAS CTRL</div>
+                <div class="c-lcd">
+                    SALA: 22.5°C<br>
+                    STATUS: OK<br>
+                    JANELAS: FECH.
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <div style="width:10px; height:10px; background:red; border-radius:50%; box-shadow:0 0 5px red;"></div>
+                    <div style="width:10px; height:10px; background:green; border-radius:50%; box-shadow:0 0 5px green;"></div>
+                </div>
+            </div>
+
+            <div class="c-board">
+                <!-- Dimmers Section (Faders) -->
+                <div class="c-section">
+                    <div class="c-title">INTENSIDADE LEDS</div>
+                    <div style="display:flex; justify-content: center;">
+                        <div>
+                            <div class="fader-track">
+                                <div class="fader-handle" style="bottom: 80px;"></div>
+                            </div>
+                            <div class="c-label">SANCA</div>
+                        </div>
+                        <div>
+                            <div class="fader-track">
+                                <div class="fader-handle" style="bottom: 20px;"></div>
+                            </div>
+                            <div class="c-label">CORTINA</div>
+                        </div>
+                        <div>
+                            <div class="fader-track">
+                                <div class="fader-handle" style="bottom: 100px;"></div>
+                            </div>
+                            <div class="c-label">NICHOS</div>
+                        </div>
+                        <div>
+                            <div class="fader-track">
+                                <div class="fader-handle" style="bottom: 0px;"></div>
+                            </div>
+                            <div class="c-label">RODAPÉ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Switches Section -->
+                <div class="c-section">
+                    <div class="c-title">ILUMINAÇÃO 220V</div>
+                    <div class="c-switch-row">
+                        <div>
+                            <div class="rocker on" onclick="this.classList.toggle('on')"></div>
+                            <div class="c-label">GERAL</div>
+                        </div>
+                        <div>
+                            <div class="rocker" onclick="this.classList.toggle('on')"></div>
+                            <div class="c-label">SPOTS</div>
+                        </div>
+                        <div>
+                            <div class="rocker on" onclick="this.classList.toggle('on')"></div>
+                            <div class="c-label">MESA</div>
+                        </div>
+                        <div>
+                            <div class="rocker" onclick="this.classList.toggle('on')"></div>
+                            <div class="c-label">CORREDOR</div>
+                        </div>
+                    </div>
+                    
+                    <div class="c-title" style="margin-top:20px;">PERSIANAS</div>
+                    <div class="c-switch-row">
+                        <button style="background:#333; border:1px solid #555; color:#aaa; padding:5px 10px; cursor:pointer;">ABRIR</button>
+                        <button style="background:#333; border:1px solid #555; color:#aaa; padding:5px 10px; cursor:pointer;">FECHAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================
+             FUTURISTA v2
+             ========================== -->
+        <div id="future-v2" class="layout future-v2">
+            <div class="f-grid-bg"></div>
+            
+            <!-- Núcleo Central -->
+            <div class="f-core">
+                <div class="f-temp-big">22°</div>
+                <div class="f-mode">AUTO COOL</div>
+                <div style="font-size:0.8rem; margin-top:5px; color:#888;">HUM: 45%</div>
+            </div>
+
+            <!-- Botões Orbitais -->
+            <div class="f-orbit">
+                <!-- Canto Superior Esquerdo (Luzes Principais) -->
+                <div class="f-btn pos-tl active" onclick="this.classList.toggle('active')">
+                    MAIN LIGHT
+                    <small>STATUS: ON</small>
+                </div>
+                
+                <div class="f-btn pos-tl" style="top: 100px; left: 20px;" onclick="this.classList.toggle('active')">
+                    WALL SPOT
+                    <small>STATUS: OFF</small>
+                </div>
+
+                <!-- Canto Superior Direito (Status) -->
+                <div class="f-btn pos-tr">
+                    SECURITY
+                    <small>ALL SECURE</small>
+                </div>
+                <div class="f-btn pos-tr" style="top: 100px; right: 20px;">
+                    WINDOWS
+                    <small>CLOSED</small>
+                </div>
+
+                <!-- Canto Inferior Esquerdo (Leds) -->
+                <div class="f-btn pos-bl">
+                    SANCA LED
+                    <div class="f-bar-container">
+                        <div class="f-bar-seg active"></div>
+                        <div class="f-bar-seg active"></div>
+                        <div class="f-bar-seg active"></div>
+                        <div class="f-bar-seg"></div>
+                    </div>
+                </div>
+                
+                <!-- Canto Inferior Direito (Persianas) -->
+                <div class="f-btn pos-br">
+                    BLINDS
+                    <small>POS: 50%</small>
+                </div>
+            </div>
+
+            <!-- Hora Flutuante -->
+            <div style="position:absolute; bottom: 10px; width:100%; text-align:center; color:var(--primary-color); letter-spacing:5px;">
+                19:45:30
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function setTheme(layoutId, btn) {
+            // Tabs
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Layouts
+            document.querySelectorAll('.layout').forEach(l => l.classList.remove('active'));
+            document.getElementById(layoutId).classList.add('active');
+        }
+
+        function setColor(color, dot) {
+            document.documentElement.style.setProperty('--primary-color', color);
+            document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('selected'));
+            dot.classList.add('selected');
+        }
+    </script>
+
+</body>
+</html>

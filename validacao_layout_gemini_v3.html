@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validação de Layout v3.0 - Minimalismo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600;900&family=Oswald:wght@400;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --panel-width: 800px;
+            --panel-height: 480px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 { margin-bottom: 5px; font-weight: 200; }
+        p { color: #666; margin-bottom: 20px; font-size: 0.9rem; }
+
+        /* --- CONTROLES EXTERNOS --- */
+        .controls-wrapper {
+            background: #1e1e1e;
+            padding: 10px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            border: 1px solid #333;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            border: 1px solid transparent;
+            background: none;
+            color: #888;
+            cursor: pointer;
+            font-size: 13px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+        .tab-btn:hover { background: #2a2a2a; }
+        .tab-btn.active { background: #333; color: white; border-color: #444; }
+        
+        .color-dot {
+            width: 20px; height: 20px; border-radius: 50%; cursor: pointer; border: 2px solid #333;
+            transition: transform 0.2s;
+        }
+        .color-dot.selected { border-color: white; }
+
+        /* --- FRAME DO DISPOSITIVO --- */
+        .device-frame {
+            width: var(--panel-width);
+            height: var(--panel-height);
+            background: #000;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 0 10px #111, 0 20px 50px rgba(0,0,0,0.5);
+            border-radius: 4px;
+        }
+
+        /* Classe base para esconder layouts */
+        .layout { width: 100%; height: 100%; display: none; }
+        .layout.active { display: flex; }
+
+
+        /* ==========================================================================
+           1. GLASS OS (Vidro Fosco, Camadas, Blur)
+           ========================================================================== */
+        .l-glass {
+            background: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000&auto=format&fit=crop') no-repeat center center/cover;
+            flex-direction: row;
+            padding: 20px;
+            box-sizing: border-box;
+            gap: 20px;
+        }
+        /* Overlay escuro para legibilidade */
+        .l-glass::before { content:''; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:0; }
+
+        .g-sidebar, .g-main { z-index: 1; position: relative; }
+
+        .g-sidebar {
+            width: 180px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .g-main {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .g-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .g-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+        
+        /* ESTADO ATIVO: Vidro acende */
+        .g-card.active {
+            background: rgba(33, 150, 243, 0.4); /* Cor dinâmica via JS seria melhor, mas fixando base aqui */
+            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 0 30px rgba(33, 150, 243, 0.3);
+        }
+        .g-card.active .g-icon { transform: scale(1.1); color: white; }
+
+        .g-icon { font-size: 2rem; margin-bottom: 10px; color: rgba(255,255,255,0.7); transition: 0.3s; }
+        .g-label { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.5px; opacity: 0.8; }
+
+        /* Slider Glass */
+        .g-slider-cont { width: 80%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-top: 10px; position: relative; overflow: hidden; }
+        .g-slider-fill { height: 100%; background: white; width: 50%; border-radius: 3px; }
+
+
+        /* ==========================================================================
+           2. NEUMORFISMO (Soft UI, Tátil, Sombras)
+           ========================================================================== */
+        .l-neo {
+            background: #e0e5ec; /* Cor base obrigatória para Neumorfismo */
+            color: #555;
+            flex-direction: row;
+            padding: 30px;
+            gap: 30px;
+            box-sizing: border-box;
+        }
+        
+        .neo-col { display: flex; flex-direction: column; gap: 20px; flex: 1; justify-content: center; }
+
+        /* Botão Neumórfico */
+        .neo-btn {
+            width: 100%;
+            flex: 1;
+            border-radius: 20px;
+            background: #e0e5ec;
+            box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.8);
+            border: none;
+            display: flex;
+            align-items: center;
+            padding: 0 25px;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .neo-content { display: flex; align-items: center; gap: 20px; width: 100%; z-index: 2; }
+        .neo-icon-box {
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: #888;
+            box-shadow: inset 3px 3px 7px rgb(163,177,198,0.6), inset -3px -3px 7px rgba(255,255,255, 0.8);
+            transition: 0.3s;
+        }
+        .neo-text { font-weight: 600; font-size: 1.1rem; color: #666; }
+
+        /* ESTADO ATIVO: "Pressionado" e iluminado */
+        .neo-btn.active {
+            box-shadow: inset 6px 6px 10px rgb(163,177,198,0.6), inset -6px -6px 10px rgba(255,255,255, 0.8);
+        }
+        .neo-btn.active .neo-icon-box {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 0 10px var(--primary-color);
+            border: 2px solid #e0e5ec;
+        }
+        .neo-btn.active .neo-text { color: var(--primary-color); }
+
+        /* Slider Neo */
+        .neo-range-wrap { padding: 20px; border-radius: 20px; background: #e0e5ec; box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.8); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .neo-range-track { width: 10px; height: 200px; background: #e0e5ec; border-radius: 10px; box-shadow: inset 3px 3px 7px rgb(163,177,198,0.6), inset -3px -3px 7px rgba(255,255,255, 0.8); position: relative; }
+        .neo-range-fill { position: absolute; bottom: 0; width: 100%; height: 60%; background: var(--primary-color); border-radius: 10px; }
+
+
+        /* ==========================================================================
+           3. SWISS TYPO (Tipografia, Alto Contraste, Sem Ícones)
+           ========================================================================== */
+        .l-typo {
+            background: #111;
+            color: #333;
+            flex-direction: column;
+            box-sizing: border-box;
+            font-family: 'Oswald', sans-serif; /* Fonte condensada e bold */
+            padding: 0;
+        }
+
+        .typo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            width: 100%; height: 100%;
+        }
+
+        .typo-cell {
+            border-right: 1px solid #222;
+            border-bottom: 1px solid #222;
+            display: flex;
+            align-items: center;
+            padding-left: 40px;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .typo-big { font-size: 4rem; font-weight: 700; text-transform: uppercase; line-height: 0.9; transition: 0.3s; }
+        .typo-small { font-size: 1rem; font-weight: 400; margin-bottom: 5px; font-family: 'Inter', sans-serif; letter-spacing: 2px; opacity: 0; transform: translateX(-10px); transition: 0.3s; }
+
+        /* ESTADO ATIVO: Texto acende, fundo muda sutilmente */
+        .typo-cell.active { background: #1a1a1a; }
+        .typo-cell.active .typo-big { color: white; text-shadow: 2px 2px 0px var(--primary-color); }
+        .typo-cell.active .typo-small { opacity: 1; color: var(--primary-color); transform: translateX(0); }
+
+        /* Célula especial para clima */
+        .typo-weather { grid-column: span 2; border-bottom: 4px solid var(--primary-color); display: flex; justify-content: space-between; padding: 0 40px; align-items: center; }
+        .typo-weather .typo-big { color: white; font-size: 3rem; }
+
+
+        /* ==========================================================================
+           4. MOSAIC (Tiles, Blocos de Cor, Full Bleed)
+           ========================================================================== */
+        .l-mosaic {
+            background: #000;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 4px; /* Gaps finos */
+            padding: 4px;
+            box-sizing: border-box;
+        }
+
+        .mos-tile {
+            background: #222;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mos-label { font-family: 'Montserrat', sans-serif; font-weight: 500; font-size: 0.9rem; z-index: 2; }
+        .mos-icon { font-size: 2.5rem; align-self: flex-end; opacity: 0.3; transition: 0.3s; z-index: 2; }
+        
+        /* ESTADO ATIVO: O bloco inteiro muda de cor */
+        .mos-tile.active { background: var(--primary-color); }
+        .mos-tile.active .mos-label { font-weight: 700; color: black; }
+        .mos-tile.active .mos-icon { opacity: 1; color: black; transform: scale(1.2) rotate(-10deg); }
+
+        /* Slider visual no Mosaic */
+        .mos-bg-slider { position: absolute; bottom: 0; left: 0; width: 100%; height: 0%; background: rgba(255,255,255,0.2); transition: height 0.3s; z-index: 1; }
+
+
+        /* ==========================================================================
+           5. ZEN OUTLINE (Linhas Finas, Monocromático)
+           ========================================================================== */
+        .l-zen {
+            background: #050505;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 60px;
+            box-sizing: border-box;
+            justify-content: space-between;
+        }
+
+        .zen-header { display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 20px; align-items: flex-end; }
+        .zen-title { font-size: 2rem; font-weight: 200; letter-spacing: 2px; }
+        .zen-info { font-size: 1rem; color: #666; }
+
+        .zen-controls { display: flex; gap: 30px; flex: 1; align-items: center; justify-content: center; }
+
+        .zen-btn {
+            width: 100px; height: 100px;
+            border: 1px solid #444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+        
+        .zen-icon { font-size: 1.5rem; color: #666; transition: 0.3s; }
+
+        /* ESTADO ATIVO: Preenche e brilha */
+        .zen-btn.active {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            box-shadow: 0 0 30px var(--primary-color);
+            transform: scale(1.1);
+        }
+        .zen-btn.active .zen-icon { color: black; font-size: 2rem; }
+
+        /* Legenda flutuante */
+        .zen-btn::after {
+            content: attr(data-label);
+            position: absolute;
+            bottom: -30px;
+            font-size: 0.8rem;
+            color: #666;
+            width: 150%;
+            text-align: center;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .zen-btn:hover::after { opacity: 1; }
+        .zen-btn.active::after { opacity: 1; color: white; }
+
+    </style>
+</head>
+<body>
+
+    <h1>Validação de Layout v3.0 - Conceitos Minimalistas</h1>
+    <p>Resolução: 800 x 480 px | O Botão é o Estado</p>
+
+    <div class="controls-wrapper">
+        <button class="tab-btn active" onclick="setTheme('l-glass', this)">1. Glass OS</button>
+        <button class="tab-btn" onclick="setTheme('l-neo', this)">2. Neo-Soft</button>
+        <button class="tab-btn" onclick="setTheme('l-typo', this)">3. Swiss Typo</button>
+        <button class="tab-btn" onclick="setTheme('l-mosaic', this)">4. Mosaic Tile</button>
+        <button class="tab-btn" onclick="setTheme('l-zen', this)">5. Zen Outline</button>
+
+        <div style="width: 1px; height: 20px; background: #333; margin: 0 10px;"></div>
+
+        <div class="color-dot selected" style="background: #2196F3;" onclick="setColor('#2196F3', this)"></div> <!-- Azul -->
+        <div class="color-dot" style="background: #FF5722;" onclick="setColor('#FF5722', this)"></div> <!-- Laranja -->
+        <div class="color-dot" style="background: #00E676;" onclick="setColor('#00E676', this)"></div> <!-- Verde -->
+        <div class="color-dot" style="background: #FFFFFF;" onclick="setColor('#FFFFFF', this)"></div> <!-- Branco -->
+    </div>
+
+    <div class="device-frame">
+
+        <!-- 1. GLASS OS -->
+        <div id="l-glass" class="layout l-glass active">
+            <div class="g-sidebar">
+                <div style="font-size:3rem; font-weight:200;">19<span style="font-weight:600">42</span></div>
+                <div>
+                    <div style="margin-bottom:20px; opacity:0.7;">Sala</div>
+                    <div style="margin-bottom:20px; opacity:0.4;">Cozinha</div>
+                    <div style="margin-bottom:20px; opacity:0.4;">Quarto</div>
+                </div>
+                <div style="font-size:1.5rem;">☁️ 22°</div>
+            </div>
+            <div class="g-main">
+                <div class="g-card active" onclick="this.classList.toggle('active')">
+                    <div class="g-icon">💡</div>
+                    <div class="g-label">Principal</div>
+                </div>
+                <div class="g-card" onclick="this.classList.toggle('active')">
+                    <div class="g-icon">🛋️</div>
+                    <div class="g-label">Mesa</div>
+                </div>
+                <div class="g-card active" onclick="this.classList.toggle('active')">
+                    <div class="g-icon">❄️</div>
+                    <div class="g-label">22°C</div>
+                </div>
+                <div class="g-card" style="grid-column: span 2; align-items: flex-start; padding-left: 30px;">
+                    <div class="g-label">Intensidade Sanca</div>
+                    <div class="g-slider-cont"><div class="g-slider-fill"></div></div>
+                </div>
+                <div class="g-card">
+                    <div class="g-icon">🪟</div>
+                    <div class="g-label">Persianas</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. NEO-SOFT -->
+        <div id="l-neo" class="layout l-neo">
+            <div class="neo-col">
+                <div style="font-size: 2rem; font-weight: 800; color: #666; margin-left: 10px;">SALA DE ESTAR</div>
+                
+                <button class="neo-btn active" onclick="this.classList.toggle('active')">
+                    <div class="neo-content">
+                        <div class="neo-icon-box">⚡</div>
+                        <div class="neo-text">Luz Geral</div>
+                    </div>
+                </button>
+                
+                <button class="neo-btn" onclick="this.classList.toggle('active')">
+                    <div class="neo-content">
+                        <div class="neo-icon-box">🌙</div>
+                        <div class="neo-text">Modo Noite</div>
+                    </div>
+                </button>
+                
+                <button class="neo-btn" onclick="this.classList.toggle('active')">
+                    <div class="neo-content">
+                        <div class="neo-icon-box">🔒</div>
+                        <div class="neo-text">Trancar Tudo</div>
+                    </div>
+                </button>
+            </div>
+
+            <div class="neo-range-wrap">
+                <div style="margin-bottom:15px; font-weight:600;">LEDS</div>
+                <div class="neo-range-track">
+                    <div class="neo-range-fill"></div>
+                </div>
+            </div>
+            
+            <div class="neo-range-wrap">
+                <div style="margin-bottom:15px; font-weight:600;">TEMP</div>
+                <div class="neo-range-track">
+                    <div class="neo-range-fill" style="height: 40%; background: #ff5252;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. SWISS TYPO -->
+        <div id="l-typo" class="layout l-typo">
+            <div class="typo-grid">
+                <div class="typo-weather">
+                    <div style="font-family:'Inter'; font-size:1rem; text-transform:uppercase; letter-spacing:4px;">Quarta, 20 Nov</div>
+                    <div class="typo-big">22°C</div>
+                </div>
+
+                <div class="typo-cell active" onclick="this.classList.toggle('active')">
+                    <div>
+                        <div class="typo-small">ILUMINAÇÃO</div>
+                        <div class="typo-big">LUZ<br>TETO</div>
+                    </div>
+                </div>
+
+                <div class="typo-cell" onclick="this.classList.toggle('active')">
+                    <div>
+                        <div class="typo-small">DECORATIVA</div>
+                        <div class="typo-big">LED<br>SANCA</div>
+                    </div>
+                </div>
+
+                <div class="typo-cell" onclick="this.classList.toggle('active')">
+                    <div>
+                        <div class="typo-small">CLIMATIZAÇÃO</div>
+                        <div class="typo-big">AR<br>COND.</div>
+                    </div>
+                </div>
+
+                <div class="typo-cell" onclick="this.classList.toggle('active')">
+                    <div>
+                        <div class="typo-small">COBERTURAS</div>
+                        <div class="typo-big">ABRIR<br>TUDO</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. MOSAIC TILE -->
+        <div id="l-mosaic" class="layout l-mosaic">
+            <!-- Tiles -->
+            <div class="mos-tile active" onclick="this.classList.toggle('active')">
+                <div class="mos-label">LUZ GERAL</div>
+                <div class="mos-icon">💡</div>
+            </div>
+            
+            <div class="mos-tile" onclick="this.classList.toggle('active')">
+                <div class="mos-label">ABAJUR</div>
+                <div class="mos-icon">🛋️</div>
+            </div>
+
+            <div class="mos-tile" style="grid-row: span 2; background:#111;">
+                <div class="mos-label">CLIMA</div>
+                <div style="font-size:3rem; font-weight:bold; align-self:center; margin-top:40px;">22°</div>
+                <div class="mos-icon" style="align-self:center;">❄️</div>
+            </div>
+
+            <div class="mos-tile" onclick="this.classList.toggle('active')">
+                <div class="mos-label">PERSIANAS</div>
+                <div class="mos-bg-slider" style="height: 50%;"></div> <!-- Simula slider visual -->
+                <div class="mos-icon">🪜</div>
+            </div>
+
+            <div class="mos-tile" style="background:#111;">
+                <div class="mos-label">MÍDIA</div>
+                <div class="mos-icon">🎵</div>
+            </div>
+            
+            <div class="mos-tile" style="grid-column: span 2;" onclick="this.classList.toggle('active')">
+                <div class="mos-label">CENA: CINEMA</div>
+                <div class="mos-icon">🎬</div>
+            </div>
+        </div>
+
+        <!-- 5. ZEN OUTLINE -->
+        <div id="l-zen" class="layout l-zen">
+            <div class="zen-header">
+                <div class="zen-title">SALA DE ESTAR</div>
+                <div class="zen-info">19:42 | 22°C</div>
+            </div>
+
+            <div class="zen-controls">
+                <div class="zen-btn active" data-label="LUZ TETO" onclick="this.classList.toggle('active')">
+                    <div class="zen-icon">💡</div>
+                </div>
+                
+                <div class="zen-btn" data-label="AR CONDICIONADO" onclick="this.classList.toggle('active')">
+                    <div class="zen-icon">❄️</div>
+                </div>
+
+                <div class="zen-btn" data-label="PERSIANAS" onclick="this.classList.toggle('active')">
+                    <div class="zen-icon">|||</div>
+                </div>
+
+                <div class="zen-btn" data-label="LEDS" onclick="this.classList.toggle('active')">
+                    <div class="zen-icon">✨</div>
+                </div>
+                
+                <div class="zen-btn" data-label="TRANCA" onclick="this.classList.toggle('active')">
+                    <div class="zen-icon">🔒</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function setTheme(layoutId, btn) {
+            // Atualiza botões das abas
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Atualiza Layouts
+            document.querySelectorAll('.layout').forEach(l => l.classList.remove('active'));
+            document.getElementById(layoutId).classList.add('active');
+
+            // Ajuste específico para Neumorfismo (fundo muda)
+            if(layoutId === 'l-neo') {
+                document.querySelector('.device-frame').style.background = '#e0e5ec';
+                setColor('#2196F3'); // Volta azul padrão
+            } else {
+                document.querySelector('.device-frame').style.background = '#000';
+                // Se for Glass, o fundo é a imagem definida no CSS
+            }
+        }
+
+        function setColor(color, dot) {
+            document.documentElement.style.setProperty('--primary-color', color);
+            
+            if(dot) {
+                document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('selected'));
+                dot.classList.add('selected');
+            }
+        }
+    </script>
+</body>
+</html>

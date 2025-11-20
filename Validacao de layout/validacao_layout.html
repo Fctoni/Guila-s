@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validação de Layout - Painéis Touch 800x480</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+            color: #ffffff;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+            color: #ffffff;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #aaaaaa;
+            font-size: 0.9em;
+        }
+
+        /* Tabs Navigation */
+        .tabs-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 12px 30px;
+            background: #2a2a2a;
+            border: 2px solid #444;
+            color: #aaa;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button:hover {
+            background: #333;
+            border-color: #666;
+        }
+
+        .tab-button.active {
+            background: #444;
+            border-color: #888;
+            color: #ffffff;
+        }
+
+        /* Color Selector */
+        .color-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            padding: 10px 25px;
+            background: #2a2a2a;
+            border: 2px solid #444;
+            color: #ccc;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .color-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .color-option.active {
+            border-width: 3px;
+            font-weight: bold;
+        }
+
+        .color-option.azul.active {
+            border-color: #2196F3;
+            color: #2196F3;
+        }
+
+        .color-option.verde.active {
+            border-color: #00BFA5;
+            color: #00BFA5;
+        }
+
+        .color-option.dourado.active {
+            border-color: #FFB300;
+            color: #FFB300;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Screens Container */
+        .screens-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .screen-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .screen-label {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            color: #ccc;
+            font-weight: 500;
+        }
+
+        /* Screen Mock - 800x480 */
+        .screen {
+            width: 800px;
+            height: 480px;
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 3px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Home Screen */
+        .home-screen {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .clock-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .time {
+            font-size: 4em;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .date {
+            font-size: 1.2em;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .weather-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+            color: #aaa;
+        }
+
+        .main-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            flex: 1;
+        }
+
+        /* Room Control Screen */
+        .room-screen {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .room-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+
+        .room-title {
+            font-size: 1.4em;
+            font-weight: 500;
+        }
+
+        .back-button {
+            padding: 6px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .room-controls {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            flex: 1;
+        }
+
+        .control-card {
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            min-height: 85px;
+        }
+
+        .control-card.large {
+            grid-column: span 2;
+            min-height: 85px;
+        }
+
+        .control-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+            gap: 6px;
+        }
+
+        .control-icon {
+            font-size: 1.2em;
+            line-height: 1;
+        }
+
+        .control-card.large .control-icon {
+            font-size: 1.5em;
+        }
+
+        .control-title {
+            font-size: 0.75em;
+            font-weight: 500;
+            flex: 1;
+            line-height: 1.2;
+        }
+
+        .control-card.large .control-title {
+            font-size: 0.9em;
+        }
+
+        .control-value {
+            font-size: 1.1em;
+            font-weight: 300;
+            margin: 4px 0;
+            text-align: center;
+            line-height: 1;
+        }
+
+        .control-card.large .control-value {
+            font-size: 1.4em;
+        }
+
+        .slider {
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            appearance: none;
+            outline: none;
+            cursor: pointer;
+            margin-top: 4px;
+        }
+
+        .slider-small {
+            height: 4px;
+        }
+
+        .toggle-button {
+            padding: 6px 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.7em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            user-select: none;
+            line-height: 1;
+        }
+
+        .control-card.large .toggle-button {
+            padding: 8px 10px;
+            font-size: 0.8em;
+        }
+
+        .section-title {
+            grid-column: 1 / -1;
+            font-size: 0.7em;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 0 2px 0;
+            border-bottom: 1px solid #333;
+            margin: 0;
+            line-height: 1;
+        }
+
+        /* ===== ESTILO MODERNO ===== */
+        .modern .main-button {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+            border: none;
+            border-radius: 16px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .modern .main-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .modern .button-icon {
+            font-size: 3em;
+        }
+
+        .modern .button-text {
+            font-size: 1.2em;
+            font-weight: 400;
+        }
+
+        .modern .control-card {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%);
+            border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .modern .control-card:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .modern .back-button {
+            background: #2a2a2a;
+            border: none;
+        }
+
+        .modern .back-button:hover {
+            background: #333;
+        }
+
+        /* ===== ESTILO CLÁSSICO ===== */
+        .classic .main-button {
+            background: linear-gradient(180deg, #353535 0%, #252525 100%);
+            border: 2px solid #444;
+            border-radius: 8px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 
+                0 2px 4px rgba(0,0,0,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        .classic .main-button:hover {
+            background: linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 100%);
+            border-color: #555;
+        }
+
+        .classic .main-button:active {
+            box-shadow: 
+                inset 0 2px 4px rgba(0,0,0,0.3),
+                0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .classic .button-icon {
+            font-size: 3em;
+        }
+
+        .classic .button-text {
+            font-size: 1.2em;
+            font-weight: 500;
+            font-family: Georgia, 'Times New Roman', serif;
+        }
+
+        .classic .control-card {
+            background: linear-gradient(180deg, #2d2d2d 0%, #222 100%);
+            border: 2px solid #3a3a3a;
+            box-shadow: 
+                0 2px 4px rgba(0,0,0,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        .classic .back-button {
+            background: linear-gradient(180deg, #353535 0%, #252525 100%);
+            border: 2px solid #444;
+        }
+
+        .classic .back-button:hover {
+            background: linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 100%);
+        }
+
+        /* ===== ESTILO FUTURISTA ===== */
+        .futuristic .main-button {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 
+                0 0 20px rgba(0,0,0,0.5),
+                inset 0 0 20px rgba(255,255,255,0.02);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .futuristic .main-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            padding: 2px;
+            background: linear-gradient(135deg, transparent 0%, transparent 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .futuristic .main-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 0 30px rgba(0,0,0,0.6),
+                inset 0 0 20px rgba(255,255,255,0.03);
+        }
+
+        .futuristic .main-button:hover::before {
+            opacity: 1;
+        }
+
+        .futuristic .button-icon {
+            font-size: 3em;
+            text-shadow: 0 0 20px currentColor;
+        }
+
+        .futuristic .button-text {
+            font-size: 1.2em;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'Courier New', monospace;
+        }
+
+        .futuristic .control-card {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 
+                0 0 20px rgba(0,0,0,0.5),
+                inset 0 0 20px rgba(255,255,255,0.02);
+        }
+
+        .futuristic .control-card:hover {
+            box-shadow: 
+                0 0 30px rgba(0,0,0,0.6),
+                inset 0 0 20px rgba(255,255,255,0.03);
+        }
+
+        .futuristic .back-button {
+            background: rgba(20, 20, 30, 0.8);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .futuristic .back-button:hover {
+            background: rgba(30, 30, 40, 0.9);
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+
+        /* Color Variations */
+        .azul .main-button:hover,
+        .azul .toggle-button.active {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: #ffffff;
+        }
+
+        .azul .slider {
+            background: #1976D2;
+        }
+
+        .azul .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            background: #2196F3;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(33, 150, 243, 0.5);
+        }
+
+        .azul .slider-small::-webkit-slider-thumb {
+            width: 12px;
+            height: 12px;
+        }
+
+        .azul .control-card {
+            border-color: rgba(33, 150, 243, 0.3);
+        }
+
+        .azul.futuristic .main-button::before {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+        }
+
+        .azul.futuristic .main-button:hover {
+            border-color: rgba(33, 150, 243, 0.5);
+            box-shadow: 0 0 30px rgba(33, 150, 243, 0.3);
+        }
+
+        .verde .main-button:hover,
+        .verde .toggle-button.active {
+            background: linear-gradient(135deg, #00BFA5 0%, #00897B 100%);
+            color: #ffffff;
+        }
+
+        .verde .slider {
+            background: #00897B;
+        }
+
+        .verde .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            background: #00BFA5;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(0, 191, 165, 0.5);
+        }
+
+        .verde .slider-small::-webkit-slider-thumb {
+            width: 12px;
+            height: 12px;
+        }
+
+        .verde .control-card {
+            border-color: rgba(0, 191, 165, 0.3);
+        }
+
+        .verde.futuristic .main-button::before {
+            background: linear-gradient(135deg, #00BFA5 0%, #00897B 100%);
+        }
+
+        .verde.futuristic .main-button:hover {
+            border-color: rgba(0, 191, 165, 0.5);
+            box-shadow: 0 0 30px rgba(0, 191, 165, 0.3);
+        }
+
+        .dourado .main-button:hover,
+        .dourado .toggle-button.active {
+            background: linear-gradient(135deg, #FFB300 0%, #FF8F00 100%);
+            color: #1a1a1a;
+        }
+
+        .dourado .slider {
+            background: #FF8F00;
+        }
+
+        .dourado .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            background: #FFB300;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(255, 179, 0, 0.5);
+        }
+
+        .dourado .slider-small::-webkit-slider-thumb {
+            width: 12px;
+            height: 12px;
+        }
+
+        .dourado .control-card {
+            border-color: rgba(255, 179, 0, 0.3);
+        }
+
+        .dourado.futuristic .main-button::before {
+            background: linear-gradient(135deg, #FFB300 0%, #FF8F00 100%);
+        }
+
+        .dourado.futuristic .main-button:hover {
+            border-color: rgba(255, 179, 0, 0.5);
+            box-shadow: 0 0 30px rgba(255, 179, 0, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 1700px) {
+            .screens-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .screen {
+                transform: scale(0.8);
+                transform-origin: top center;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .screen {
+                transform: scale(0.6);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .screen {
+                transform: scale(0.45);
+            }
+        }
+
+        /* Instructions */
+        .instructions {
+            background: #2a2a2a;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid #00BFA5;
+        }
+
+        .instructions h3 {
+            margin-bottom: 10px;
+            color: #00BFA5;
+        }
+
+        .instructions ul {
+            margin-left: 20px;
+            color: #ccc;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Validação de Layout - Painéis Touch</h1>
+        <p class="subtitle">Resolução: 800 × 480 pixels (paisagem) | Escolha o estilo e cor preferidos</p>
+
+        <div class="instructions">
+            <h3>📋 Instruções:</h3>
+            <ul>
+                <li><strong>Selecione um estilo:</strong> Moderno, Clássico ou Futurista</li>
+                <li><strong>Escolha uma cor:</strong> Azul, Verde ou Dourado</li>
+                <li><strong>Interaja:</strong> Passe o mouse sobre os botões, ajuste os sliders, clique nos toggles</li>
+                <li><strong>Avalie:</strong> Duas telas são demonstradas - Tela Inicial (Home) e Controle de Ambiente</li>
+                <li><strong>Controle de Ambiente:</strong> Exemplo realista com 4 luzes 220V, 4 fitas LED 24V, 1 ar condicionado e 2 persianas</li>
+            </ul>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <div class="tabs-nav">
+            <button class="tab-button active" data-tab="modern">Moderno</button>
+            <button class="tab-button" data-tab="classic">Clássico</button>
+            <button class="tab-button" data-tab="futuristic">Futurista</button>
+        </div>
+
+        <!-- Modern Tab -->
+        <div class="tab-content active" id="modern">
+            <div class="color-selector">
+                <button class="color-option azul active" data-style="modern" data-color="azul">🔵 Azul</button>
+                <button class="color-option verde" data-style="modern" data-color="verde">🟢 Verde</button>
+                <button class="color-option dourado" data-style="modern" data-color="dourado">🟡 Dourado</button>
+            </div>
+
+            <div class="screens-container">
+                <!-- Home Screen -->
+                <div class="screen-wrapper">
+                    <div class="screen-label">Tela Inicial (Home)</div>
+                    <div class="screen modern azul" id="modern-home">
+                        <div class="home-screen">
+                            <div class="clock-section">
+                                <div class="time" id="time-modern">19:34</div>
+                                <div class="date">Quarta-feira, 20 de Novembro</div>
+                                <div class="weather-info">
+                                    <span>🌡️ 22°C</span>
+                                    <span>|</span>
+                                    <span>☀️ Ensolarado</span>
+                                </div>
+                            </div>
+                            <div class="main-buttons">
+                                <button class="main-button">
+                                    <div class="button-icon">💡</div>
+                                    <div class="button-text">Luzes</div>
+                                </button>
+                                <button class="main-button">
+                                    <div class="button-icon">❄️</div>
+                                    <div class="button-text">Clima</div>
+                                </button>
+                                <button class="main-button">
+                                    <div class="button-icon">🪟</div>
+                                    <div class="button-text">Persianas</div>
+                                </button>
+                                <button class="main-button">
+                                    <div class="button-icon">📺</div>
+                                    <div class="button-text">Multimídia</div>
+                                </button>
+                                <button class="main-button">
+                                    <div class="button-icon">✨</div>
+                                    <div class="button-text">Cenas</div>
+                                </button>
+                                <button class="main-button">
+                                    <div class="button-icon">⚙️</div>
+                                    <div class="button-text">Config</div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Room Control Screen -->
+                <div class="screen-wrapper">
+                    <div class="screen-label">Controle de Ambiente (Sala de Estar)</div>
+                    <div class="screen modern azul" id="modern-room">
+                        <div class="room-screen">
+                            <div class="room-header">
+                                <div class="room-title">Sala de Estar</div>
+                                <button class="back-button">← Voltar</button>
+                            </div>
+                            <div class="room-controls">
+                                <!-- LUZES -->
+                                <div class="section-title">💡 Iluminação 220V</div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">💡</span>
+                                        <div class="control-title">Luz Principal</div>
+                                    </div>
+                                    <div class="toggle-button active">LIGADO</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">💡</span>
+                                        <div class="control-title">Luz Lateral</div>
+                                    </div>
+                                    <div class="toggle-button">DESLIGADO</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">💡</span>
+                                        <div class="control-title">Luz Parede</div>
+                                    </div>
+                                    <div class="toggle-button active">LIGADO</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">💡</span>
+                                        <div class="control-title">Spot Quadro</div>
+                                    </div>
+                                    <div class="toggle-button">DESLIGADO</div>
+                                </div>
+
+                                <!-- FITAS LED -->
+                                <div class="section-title">✨ Fitas LED 24V</div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">✨</span>
+                                        <div class="control-title">LED Teto</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="80">
+                                    <div class="control-value">80%</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">✨</span>
+                                        <div class="control-title">LED Sanca</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="60">
+                                    <div class="control-value">60%</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">✨</span>
+                                        <div class="control-title">LED Nicho</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="100">
+                                    <div class="control-value">100%</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">✨</span>
+                                        <div class="control-title">LED Painel</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="40">
+                                    <div class="control-value">40%</div>
+                                </div>
+
+                                <!-- AR CONDICIONADO E PERSIANAS -->
+                                <div class="section-title">🌡️ Clima & Persianas</div>
+                                <div class="control-card large">
+                                    <div class="control-header">
+                                        <span class="control-icon">❄️</span>
+                                        <div class="control-title">Ar Condicionado</div>
+                                    </div>
+                                    <div class="control-value">22°C</div>
+                                    <div style="display: flex; gap: 10px;">
+                                        <button class="toggle-button" style="flex: 1;">-</button>
+                                        <button class="toggle-button active" style="flex: 2;">LIGADO</button>
+                                        <button class="toggle-button" style="flex: 1;">+</button>
+                                    </div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">🪟</span>
+                                        <div class="control-title">Persiana 1</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="50">
+                                    <div class="control-value">50%</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">🪟</span>
+                                        <div class="control-title">Persiana 2</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="30">
+                                    <div class="control-value">30%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Classic Tab -->
+        <div class="tab-content" id="classic">
+            <div class="color-selector">
+                <button class="color-option azul active" data-style="classic" data-color="azul">🔵 Azul</button>
+                <button class="color-option verde" data-style="classic" data-color="verde">🟢 Verde</button>
+                <button class="color-option dourado" data-style="classic" data-color="dourado">🟡 Dourado</button>
+            </div>
+
+            <div class="screens-container">
+                <!-- Home Screen -->
+                <div class="screen-wrapper">
+                    <div class="screen-label">Tela Inicial (Home)</div>
+                    <div class="screen classic azul" id="classic-home">
+                        <div class="home-screen">
+                            <div class="clock-section">
+                                <div class="time" id="time-classic">19:34</div>
+                                <div class="date">Quarta-feira, 20 de Novembro</div>
+                                <div class="weather-info">
+                                    <span>🌡️ 22°C</span>
+                                    <span>|</span>
+                                    <span>☀️ Ensolarado</span>
+                                </div>
+                            </div>
+                            <div class="main-buttons">
+                                <button class="main-button">
+                                    <div class="button-icon">💡</div>
+                                    <div class="button-text">Luzes</div>
+                                </button>
+                                <button class="main-button">
+                                    <div class="button-icon">❄️</div>
+                                    <div class="button-text">Clima</div>
+                                </button>
+                                <button class="main-button">
+                                    <div class="button-icon">🪟</div>
+                                    <div class="button-text">Persianas</div>
+                                </button>
+                                <button class="main-button">
+                                    <div class="button-icon">📺</div>
+                                    <div class="button-text">Multimídia</div>
+                                </button>
+                                <button class="main-button">
+                                    <div class="button-icon">✨</div>
+                                    <div class="button-text">Cenas</div>
+                                </button>
+                                <button class="main-button">
+                                    <div class="button-icon">⚙️</div>
+                                    <div class="button-text">Config</div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Room Control Screen -->
+                <div class="screen-wrapper">
+                    <div class="screen-label">Controle de Ambiente (Sala de Estar)</div>
+                    <div class="screen classic azul" id="classic-room">
+                        <div class="room-screen">
+                            <div class="room-header">
+                                <div class="room-title">Sala de Estar</div>
+                                <button class="back-button">← Voltar</button>
+                            </div>
+                            <div class="room-controls">
+                                <!-- LUZES -->
+                                <div class="section-title">💡 Iluminação 220V</div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">💡</span>
+                                        <div class="control-title">Luz Principal</div>
+                                    </div>
+                                    <div class="toggle-button active">LIGADO</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">💡</span>
+                                        <div class="control-title">Luz Lateral</div>
+                                    </div>
+                                    <div class="toggle-button">DESLIGADO</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">💡</span>
+                                        <div class="control-title">Luz Parede</div>
+                                    </div>
+                                    <div class="toggle-button active">LIGADO</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">💡</span>
+                                        <div class="control-title">Spot Quadro</div>
+                                    </div>
+                                    <div class="toggle-button">DESLIGADO</div>
+                                </div>
+
+                                <!-- FITAS LED -->
+                                <div class="section-title">✨ Fitas LED 24V</div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">✨</span>
+                                        <div class="control-title">LED Teto</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="80">
+                                    <div class="control-value">80%</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">✨</span>
+                                        <div class="control-title">LED Sanca</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="60">
+                                    <div class="control-value">60%</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">✨</span>
+                                        <div class="control-title">LED Nicho</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="100">
+                                    <div class="control-value">100%</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">✨</span>
+                                        <div class="control-title">LED Painel</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="40">
+                                    <div class="control-value">40%</div>
+                                </div>
+
+                                <!-- AR CONDICIONADO E PERSIANAS -->
+                                <div class="section-title">🌡️ Clima & Persianas</div>
+                                <div class="control-card large">
+                                    <div class="control-header">
+                                        <span class="control-icon">❄️</span>
+                                        <div class="control-title">Ar Condicionado</div>
+                                    </div>
+                                    <div class="control-value">22°C</div>
+                                    <div style="display: flex; gap: 10px;">
+                                        <button class="toggle-button" style="flex: 1;">-</button>
+                                        <button class="toggle-button active" style="flex: 2;">LIGADO</button>
+                                        <button class="toggle-button" style="flex: 1;">+</button>
+                                    </div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">🪟</span>
+                                        <div class="control-title">Persiana 1</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="50">
+                                    <div class="control-value">50%</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">🪟</span>
+                                        <div class="control-title">Persiana 2</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="30">
+                                    <div class="control-value">30%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Futuristic Tab -->
+        <div class="tab-content" id="futuristic">
+            <div class="color-selector">
+                <button class="color-option azul active" data-style="futuristic" data-color="azul">🔵 Azul</button>
+                <button class="color-option verde" data-style="futuristic" data-color="verde">🟢 Verde</button>
+                <button class="color-option dourado" data-style="futuristic" data-color="dourado">🟡 Dourado</button>
+            </div>
+
+            <div class="screens-container">
+                <!-- Home Screen -->
+                <div class="screen-wrapper">
+                    <div class="screen-label">Tela Inicial (Home)</div>
+                    <div class="screen futuristic azul" id="futuristic-home">
+                        <div class="home-screen">
+                            <div class="clock-section">
+                                <div class="time" id="time-futuristic">19:34</div>
+                                <div class="date">Quarta-feira, 20 de Novembro</div>
+                                <div class="weather-info">
+                                    <span>🌡️ 22°C</span>
+                                    <span>|</span>
+                                    <span>☀️ Ensolarado</span>
+                                </div>
+                            </div>
+                            <div class="main-buttons">
+                                <button class="main-button">
+                                    <div class="button-icon">💡</div>
+                                    <div class="button-text">Luzes</div>
+                                </button>
+                                <button class="main-button">
+                                    <div class="button-icon">❄️</div>
+                                    <div class="button-text">Clima</div>
+                                </button>
+                                <button class="main-button">
+                                    <div class="button-icon">🪟</div>
+                                    <div class="button-text">Persianas</div>
+                                </button>
+                                <button class="main-button">
+                                    <div class="button-icon">📺</div>
+                                    <div class="button-text">Multimídia</div>
+                                </button>
+                                <button class="main-button">
+                                    <div class="button-icon">✨</div>
+                                    <div class="button-text">Cenas</div>
+                                </button>
+                                <button class="main-button">
+                                    <div class="button-icon">⚙️</div>
+                                    <div class="button-text">Config</div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Room Control Screen -->
+                <div class="screen-wrapper">
+                    <div class="screen-label">Controle de Ambiente (Sala de Estar)</div>
+                    <div class="screen futuristic azul" id="futuristic-room">
+                        <div class="room-screen">
+                            <div class="room-header">
+                                <div class="room-title">Sala de Estar</div>
+                                <button class="back-button">← Voltar</button>
+                            </div>
+                            <div class="room-controls">
+                                <!-- LUZES -->
+                                <div class="section-title">💡 Iluminação 220V</div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">💡</span>
+                                        <div class="control-title">Luz Principal</div>
+                                    </div>
+                                    <div class="toggle-button active">LIGADO</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">💡</span>
+                                        <div class="control-title">Luz Lateral</div>
+                                    </div>
+                                    <div class="toggle-button">DESLIGADO</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">💡</span>
+                                        <div class="control-title">Luz Parede</div>
+                                    </div>
+                                    <div class="toggle-button active">LIGADO</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">💡</span>
+                                        <div class="control-title">Spot Quadro</div>
+                                    </div>
+                                    <div class="toggle-button">DESLIGADO</div>
+                                </div>
+
+                                <!-- FITAS LED -->
+                                <div class="section-title">✨ Fitas LED 24V</div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">✨</span>
+                                        <div class="control-title">LED Teto</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="80">
+                                    <div class="control-value">80%</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">✨</span>
+                                        <div class="control-title">LED Sanca</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="60">
+                                    <div class="control-value">60%</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">✨</span>
+                                        <div class="control-title">LED Nicho</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="100">
+                                    <div class="control-value">100%</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">✨</span>
+                                        <div class="control-title">LED Painel</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="40">
+                                    <div class="control-value">40%</div>
+                                </div>
+
+                                <!-- AR CONDICIONADO E PERSIANAS -->
+                                <div class="section-title">🌡️ Clima & Persianas</div>
+                                <div class="control-card large">
+                                    <div class="control-header">
+                                        <span class="control-icon">❄️</span>
+                                        <div class="control-title">Ar Condicionado</div>
+                                    </div>
+                                    <div class="control-value">22°C</div>
+                                    <div style="display: flex; gap: 10px;">
+                                        <button class="toggle-button" style="flex: 1;">-</button>
+                                        <button class="toggle-button active" style="flex: 2;">LIGADO</button>
+                                        <button class="toggle-button" style="flex: 1;">+</button>
+                                    </div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">🪟</span>
+                                        <div class="control-title">Persiana 1</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="50">
+                                    <div class="control-value">50%</div>
+                                </div>
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <span class="control-icon">🪟</span>
+                                        <div class="control-title">Persiana 2</div>
+                                    </div>
+                                    <input type="range" class="slider slider-small" min="0" max="100" value="30">
+                                    <div class="control-value">30%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            const time = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('time-modern').textContent = time;
+            document.getElementById('time-classic').textContent = time;
+            document.getElementById('time-futuristic').textContent = time;
+        }
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Tab switching
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.dataset.tab;
+                
+                // Remove active class from all tabs and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked tab and its content
+                button.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Color switching
+        const colorOptions = document.querySelectorAll('.color-option');
+
+        colorOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const style = option.dataset.style;
+                const color = option.dataset.color;
+                
+                // Get all color options for this style
+                const styleColorOptions = document.querySelectorAll(`.color-option[data-style="${style}"]`);
+                
+                // Remove active class from all color options in this style
+                styleColorOptions.forEach(opt => opt.classList.remove('active'));
+                
+                // Add active class to clicked option
+                option.classList.add('active');
+                
+                // Update screen classes
+                const homeScreen = document.getElementById(`${style}-home`);
+                const roomScreen = document.getElementById(`${style}-room`);
+                
+                // Remove all color classes
+                homeScreen.classList.remove('azul', 'verde', 'dourado');
+                roomScreen.classList.remove('azul', 'verde', 'dourado');
+                
+                // Add selected color class
+                homeScreen.classList.add(color);
+                roomScreen.classList.add(color);
+            });
+        });
+
+        // Toggle button interactivity
+        document.querySelectorAll('.toggle-button').forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.textContent === 'LIGADO') {
+                    this.textContent = 'DESLIGADO';
+                    this.classList.remove('active');
+                } else if (this.textContent === 'DESLIGADO') {
+                    this.textContent = 'LIGADO';
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Slider value display
+        document.querySelectorAll('.slider').forEach(slider => {
+            slider.addEventListener('input', function() {
+                const valueDisplay = this.nextElementSibling;
+                if (valueDisplay && valueDisplay.classList.contains('control-value')) {
+                    valueDisplay.textContent = this.value + '%';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
