@@ -573,3 +573,4 @@ lv_obj_set_style_border_opa(card, 128, 0); // 50%
 *Versão: 1.0*
 
 
+
