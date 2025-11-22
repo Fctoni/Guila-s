@@ -111,3 +111,4 @@ Este documento consolida todas as opções de interface apresentadas nos arquivo
 *   ⚠️ **Glass OS** (Limitação de hardware para blur)
 *   ⚠️ **Neo-Soft** (Exige criação massiva de imagens PNG)
 
+
