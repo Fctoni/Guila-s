@@ -43,26 +43,63 @@ Quando você tiver as respostas das pendências abaixo:
 ## 🏗️ ARQUITETO - Verificar com o responsável do projeto arquitetônico
 
 ### Ar Condicionado
-- [ ] Quantos aparelhos de ar condicionado no total?
-- [ ] Modelos específicos dos aparelhos LG? (importante para verificar tipo de integração)
-- [ ] Distribuição dos aparelhos por ambiente (sala, quartos, etc)
+- [✓] Quantos aparelhos de ar condicionado no total?
+6
+- [✓] Modelos específicos dos aparelhos LG? (importante para verificar tipo de integração)
+Respondido abaixo na distribuição
+- [✓] Distribuição dos aparelhos por ambiente (sala, quartos, etc)
+Office 12² - 1 máquina 9000 btu AMNW09GTUC0 - LG
+Living 120m² - 2 máquinas 24000 btu ATNW24GTLP1.ANWZBR1 - LG
+Suíte 1 (leste) 18m² - 1 máquina 12000 btu AMNW12GTUC0 - LG
+Suíte 2 (oeste) 15m² - 1 máquina 12000 btu AMNW12GTUC0 - LG
+Suíte master 48m² - 1 máquina 24000 btu AMNW24GTTC0 - LG
 
 ### Piso Aquecido
-- [ ] Quantas zonas de piso aquecido?
-- [ ] Quais ambientes terão piso aquecido?
-- [ ] Metragem de cada zona
+- [✓] Quantas zonas de piso aquecido?
+10
+- [✓] Quais ambientes terão piso aquecido?
+1) Térreo: 3 zonas
+a) Living (120m²)
+b) Office (12m²)
+c) Lavanderia (11m²)
+(garagem, sauna e banheiro de serviço não tem)
+
+2) Pav. Superior
+Hall 15m² 
+Suíte 1 (leste) 18m²
+Banho 1 (3m²)
+Suíte 2 (oeste) 15m²
+Banho 2 (3m²)
+Suíte master 48m²
+Banho master (9m²)
+
+- [✓] Metragem de cada zona (respondido acima nos ambientes)
 
 ### Piscina
-- [ ] A iluminação da piscina está incluída no projeto?
-- [ ] Se sim, quantos pontos de luz e tipo (LED RGB, branco)?
-- [ ] Localização do quadro de comando da piscina
+- [✓] A iluminação da piscina está incluída no projeto?
+Sim, falta verificar a marca do controlador instalado.
+- [✓] Se sim, quantos pontos de luz e tipo (LED RGB, branco)?
+4 pontos de luz (verificar informação), Azul (verificar informação)
+- [✓] Localização do quadro de comando da piscina
+Externo, ao lado esquerdo da piscina, no meio da vegetação do jardim
 
 ### Irrigação
-- [ ] Quantas zonas de irrigação?
-- [ ] Mapa das zonas (jardim frontal, lateral, fundos, etc)
-- [ ] Tipo de vegetação em cada zona (para programar tempo de rega)
+- [✓] Quantas zonas de irrigação?
+1) 3 no pavimento térreo
+a) frente
+b) meio
+c) fundos
+2) 2 no pavimento superior
+a) frente 
+b) fundos
+- [✓] Mapa das zonas (jardim frontal, lateral, fundos, etc)
+- [✓] Tipo de vegetação em cada zona (para programar tempo de rega)
+Recomendado pelo jardineiro ligar às 8h da manhã e deixar de 10 a 15 minutos por setor todos os dias, e às 18h mais 10 a 15 minutos no verão.
+No inverno, 5 minutos por rega.
 - [✓] **Sensores de Umidade do Solo**: NÃO usar
   - **Resposta**: Apenas programação + previsão do tempo (infraestrutura já fechada)
+
+Observação importante: Recomendação do jardineiro ligar todos os dias independente de previsão do tempo, pois existem áreas 'cobertas' que não pegam chuva.
 
 ### Plantas da Casa
 - [ ] Fornecer plantas em PDF ou DWG
@@ -102,6 +139,8 @@ Quando você tiver as respostas das pendências abaixo:
 ## 🏭 FABRICANTE - VESTA (Piso Aquecido SAS920FHL-7)
 
 ### Integração do Controlador
+
+*Sonda enviou manual*, está no link \Manuais equipamentos\920 fh wifi si en.pdf
 - [ ] Protocolo de comunicação suportado (Modbus RTU/TCP, protocolo proprietário, ou apenas relés)?
 - [ ] Documentação técnica da API/protocolo
 - [ ] Existe integração pronta com Home Assistant?
