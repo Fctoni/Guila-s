@@ -241,20 +241,24 @@ Observação importante: Recomendação do jardineiro ligar todos os dias indepe
   - Outra cor?
 
 ### Sensores de Segurança
-- [✓] **Sensores de Vazamento**: Shelly Flood (WiFi)
-  - **Resposta**: Aprovado
+- [ ] **Sensores de Vazamento**: Shelly Flood (WiFi)
   - Custo estimado: 10-15 unidades (~R$1.500-2.700)
   - Locais: banheiros, cozinha, lavanderia, piscina, aquecedor
+  - Especificações oficiais: https://www.shelly.com/en/products/shop/shelly-flood
+  - Cliente aprova o investimento?
 
-- [✓] **Sensores de Fumaça**: Shelly Plus Smoke (WiFi)
-  - **Resposta**: Aprovado
+- [ ] **Sensores de Fumaça**: Shelly Plus Smoke (WiFi)
   - Custo estimado: 8-12 unidades (~R$1.800-3.000)
   - Locais: quartos, salas, cozinha, corredores, área serviço
+  - Especificações oficiais: https://www.shelly.com/en/products/shop/shelly-plus-smoke
+  - AliExpress: Produtos Shelly não disponíveis oficialmente no AliExpress
+  - Cliente aprova o investimento?
 
-- [✓] **Sensores de Abertura (Porta/Janela)**: Shelly Door/Window 2
-  - **Resposta**: Escolhido Shelly Door/Window 2 (WiFi, preto)
+- [ ] **Sensores de Abertura (Porta/Janela)**: Shelly Door/Window 2
   - Estimativa: 18-30 sensores (todas janelas + portas principais)
-  - Custo: ~R$4.125 (25 sensores x R$165)
+  - Custo estimado: ~R$4.125 (25 sensores x R$165)
+  - Especificações oficiais: https://www.shelly.com/en/products/shop/shelly-door-window-2
+  - Cliente aprova o investimento?
 
 - [ ] **Sensores de Presença mmWave**: Posicionamento e quantidades
   - Fabricação própria com ESP32 WiFi
