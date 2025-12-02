@@ -1,0 +1,64 @@
+# Projeto Guilas - .gitignore
+
+# Secrets e senhas
+secrets.yaml
+**/secrets.yaml
+*.secret
+
+# Logs
+*.log
+logs/
+
+# Backups
+backups/
+*.backup
+*.bak
+
+# Node modules (se usar)
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.so
+
+# IDEs
+.vscode/settings.json
+.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporarios
+*.tmp
+temp/
+tmp/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Dados sensíveis
+**/*senha*
+**/*password*
+**/*token*
+
+# Grandes arquivos de backup
+*.sql
+*.db
+*.sqlite
+
+# Específico do projeto
+Home-Assistant/.storage/
+Home-Assistant/home-assistant_v2.db
+Home-Assistant/home-assistant.log
+

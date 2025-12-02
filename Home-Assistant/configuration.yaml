@@ -1,0 +1,113 @@
+# Home Assistant Configuration - Projeto Guilas
+
+## 📝 GUIA PARA IA FUTURA
+
+Este arquivo será o configuration.yaml principal do Home Assistant.
+
+### Estrutura Recomendada:
+
+```yaml
+homeassistant:
+  name: Casa Guilas
+  latitude: !secret latitude
+  longitude: !secret longitude
+  elevation: !secret elevation
+  unit_system: metric
+  time_zone: America/Sao_Paulo
+  currency: BRL
+  country: BR
+  
+  # Customize entities
+  customize: !include customize.yaml
+
+# Frontend
+frontend:
+  themes: !include_dir_merge_named themes
+
+# Lovelace (dashboards)
+lovelace:
+  mode: storage
+  dashboards:
+    lovelace-mobile:
+      mode: yaml
+      title: Mobile
+      icon: mdi:cellphone
+      show_in_sidebar: true
+      filename: dashboards/mobile.yaml
+
+# HTTP
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.10.0/24
+
+# Recorder (database)
+recorder:
+  db_url: !secret db_url
+  purge_keep_days: 30
+  include:
+    domains:
+      - light
+      - switch
+      - climate
+      - cover
+      - camera
+      - alarm_control_panel
+
+# History
+history:
+  include:
+    domains:
+      - light
+      - switch
+      - climate
+
+# Logbook
+logbook:
+  include:
+    domains:
+      - light
+      - climate
+      - alarm_control_panel
+
+# Integrations
+discovery:
+esphome:
+mobile_app:
+
+# Includes
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+group: !include groups.yaml
+
+# Zones
+zone:
+  - name: Casa
+    latitude: !secret latitude
+    longitude: !secret longitude
+    radius: 100
+    icon: mdi:home
+
+# Input Booleans (for alarm modes, etc)
+input_boolean: !include input_boolean.yaml
+
+# Input Selects (for scenes, etc)
+input_select: !include input_select.yaml
+
+# Timers
+timer: !include timers.yaml
+```
+
+### Arquivos Complementares a Criar:
+- `secrets.yaml` (NÃO commitar!)
+- `customize.yaml`
+- `groups.yaml`
+- `input_boolean.yaml`
+- `input_select.yaml`
+- `timers.yaml`
+
+---
+
+**Status**: 🔴 Criar durante Fase 3 (Desenvolvimento)
+

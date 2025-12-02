@@ -7,13 +7,14 @@ Quando você (IA futura) ler este documento:
 
 1. **Priorize ler também**:
    - `README.md` - Visão geral do projeto
+   - `PROJECT-CONTEXT.md` - Decisões técnicas finais e informações confirmadas
    - `Conversas/20251120.md` - Contexto completo das decisões iniciais
    - `Guia para IA.md` - Regras de interação
 
 2. **Ao receber atualizações**:
    - Identifique quais pendências foram resolvidas
    - Pergunte se alguma resposta impacta decisões técnicas já tomadas
-   - Atualize documentos relacionados (PRD, diagramas, etc)
+   - Atualize documentos relacionados (PROJECT-CONTEXT.md, diagramas, etc)
 
 3. **Formato esperado das respostas**:
    - Marque `[✓]` na pendência resolvida
@@ -42,64 +43,10 @@ Quando você tiver as respostas das pendências abaixo:
 
 ## 🏗️ ARQUITETO - Verificar com o responsável do projeto arquitetônico
 
-### Ar Condicionado
-- [✓] Quantos aparelhos de ar condicionado no total?
-6
-- [✓] Modelos específicos dos aparelhos LG? (importante para verificar tipo de integração)
-Respondido abaixo na distribuição
-- [✓] Distribuição dos aparelhos por ambiente (sala, quartos, etc)
-Office 12² - 1 máquina 9000 btu AMNW09GTUC0 - LG
-Living 120m² - 2 máquinas 24000 btu ATNW24GTLP1.ANWZBR1 - LG
-Suíte 1 (leste) 18m² - 1 máquina 12000 btu AMNW12GTUC0 - LG
-Suíte 2 (oeste) 15m² - 1 máquina 12000 btu AMNW12GTUC0 - LG
-Suíte master 48m² - 1 máquina 24000 btu AMNW24GTTC0 - LG
-
-### Piso Aquecido
-- [✓] Quantas zonas de piso aquecido?
-10
-- [✓] Quais ambientes terão piso aquecido?
-1) Térreo: 3 zonas
-a) Living (120m²)
-b) Office (12m²)
-c) Lavanderia (11m²)
-(garagem, sauna e banheiro de serviço não tem)
-
-2) Pav. Superior
-Hall 15m² 
-Suíte 1 (leste) 18m²
-Banho 1 (3m²)
-Suíte 2 (oeste) 15m²
-Banho 2 (3m²)
-Suíte master 48m²
-Banho master (9m²)
-
-- [✓] Metragem de cada zona (respondido acima nos ambientes)
-
-### Piscina
-- [✓] A iluminação da piscina está incluída no projeto?
-Sim, falta verificar a marca do controlador instalado.
-- [✓] Se sim, quantos pontos de luz e tipo (LED RGB, branco)?
-4 pontos de luz (verificar informação), Azul (verificar informação)
-- [✓] Localização do quadro de comando da piscina
-Externo, ao lado esquerdo da piscina, no meio da vegetação do jardim
-
-### Irrigação
-- [✓] Quantas zonas de irrigação?
-1) 3 no pavimento térreo
-a) frente
-b) meio
-c) fundos
-2) 2 no pavimento superior
-a) frente 
-b) fundos
-- [✓] Mapa das zonas (jardim frontal, lateral, fundos, etc)
-- [✓] Tipo de vegetação em cada zona (para programar tempo de rega)
-Recomendado pelo jardineiro ligar às 8h da manhã e deixar de 10 a 15 minutos por setor todos os dias, e às 18h mais 10 a 15 minutos no verão.
-No inverno, 5 minutos por rega.
-- [✓] **Sensores de Umidade do Solo**: NÃO usar
-  - **Resposta**: Apenas programação + previsão do tempo (infraestrutura já fechada)
-
-Observação importante: Recomendação do jardineiro ligar todos os dias independente de previsão do tempo, pois existem áreas 'cobertas' que não pegam chuva.
+### Piscina (verificações finais)
+- [ ] Verificar marca do controlador de iluminação instalado
+- [ ] Confirmar se são exatamente 4 pontos de luz
+- [ ] Confirmar tipo exato de iluminação (azul padrão ou LED RGB)
 
 ### Plantas da Casa
 - [ ] Fornecer plantas em PDF ou DWG
@@ -138,14 +85,18 @@ Observação importante: Recomendação do jardineiro ligar todos os dias indepe
 
 ## 🏭 FABRICANTE - VESTA (Piso Aquecido SAS920FHL-7)
 
-### Integração do Controlador
+### ✅ RESOLVIDO - Desenvolvimento Próprio
 
-*Sonda enviou manual*, está no link \Manuais equipamentos\920 fh wifi si en.pdf
-- [ ] Protocolo de comunicação suportado (Modbus RTU/TCP, protocolo proprietário, ou apenas relés)?
-- [ ] Documentação técnica da API/protocolo
-- [ ] Existe integração pronta com Home Assistant?
-- [ ] Se não existe integração pronta, é possível desenvolver? Documentação disponível?
-- [ ] Possibilidade de controle via relés externos (bypass do controlador)
+**Situação**: O fabricante enviou o manual (ver `\Manuais equipamentos\920 fh wifi si en.pdf`), mas o controlador não é compatível com a automação desejada.
+
+**Decisão**: Desenvolver termostato próprio integrado ao Home Assistant
+
+**Hardware em teste**:
+- [✓] UEDX80480043E-WB-A (adquirida para testes)
+- [✓] ESP32-3248S035 (alternativa para comparação)
+- [ ] **Pendente**: Testar ambos e definir modelo final
+
+**Próximos passos**: Ver seção "Termostatos Piso Aquecido" no `PROJECT-CONTEXT.md`
 
 ---
 
@@ -171,12 +122,16 @@ Observação importante: Recomendação do jardineiro ligar todos os dias indepe
 
 ## 🌡️ FABRICANTE - LG (Ar Condicionado)
 
-### Integração dos Aparelhos
-- [ ] Os modelos escolhidos suportam integração via app LG ThinQ?
-- [ ] A integração LG ThinQ funciona 100% local ou depende de servidor externo da LG?
-- [ ] Existe API local documentada?
-- [ ] Alternativa: os aparelhos aceitam controle via módulo Wi-Fi? Qual protocolo?
-- [ ] Se for usar IR: confirmar que todos os modelos usam mesmo protocolo IR (facilitará programação)
+### ✅ RESOLVIDO - Integração LG ThinQ Confirmada
+
+**Respostas**:
+- [✓] Os modelos escolhidos suportam integração via app LG ThinQ? **SIM**
+- [✓] A integração LG ThinQ funciona 100% local ou depende de servidor externo da LG? **Depende de servidor externo**
+- [✓] Existe API local documentada? **Existe integração no HA, porém depende do servidor da LG**
+- [✓] Alternativa: os aparelhos aceitam controle via módulo Wi-Fi? Qual protocolo? **Já tem WiFi integrado**
+- [✓] Se for usar IR: confirmar que todos os modelos usam mesmo protocolo IR? **Decidimos não usar IR inicialmente. Iremos usar a integração da própria LG**
+
+**Decisão Final**: Usar integração LG ThinQ via Home Assistant (depende de servidor LG). Se a experiência for ruim, implementar plano B com controle IR local.
 
 ---
 
@@ -240,7 +195,7 @@ Observação importante: Recomendação do jardineiro ligar todos os dias indepe
   - Dourado/Amarelo?
   - Outra cor?
 
-### Sensores de Segurança
+### Sensores de Segurança (aprovação de investimento)
 - [ ] **Sensores de Vazamento**: Shelly Flood (WiFi)
   - Custo estimado: 10-15 unidades (~R$1.500-2.700)
   - Locais: banheiros, cozinha, lavanderia, piscina, aquecedor
@@ -251,7 +206,6 @@ Observação importante: Recomendação do jardineiro ligar todos os dias indepe
   - Custo estimado: 8-12 unidades (~R$1.800-3.000)
   - Locais: quartos, salas, cozinha, corredores, área serviço
   - Especificações oficiais: https://www.shelly.com/en/products/shop/shelly-plus-smoke
-  - AliExpress: Produtos Shelly não disponíveis oficialmente no AliExpress
   - Cliente aprova o investimento?
 
 - [ ] **Sensores de Abertura (Porta/Janela)**: Shelly Door/Window 2
@@ -267,34 +221,19 @@ Observação importante: Recomendação do jardineiro ligar todos os dias indepe
   - Locais sugeridos: sala, cozinha, quartos, corredores, home office
   - **Pendente**: Definir com arquiteto posições exatas e quantidades finais
 
-### Sistema de Alarme
-- [✓] **Alarme de Intrusão**: Cliente tem muito interesse!
-  - **Resposta**: SIM, implementar
-  - Modos: Ausente, Noite, Casa
-  - Notificações push instantâneas
-  - Integração com sirenes (Shelly Plus Smoke)
-  - Automações com aberturas de portas/janelas + câmeras
+### Controle de Acesso
+- [ ] **Fechadura Yale**: Verificar com arquiteto o modelo exato
+  - Validar compatibilidade com Home Assistant (Z-Wave/Zigbee/WiFi)
+  - **IMPORTANTE**: SEM automações de trava/destrava (apenas monitoramento por segurança)
+  - Notificações apenas: porta aberta >10min, código usado, tentativas falhas
 
 ### Câmeras de Segurança
-- [✓] **Câmeras IP**: 7 câmeras Unifi já definidas
-  - **Resposta**: 7 câmeras Unifi no Unifi Protect (UDM-Pro SE)
-  - Sistema já adquirido/planejado
-  - Integração: UniFi Protect Integration para Home Assistant
-  
 - [ ] **Teste Técnico - Visualização câmeras nos painéis touch LVGL**:
   - Testar durante prototipagem (Fase 1)
   - Expectativa: Snapshot/foto a cada 2s (2fps) funciona, stream real HD provavelmente não
   - Limitação: ESP32 tem CPU/RAM insuficiente para decode vídeo H.264/H.265
   - Se funcionar satisfatoriamente: implementar em todos painéis
   - Se não funcionar bem: manter visualização apenas em tablets (app Unifi Protect)
-
-### Controle de Acesso
-- [✓] **Fechadura Inteligente**: Yale na porta principal
-  - **Resposta**: Já definido - fechadura Yale (única da casa)
-  - [ ] **Pendente**: Verificar com arquiteto o modelo exato da Yale
-  - Validar compatibilidade com Home Assistant (Z-Wave/Zigbee/WiFi)
-  - **IMPORTANTE**: SEM automações de trava/destrava (apenas monitoramento por segurança)
-  - Notificações apenas: porta aberta >10min, código usado, tentativas falhas
 
 ### Qualidade do Ar
 - [ ] **Sensores de Qualidade do Ar**: Cliente tem interesse?
@@ -304,10 +243,10 @@ Observação importante: Recomendação do jardineiro ligar todos os dias indepe
 
 ### Controle de Voz
 - [ ] **Estratégia de Voz**: Decidir entre:
-  - **Opção 1**: Apenas Alexa (~5 dispositivos) - Facilidade de uso
-  - **Opção 2**: Apenas HA Voice (ESP32 com mic) - Privacidade, 100% local
-  - **Opção 3**: Híbrido (Alexa principal + HA Voice backup) - Melhor dos dois mundos
-  - Qual é mais importante para o cliente: facilidade de uso ou privacidade?
+  - **Opção 1**: Apenas Alexa (~5 dispositivos) - Facilidade de uso, suporta português, Alexa está ficando burra e surda (amazon está piorando o serviço)
+  - **Opção 2**: Apenas HA Voice - Privacidade, 100% local, português
+  - **Opção 3**: Apple HomeKit via Siri - Integração nativa iOS, **limitação: apenas inglês*
+  - Qual é mais importante para o cliente: facilidade de uso ou privacidade? Português é essencial?
 
 ### Tablets
 - [ ] **Especificações dos Tablets**:
@@ -317,39 +256,6 @@ Observação importante: Recomendação do jardineiro ligar todos os dias indepe
   - Quantidade confirmada: 2 tablets
   - Sistema: App oficial Home Assistant (iOS/Android)
 
----
-
----
-
----
-
-## ⚙️ DECISÕES CONFIRMADAS - CONFIGURAÇÃO E INFRAESTRUTURA
-
-### Backup e Redundância
-- [✓] **Scripts de Backup**: APROVADO - Criar configuração automática
-  - **Resposta**: SIM, incluir nos scripts
-  - Snapshot HA diário (3h, reter 7 dias local)
-  - Export para UGREEN via Samba Backup
-  - Snapshot Proxmox VM semanal
-  - Backup Git automático de configs
-
-- [✓] **Redundância de Internet**: Documentar como recomendação opcional
-  - **Resposta**: Não implementar agora, deixar na documentação como sugestão
-  - Opção para cliente: 4G/5G backup com failover automático
-  - Custo seria: Hardware inicial + chip dados mensal
-
-### Monitoramento Remoto
-- [✓] **Dashboard de Monitoramento para Integrador**: APROVADO!
-  - **Resposta**: SIM, configurar completo
-  - Uptime Kuma para monitor de status
-  - Tailscale VPN para acesso remoto seguro
-  - Notificações Telegram para alertas:
-    - ESP32 offline >10min
-    - Temperatura anormal
-    - Backup falhou
-    - Relatório diário (status geral)
-
----
 
 ## ⚙️ PENDÊNCIAS - CONFIGURAÇÃO E INFRAESTRUTURA
 
@@ -362,19 +268,26 @@ Observação importante: Recomendação do jardineiro ligar todos os dias indepe
 
 ---
 
-**Última atualização**: 20/11/2025
-**Status**: 🟢 Fase de planejamento avançada - Aguardando dados externos para implementação
+**Última atualização**: 01/12/2025
+**Status**: 🟢 Fase de planejamento avançada - Iniciando prototipagem
 
-**Localização do projeto**: Caxias do Sul - RS - Brasil (CEP 95012-617)
+**Localização do projeto**: Caxias do Sul - RS - Brasil (Le Parc)
 
-**Decisões Confirmadas**: 
+**Decisões Confirmadas** (já no PROJECT-CONTEXT.md): 
 - Hardware principal definido (ESP32s, sensores Shelly, módulos I2C)
 - Software stack escolhido (HAOS + ESPHome + LVGL)
 - Sensores de segurança selecionados (Shelly ecosystem - WiFi)
 - Sistema de alarme aprovado pelo cliente
-- Câmeras e fechadura já existentes no projeto
+- Câmeras (7 Unifi) e fechadura Yale já existentes no projeto
 - Monitoramento remoto para integrador confirmado
 - Backup automático confirmado
+- **Especificações confirmadas (01/12/2025)**:
+  - 6 ACs LG com modelos e distribuição definidos
+  - Integração LG ThinQ confirmada (via servidor LG)
+  - 10 zonas de piso aquecido com metragens
+  - Desenvolvimento de termostato próprio (Vesta incompatível)
+  - Hardware termostato em teste: UEDX80480043E-WB-A e ESP32-3248S035
+  - 5 zonas de irrigação com programação
+  - Piscina com iluminação (4 pontos azul)
 
 **Contexto Completo**: Ver `PROJECT-CONTEXT.md` para todas as decisões técnicas finais
-

@@ -1,10 +1,15 @@
 # Projeto Guilas - Decisões e Contexto Técnico
 
-**Última atualização**: 20/11/2025
+**Última atualização**: 01/12/2025
 **Status**: Fase de Planejamento
-**Localização**: Caxias do Sul - RS (CEP 95012-617)
+**Localização**: Caxias do Sul - RS (Le Parc)
 
 ### 📝 Histórico de Atualizações
+- **01/12/2025**: 
+  - Adicionadas especificações confirmadas (ACs, piso aquecido, piscina, irrigação)
+  - Confirmada integração LG ThinQ (via servidor LG, backup IR)
+  - Decisão: Desenvolver termostato próprio para piso aquecido (Vesta incompatível)
+  - Atualizada localização: Le Parc
 - **20/11/2025**: Criação inicial (baseado em discussão completa `Conversas/20251120.md`)
 
 ---
@@ -99,6 +104,22 @@ Sistema de automação residencial completo, 100% local, com:
 - **Nomenclatura**: `painel-touch-[ambiente]`
   - Exemplos: `painel-touch-hall-entrada`, `painel-touch-sala-estar`
 
+#### Termostatos Piso Aquecido (WiFi)
+- **Quantidade**: 10 termostatos (1 por zona)
+- **Hardware em teste**:
+  - UEDX80480043E-WB-A (adquirida)
+  - ESP32-3248S035 (alternativa)
+- **Sensor de temperatura**: DS18B20 integrado em cada termostato
+- **Software**: ESPHome + LVGL
+- **Funcionalidade**:
+  - Controle temperatura setpoint
+  - Display temperatura atual (leitura DS18B20)
+  - Programação horária
+  - Integração completa com Home Assistant
+  - Controle de relés para acionamento do piso aquecido
+- **Nomenclatura**: `termostato-[ambiente]`
+  - Exemplos: `termostato-living`, `termostato-suite-master`
+
 #### Tablets
 - **Quantidade**: 2 tablets
 - **Sistema**: Home Assistant via app oficial (iOS/Android)
@@ -108,9 +129,9 @@ Sistema de automação residencial completo, 100% local, com:
 
 #### Sensores Temperatura (WiFi)
 - **Modelo**: DS18B20
-- **Função**: Controle preciso de ACs (temperatura real vs temperatura do AC)
-- **Quantidade**: 1 por ambiente climatizado (a definir com arquiteto)
-- **Nomenclatura**: `esp-sensor-temp-[ambiente]`
+- **Uso**: Integrados nos termostatos de piso aquecido (10 sensores)
+- **Função**: Leitura de temperatura ambiente para controle do piso aquecido
+- **Nomenclatura**: Parte do termostato `termostato-[ambiente]`
 
 #### Sensores Presença mmWave (WiFi)
 - **Modelo**: LD2410 (24GHz, radar)
@@ -184,11 +205,10 @@ Sistema de automação residencial completo, 100% local, com:
 - Unifi Network (UDM, APs)
 - Shelly (todos sensores)
 - WebOS (TV LG - 100% local)
-- OpenWeatherMap ou INMET (irrigação)
+- LG ThinQ (ACs) - Integração via servidor LG, backup IR local se necessário
 
 ### Integrações Pendentes (validar)
-- LG ThinQ (ACs) - verificar se funciona 100% local
-- Vesta (piso aquecido SAS920FHL-7) - verificar protocolo
+- Vesta (piso aquecido SAS920FHL-7) - Manual analisado, não compatível com automação desejada
 - Receiver Anthem - verificar controle IP
 - Yale (fechadura) - verificar modelo e compatibilidade
 
@@ -223,26 +243,61 @@ Sistema de automação residencial completo, 100% local, com:
 - **Sem sensores**: Sem obstrução, sem botão emergência
 
 ### Climatização
-- **ACs**: Integração LG (local se possível, senão IR via ESP32)
-- **Sensores temperatura externos**: DS18B20 (1 por ambiente)
-- **Piso aquecido**: Controladores Vesta SAS920FHL-7 (pendente protocolo comunicação)
-- **Zonas piso aquecido**: A definir com arquiteto
+
+#### Ar Condicionado
+- **Quantidade total**: 6 aparelhos LG
+- **Integração**: LG ThinQ, via integração HA (funciona integrado, mas depende de servidor externo. Se a experiência for ruim, plano B usar integração IR local)
+- **Distribuição**:
+  - Office (12m²): 1x 9.000 BTU - AMNW09GTUC0
+  - Living (120m²): 2x 24.000 BTU - ATNW24GTLP1.ANWZBR1
+  - Suíte 1 - leste (18m²): 1x 12.000 BTU - AMNW12GTUC0
+  - Suíte 2 - oeste (15m²): 1x 12.000 BTU - AMNW12GTUC0
+  - Suíte master (48m²): 1x 24.000 BTU - AMNW24GTTC0
+
+#### Piso Aquecido
+- **Controladores originais**: Vesta SAS920FHL-7 (analisado, incompatível com automação)
+- **Solução**: Desenvolvimento de termostato próprio integrado ao Home Assistant
+- **Hardware de teste**:
+  - UEDX80480043E-WB-A (adquirida para testes)
+  - ESP32-3248S035 (alternativa para testes)
+  - Definir qual modelo melhor se encaixa no projeto após prototipagem
+- **Sensores**: DS18B20 integrado em cada termostato (1 por zona)
+- **Quantidade total**: 10 zonas (10 termostatos com sensores integrados)
+- **Térreo (3 zonas)**:
+  - Living: 120m²
+  - Office: 12m²
+  - Lavanderia: 11m²
+  - *(Garagem, sauna e banheiro de serviço não têm)*
+- **Pavimento Superior (7 zonas)**:
+  - Hall: 15m²
+  - Suíte 1 (leste): 18m²
+  - Banho 1: 3m²
+  - Suíte 2 (oeste): 15m²
+  - Banho 2: 3m²
+  - Suíte master: 48m²
+  - Banho master: 9m²
 
 ### Piscina
-- ESP32 WiFi + relés para contatoras
-- Funções: Aquecimento e recirculação
-- Sem sensores químicos (pH, cloro)
-- Sem iluminação (verificar com arquiteto)
+- **Controle**: ESP32 WiFi + relés para contatoras
+- **Funções**: Aquecimento e recirculação
+- **Iluminação**: SIM, 4 pontos de luz azul (pendente: verificar marca do controlador)
+- **Localização quadro de comando**: Externo, lado esquerdo da piscina, meio do jardim
+- **Sensores químicos**: NÃO (pH, cloro) - controle manual
 
 ### Irrigação
-- ESP32 WiFi + relés para válvulas solenoides 24V
-- Programação por zona (quantidade e mapa com arquiteto)
-- Integração climática: 
-  - Previsão chuva >70% nas próximas 24h → Cancelar irrigação
-  - Choveu >10mm ontem → Pular irrigação hoje
-  - Temperatura >35°C → +20% tempo de rega
-- SEM sensores umidade solo (infraestrutura já fechada)
-- Controle manual via painéis touch, voz e celular
+- **Controle**: ESP32 WiFi + relés para válvulas solenoides 24V
+- **Quantidade total**: 5 zonas
+- **Térreo (3 zonas)**: Frente, meio, fundos
+- **Pavimento Superior (2 zonas)**: Frente, fundos
+- **Programação recomendada pelo jardineiro**:
+  - **Verão**: 8h (10-15 min/zona) + 18h (10-15 min/zona)
+  - **Inverno**: 8h (5 min/zona)
+  - **IMPORTANTE**: Ligar TODOS os dias sem exceção
+- **Integração climática**: NÃO IMPLEMENTAR
+  - **Motivo**: Existem áreas cobertas que não pegam chuva
+  - **Decisão do cliente**: Irrigação sempre ativa, independente da previsão do tempo
+- **Sensores umidade solo**: NÃO (infraestrutura já fechada)
+- **Controle manual**: Via painéis touch, voz e celular
 
 ### Multimídia
 - **TV LG**: Integração WebOS (100% local, SSDP)
@@ -256,9 +311,10 @@ Sistema de automação residencial completo, 100% local, com:
 ### Controle de Voz
 - **Pendente**: Verificar com cliente
 - **Opções**: 
-  - Alexa (5 dispositivos) - Facilidade de uso
-  - HA Voice (ESP32 com microfone) - Privacidade, 100% local
-  - Híbrido - Melhor dos dois mundos (Alexa principal + HA Voice backup)
+  - Alexa (5 dispositivos) - Facilidade de uso, suporta português
+  - HA Voice (ESP32 com microfone) - Privacidade, 100% local, português
+  - Apple HomeKit via Siri - Integração nativa iOS, **limitação: apenas inglês**
+  - Híbrido - Melhor dos dois mundos (Alexa/Siri principal + HA Voice backup)
 
 ---
 
@@ -348,9 +404,9 @@ painel-touch-sala.local → 192.168.20.101
 **Arquivo detalhado**: `Conversas/pendencias.md`
 
 ### Resumo
-- **Com Arquiteto**: Plantas da casa, quantidades de sensores mmWave, zonas irrigação/piso aquecido, distribuição ACs, modelo fechadura Yale, localização quadros elétricos, planilhas iluminação 220V e LEDs 24V
-- **Com Fornecedores**: Modelos e protocolos de integração (LG ACs, Vesta piso aquecido, equipamentos A/V)
-- **Com Cliente**: Preferências UI painéis (cores, estilo), aprovação cenas automáticas, qualidade do ar, estratégia voz, no-break, especificações tablets
+- **Com Arquiteto**: Plantas da casa, posicionamento sensores mmWave, modelo exato fechadura Yale, localização quadros elétricos, planilhas iluminação 220V e LEDs 24V, verificações finais piscina (marca controlador, confirmar 4 pontos luz)
+- **Com Fornecedores**: Modelos e protocolos de integração (equipamentos A/V - Receiver Anthem, amplificadores)
+- **Com Cliente**: Preferências UI painéis/termostatos, aprovação cenas automáticas, sensores segurança (aprovação investimento), qualidade do ar, estratégia voz, no-break, especificações tablets
 
 **Como atualizar**: Marcar resolvidas no arquivo `pendencias.md` e informar à IA para atualizar documentação relacionada
 
@@ -383,10 +439,15 @@ painel-touch-sala.local → 192.168.20.101
 ### Fase 1 - Prototipagem (validação técnica)
 1. Montar 1 painel comando (ESP32 + MCP23017 + I2C)
 2. Montar 1 painel touch (ESP32-8048S070 + LVGL)
-3. Configurar HA básico no Proxmox
-4. Testar integrações principais (Shelly, Unifi)
-5. Validar lógica pulsadores múltiplos cliques
-6. Testar viabilidade câmeras em painéis touch
+3. **Prototipar termostato piso aquecido**:
+   - Testar UEDX80480043E-WB-A
+   - Testar ESP32-3248S035
+   - Definir modelo final
+   - Desenvolver firmware ESPHome + UI LVGL
+4. Configurar HA básico no Proxmox
+5. Testar integrações principais (Shelly, Unifi, LG ThinQ)
+6. Validar lógica pulsadores múltiplos cliques
+7. Testar viabilidade câmeras em painéis touch
 
 ### Fase 2 - Aguardar Dados Externos
 - Plantas e definições do arquiteto
@@ -442,7 +503,7 @@ painel-touch-sala.local → 192.168.20.101
 
 **Segurança**: 7 câmeras Unifi, alarme, sensores abertura/vazamento/fumaça, fechadura Yale (monitoramento apenas)
 
-**Climatização**: ACs LG (pendente integração), piso aquecido Vesta (pendente protocolo)
+**Climatização**: 6 ACs LG (integração ThinQ via servidor LG), piso aquecido com termostatos próprios (desenvolvimento custom)
 
 **Outros**: Iluminação 220V/24V, persianas, piscina, irrigação inteligente, multimídia
 
@@ -456,5 +517,5 @@ painel-touch-sala.local → 192.168.20.101
 
 *Este documento é atualizado apenas com decisões finais. Para detalhes de discussões e alternativas consideradas, consultar arquivo de conversa completa.*
 
-*Última revisão: 20/11/2025*
+*Última revisão: 01/12/2025*
 
