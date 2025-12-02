@@ -186,7 +186,7 @@
 ---
 
 ### ENTRADAS (GPIOs de Entrada) = Teclas/Circuitos Lum Únicos
-**22 entradas** (circuitos luminotécnicos únicos):
+**24 entradas** (circuitos luminotécnicos únicos):
 - **Circ 1** (Int 34) → 2L
 - **Circ 2** (Int 34) → 2M
 - **Circ 3** (Int 34) → 2K
