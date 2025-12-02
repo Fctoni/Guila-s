@@ -9,7 +9,8 @@ Este diretório contém datasheets técnicos de todos componentes.
 #### Microcontroladores:
 - `ESP32-WROOM-32-datasheet.pdf`
 - `ESP32-Ethernet-datasheet.pdf`
-- `ESP32-8048S070-datasheet.pdf`
+- `ESP32-8048S070-datasheet.pdf` (painéis touch 7")
+- `UEDX48480040E-WB-A-datasheet.pdf` (termostato quadrado 4")
 
 #### ICs:
 - `MCP23017-datasheet.pdf` (expansor I2C)
@@ -23,6 +24,10 @@ Este diretório contém datasheets técnicos de todos componentes.
 - `Shelly-Flood-specs.pdf`
 - `Shelly-Plus-Smoke-specs.pdf`
 - `Shelly-RGBW2-specs.pdf`
+
+#### Displays:
+- `GC9503V-datasheet.pdf` (LCD driver - UEDX48480040E)
+- `FT6336U-datasheet.pdf` (Touch controller)
 
 #### Outros:
 - Relés utilizados

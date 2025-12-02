@@ -92,9 +92,16 @@ Quando você tiver as respostas das pendências abaixo:
 **Decisão**: Desenvolver termostato próprio integrado ao Home Assistant
 
 **Hardware em teste**:
-- [✓] UEDX80480043E-WB-A (adquirida para testes)
-- [✓] ESP32-3248S035 (alternativa para comparação)
-- [ ] **Pendente**: Testar ambos e definir modelo final
+- [✓] UEDX48480040E-WB-A (em aquisição - display quadrado 4" 480x480)
+  - **Motivo da escolha**: Formato quadrado elegante para termostato
+  - **Especificações**: ESP32-S3, display GC9503V RGB paralelo, touch FT6336U
+  - **Framework**: Arduino + LVGL (ESPHome não suporta nativamente)
+  - **Repositório**: https://github.com/VIEWESMART/UEDX48480040ESP32-4inch-Touch-Display
+  - **Documentação**: Ver `Documentacao/05-Manuais-Equipamentos/displays/UEDX48480040E-WB-A.md`
+  - **Testes**: Ver `Firmware/ESP32-Paineis-Touch/validacoes/teste_UEDX48480040E/`
+- [✓] UEDX80480043E-WB-A (alternativa retangular)
+- [✓] ESP32-3248S035 (alternativa 3.5")
+- [ ] **Pendente**: Testar e definir modelo final após recebimento
 
 **Próximos passos**: Ver seção "Termostatos Piso Aquecido" no `PROJECT-CONTEXT.md`
 
@@ -268,7 +275,7 @@ Quando você tiver as respostas das pendências abaixo:
 
 ---
 
-**Última atualização**: 01/12/2025
+**Última atualização**: 02/12/2025
 **Status**: 🟢 Fase de planejamento avançada - Iniciando prototipagem
 
 **Localização do projeto**: Caxias do Sul - RS - Brasil (Le Parc)
@@ -281,12 +288,16 @@ Quando você tiver as respostas das pendências abaixo:
 - Câmeras (7 Unifi) e fechadura Yale já existentes no projeto
 - Monitoramento remoto para integrador confirmado
 - Backup automático confirmado
+- **Especificações confirmadas (02/12/2025)**:
+  - Display termostato: UEDX48480040E-WB-A (4" quadrado, em aquisição)
+  - Framework termostato: Arduino + LVGL + Home Assistant API
+  - Estrutura de testes criada em `Firmware/ESP32-Paineis-Touch/validacoes/`
 - **Especificações confirmadas (01/12/2025)**:
   - 6 ACs LG com modelos e distribuição definidos
   - Integração LG ThinQ confirmada (via servidor LG)
   - 10 zonas de piso aquecido com metragens
   - Desenvolvimento de termostato próprio (Vesta incompatível)
-  - Hardware termostato em teste: UEDX80480043E-WB-A e ESP32-3248S035
+  - Hardware termostato em teste: UEDX48480040E-WB-A (prioridade), UEDX80480043E-WB-A e ESP32-3248S035 (alternativas)
   - 5 zonas de irrigação com programação
   - Piscina com iluminação (4 pontos azul)
 

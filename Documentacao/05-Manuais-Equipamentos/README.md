@@ -7,6 +7,7 @@ Esta pasta deve conter os manuais de todos os equipamentos utilizados no projeto
 ### Arquivos já presentes:
 - `920 fh wifi si en.pdf` - Manual do controlador Vesta (piso aquecido)
   - **Nota**: Analisado, incompatível. Desenvolvemos termostato próprio.
+- `displays/UEDX48480040E-WB-A.md` - Display quadrado 4" para termostato (em teste)
 
 ### Arquivos a adicionar:
 
@@ -24,6 +25,12 @@ Esta pasta deve conter os manuais de todos os equipamentos utilizados no projeto
 
 #### Sensores mmWave:
 - `LD2410-datasheet.pdf`
+
+#### Displays/Termostatos:
+- `displays/UEDX48480040E-WB-A.md` - Display 4" quadrado (termostato)
+- `UEDX48480040E-WB-A-datasheet.pdf` - Datasheet completo
+- `GC9503V-datasheet.pdf` - LCD driver
+- `FT6336U-datasheet.pdf` - Touch controller
 
 #### ESP32:
 - `ESP32-8048S070-datasheet.pdf` (painéis touch)

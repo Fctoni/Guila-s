@@ -5,6 +5,10 @@
 **Localização**: Caxias do Sul - RS (Le Parc)
 
 ### 📝 Histórico de Atualizações
+- **02/12/2025**:
+  - Definido hardware para teste de termostato: UEDX48480040E-WB-A (display quadrado 4")
+  - Decisão: Usar Arduino Framework + LVGL ao invés de ESPHome (compatibilidade)
+  - Adicionada estrutura de documentação para novo hardware
 - **01/12/2025**: 
   - Adicionadas especificações confirmadas (ACs, piso aquecido, piscina, irrigação)
   - Confirmada integração LG ThinQ (via servidor LG, backup IR)
@@ -107,10 +111,19 @@ Sistema de automação residencial completo, 100% local, com:
 #### Termostatos Piso Aquecido (WiFi)
 - **Quantidade**: 10 termostatos (1 por zona)
 - **Hardware em teste**:
-  - UEDX80480043E-WB-A (adquirida)
+  - **UEDX80480043E-WB-A** (adquirida)
+  - **UEDX48480040E-WB-A** (em aquisição - display 4" quadrado 480x480)
+    - Display: GC9503V (RGB paralelo 16-bit)
+    - Touch: FT6336U (I2C)
+    - MCU: ESP32-S3 (16MB Flash, OPI PSRAM)
+    - Software: Arduino Framework + LVGL v8 + Home Assistant API
+    - Repositório: https://github.com/VIEWESMART/UEDX48480040ESP32-4inch-Touch-Display
+  - UEDX80480043E-WB-A (alternativa)
   - ESP32-3248S035 (alternativa)
 - **Sensor de temperatura**: DS18B20 integrado em cada termostato
 - **Software**: ESPHome + LVGL
+- **Framework**: Arduino + LVGL (ESPHome não suporta nativamente este display)
+- **Integração HA**: Home Assistant Native API (funciona como ESPHome)
 - **Funcionalidade**:
   - Controle temperatura setpoint
   - Display temperatura atual (leitura DS18B20)

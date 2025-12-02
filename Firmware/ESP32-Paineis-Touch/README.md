@@ -5,12 +5,23 @@
 Este diretório contém os firmwares de todos painéis touch LVGL.
 
 ### Hardware:
-- **Modelo**: ESP32-8048S070
-- **Quantidade**: 6 painéis
-- **Display**: 7" 800x480 touchscreen
-- **Conexão**: WiFi
-- **VLAN**: 20 (IoT Sensores)
-- **Software**: ESPHome + LVGL
+- **Painéis Touch 7" (Dashboards gerais)**:
+  - **Modelo**: ESP32-8048S070
+  - **Quantidade**: 6 painéis
+  - **Display**: 7" 800x480 touchscreen
+  - **Conexão**: WiFi
+  - **VLAN**: 20 (IoT Sensores)
+  - **Software**: ESPHome + LVGL
+
+- **Termostatos 4" (Piso Aquecido)**:
+  - **Modelo**: UEDX48480040E-WB-A (em teste)
+  - **Quantidade**: 10 termostatos (após validação)
+  - **Display**: 4" 480x480 quadrado touchscreen
+  - **Conexão**: WiFi
+  - **VLAN**: 20 (IoT Sensores)
+  - **Software**: Arduino Framework + LVGL + Home Assistant API
+  - **Repositório**: https://github.com/VIEWESMART/UEDX48480040ESP32-4inch-Touch-Display
+  - **Nota**: ESPHome não suporta nativamente este display (RGB paralelo GC9503V)
 
 ### Características UI:
 - **Estilo**: Minimalista, fundo escuro
@@ -31,7 +42,13 @@ Este diretório contém os firmwares de todos painéis touch LVGL.
 │   ├── security_screen.yaml  (câmeras e alarme)
 │   └── scenes_screen.yaml    (cenas)
 ├── validacoes/
-│   └── [arquivos HTML de validação de layout]
+│   ├── README.md
+│   ├── [arquivos HTML de validação de layout]
+│   └── teste_UEDX48480040E/  (testes display termostato)
+│       ├── platformio.ini
+│       ├── src/
+│       │   └── main.cpp
+│       └── README.md
 └── [configs individuais por painel]
 ```
 

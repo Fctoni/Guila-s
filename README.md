@@ -13,7 +13,7 @@ Sistema de automação residencial 100% local para residência premium em Le Par
 ## 🏗️ Arquitetura Técnica
 
 - **Servidor**: Mini-PC Beelink i3-1240P (12ª geração) + Proxmox
-- **Home Assistant**: VM dedicada (4 vCPUs, 8GB RAM, 32GB disco)
+- **Home Assistant**: VM dedicada (4 vCPUs, 4-8GB RAM, 32GB disco)
 - **Storage**: UGREEN DXP480T Plus (NAS)
 - **Rede**: VLANs segregadas, DNS local, IPs estáticos
 - **Backup**: Snapshots diários → UGREEN + redundância externa
@@ -37,6 +37,8 @@ Sistema de automação residencial 100% local para residência premium em Le Par
 - Presença mmWave (LD2410) - 8-15 unidades
 - Temperatura (DS18B20) - Integrados nos termostatos
 - Termostatos piso aquecido - 10 zonas
+  - **Hardware em teste**: UEDX48480040E-WB-A (display quadrado 4")
+  - **Framework**: Arduino + LVGL + Home Assistant API
 
 ### Sensores Shelly (WiFi)
 - Door/Window 2 - 18-30 sensores (abertura)
@@ -136,5 +138,5 @@ Guilas/
 
 ---
 
-**Última atualização**: 01/12/2025  
-**Versão**: 1.0.0
+**Última atualização**: 02/12/2025  
+**Versão**: 1.1.0
