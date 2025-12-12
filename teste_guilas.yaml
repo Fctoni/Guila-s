@@ -1,0 +1,863 @@
+# ============================================================================
+# TESTE GUILAS - Painel Touch 7" 800x480 com LVGL
+# Replica a tela "Controle de Ambiente" do validacao_layout.html
+# Estilo: Moderno Azul
+# ============================================================================
+
+substitutions:
+  devicename: teste-guilas
+  friendly_name: "Teste Guilas"
+  device_description: "Painel Touch 7 polegadas - Sala de Estar"
+  
+  # Cores do tema "Moderno Azul"
+  color_primary: "0x2196F3"       # Azul principal
+  color_primary_dark: "0x1976D2"  # Azul escuro
+  color_background: "0x1A1A1A"    # Fundo escuro
+  color_card: "0x2A2A2A"          # Cards
+  color_card_dark: "0x1F1F1F"     # Cards gradient
+  color_text: "0xFFFFFF"          # Texto branco
+  color_text_secondary: "0x888888" # Texto secundário
+  color_border: "0x333333"        # Bordas
+  color_on: "0x4CAF50"            # Verde (ligado)
+  color_off: "0x666666"           # Cinza (desligado)
+
+# ============================================================================
+# CONFIGURAÇÃO DO ESP32-S3
+# ============================================================================
+
+esphome:
+  name: ${devicename}
+  friendly_name: ${friendly_name}
+  platformio_options:
+    build_flags: "-DBOARD_HAS_PSRAM"
+    board_build.esp-idf.memory_type: qio_opi
+    board_build.flash_mode: dio
+    board_upload.maximum_ram_size: 524288
+
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: esp32s3
+  flash_size: 16MB
+  partitions: "default_16MB.csv"
+  framework:
+    type: esp-idf
+    sdkconfig_options:
+      CONFIG_ESP32S3_DEFAULT_CPU_FREQ_240: y
+      CONFIG_ESP32S3_DATA_CACHE_64KB: y
+      CONFIG_SPIRAM_FETCH_INSTRUCTIONS: y
+      CONFIG_SPIRAM_RODATA: y
+
+psram:
+  mode: octal
+  speed: 80MHz
+
+# ============================================================================
+# REDE E SERVIÇOS
+# ============================================================================
+
+logger:
+  level: DEBUG
+
+api:
+
+
+ota:
+  - platform: esphome
+
+
+wifi:
+  ssid: Toniezzer
+  password: caroletoni
+
+
+# ============================================================================
+# HARDWARE - I2C, BACKLIGHT, TOUCHSCREEN, DISPLAY
+# ============================================================================
+
+i2c:
+  sda: GPIO19
+  scl: GPIO20
+  scan: true
+
+# Backlight PWM
+output:
+  - platform: ledc
+    pin: 2
+    frequency: 300
+    id: gpio_backlight_pwm
+
+light:
+  - platform: monochromatic
+    output: gpio_backlight_pwm
+    name: "${friendly_name} Backlight"
+    id: back_light
+    restore_mode: ALWAYS_ON
+
+# Touchscreen GT911
+touchscreen:
+  - platform: gt911
+    id: main_touch
+    reset_pin: GPIO38
+    address: 0x5D
+    display: main_display
+    on_release:
+      - if:
+          condition: lvgl.is_paused
+          then:
+            - logger.log: "LVGL resumindo..."
+            - lvgl.resume:
+            - lvgl.widget.redraw:
+            - light.turn_on: back_light
+
+# Display RGB 800x480
+display:
+  - platform: rpi_dpi_rgb
+    id: main_display
+    color_order: RGB
+    invert_colors: true
+    update_interval: never
+    auto_clear_enabled: false
+    dimensions:
+      width: 800
+      height: 480
+    de_pin: 41
+    hsync_pin: 39
+    vsync_pin: 40
+    pclk_pin: 42
+    pclk_frequency: 12MHz
+    data_pins:
+      red:
+        - 14
+        - 21
+        - 47
+        - 48
+        - 45
+      green:
+        - 9
+        - 46
+        - 3
+        - 8
+        - 16
+        - 1
+      blue:
+        - 15
+        - 7
+        - 6
+        - 5
+        - 4
+
+# ============================================================================
+# FONTES
+# ============================================================================
+
+font:
+  - file: "gfonts://Roboto"
+    id: roboto24
+    size: 24
+    bpp: 4
+    
+  - file: "gfonts://Roboto"
+    id: roboto18
+    size: 18
+    bpp: 4
+    
+  - file: "gfonts://Roboto"
+    id: roboto14
+    size: 14
+    bpp: 4
+
+  - file: "gfonts://Roboto"
+    id: roboto30
+    size: 30
+    bpp: 4
+  
+  ## Fonte com ícones MDI
+  - file: "fonts/materialdesignicons-webfont.ttf"
+    id: icons24
+    size: 24
+    bpp: 4
+    glyphs:
+      - "\U000F0335"  # mdi-lightbulb
+      - "\U000F07D6"  # mdi-led-strip
+      - "\U000F0D43"  # mdi-hvac / ar condicionado
+      - "\U000F1A2B"  # mdi-blinds-horizontal / persiana
+      - "\U000F0717"  # mdi-snowflake
+      - "\U000F0238"  # mdi-fire
+
+## =============================================================================
+## LVGL CONFIGURAÇÃO
+## =============================================================================
+
+lvgl:
+  displays:
+    - main_display
+  touchscreens:
+    - main_touch
+  buffer_size: 25%
+  log_level: INFO
+  color_depth: 16
+  disp_bg_color: 0x1A1A1A
+  
+  on_idle:
+    - timeout: 60s
+      then:
+        - logger.log: "Display entrando em sleep mode"
+        - light.turn_off: back_light
+        - lvgl.pause:
+  
+  ## Estilos reutilizáveis
+  style_definitions:
+    - id: card_style
+      bg_color: 0x2A2A2A
+      bg_grad_color: 0x1F1F1F
+      bg_grad_dir: VER
+      bg_opa: COVER
+      border_width: 1
+      border_color: 0x444444
+      radius: 8
+      pad_all: 10
+    
+    - id: card_style_large
+      bg_color: 0x2A2A2A
+      bg_grad_color: 0x1F1F1F
+      bg_grad_dir: VER
+      bg_opa: COVER
+      border_width: 1
+      border_color: 0x444444
+      radius: 8
+      pad_all: 12
+    
+    - id: btn_off_style
+      bg_color: 0x333333
+      bg_opa: COVER
+      border_width: 0
+      radius: 6
+      text_color: 0xAAAAAA
+    
+    - id: btn_on_style
+      bg_color: 0x2196F3
+      bg_grad_color: 0x1976D2
+      bg_grad_dir: VER
+      bg_opa: COVER
+      border_width: 0
+      radius: 6
+      text_color: 0xFFFFFF
+    
+    - id: btn_checked_style
+      bg_color: 0x2196F3
+      text_color: 0xFFFFFF
+  
+  ## Tema base (igual ao styles.yaml do Display-7-bk)
+  theme:
+    button:
+      text_font: roboto14
+      radius: 8
+      width: 100
+      height: 32
+      pad_all: 5
+      shadow_width: 0
+      bg_color: 0x333333
+      border_width: 0
+      text_color: 0xAAAAAA
+      pressed:
+        bg_color: 0x444444
+      checked:
+        bg_color: 0x2196F3
+        text_color: 0xFFFFFF
+    
+    obj:
+      scrollable: false
+      bg_color: 0x1A1A1A
+      border_width: 0
+    
+    label:
+      scrollable: false
+      text_color: 0xCCCCCC
+
+  ## Páginas
+  pages:
+    - id: page_room_control
+      width: 100%
+      height: 100%
+      widgets:
+        ## ============================================================
+        ## HEADER
+        ## ============================================================
+        - obj:
+            x: 0
+            y: 0
+            width: 800
+            height: 50
+            bg_color: 0x1A1A1A
+            border_width: 0
+            scrollable: false
+            widgets:
+              - label:
+                  x: 15
+                  y: 12
+                  text: "Sala de Estar"
+                  text_font: roboto24
+                  text_color: 0xFFFFFF
+              - button:
+                  id: btn_back
+                  x: 690
+                  y: 8
+                  width: 95
+                  height: 35
+                  bg_color: 0x2A2A2A
+                  radius: 6
+                  widgets:
+                    - label:
+                        align: center
+                        text: "< Voltar"
+                        text_font: roboto14
+                        text_color: 0xCCCCCC
+                  on_click:
+                    - logger.log: "Botao Voltar pressionado"
+
+        ## ============================================================
+        ## SECAO: ILUMINACAO 220V
+        ## ============================================================
+        - obj:
+            x: 15
+            y: 55
+            width: 200
+            height: 20
+            bg_opa: TRANSP
+            border_width: 0
+            widgets:
+              - label:
+                  x: 0
+                  y: 0
+                  text: "\U000F0335"
+                  text_font: icons24
+                  text_color: 0x888888
+              - label:
+                  x: 28
+                  y: 2
+                  text: "Iluminacao 220V"
+                  text_font: roboto14
+                  text_color: 0x888888
+
+        ## Card Luz Principal
+        - obj:
+            x: 15
+            y: 78
+            width: 185
+            height: 90
+            styles: card_style
+            scrollable: false
+            widgets:
+              - label:
+                  x: 0
+                  y: 0
+                  text: "\U000F0335"
+                  text_font: icons24
+                  text_color: 0xFFD700
+              - label:
+                  x: 30
+                  y: 4
+                  text: "Luz Principal"
+                  text_font: roboto14
+                  text_color: 0xCCCCCC
+              - button:
+                  id: btn_luz_principal
+                  x: 0
+                  y: 38
+                  width: 165
+                  height: 32
+                  checkable: true
+                  checked:
+                    styles: btn_checked_style
+                  widgets:
+                    - label:
+                        id: lbl_luz_principal
+                        align: center
+                        text: "LIGADO"
+                        text_font: roboto14
+
+        ## Card Luz Lateral
+        - obj:
+            x: 210
+            y: 78
+            width: 185
+            height: 90
+            styles: card_style
+            scrollable: false
+            widgets:
+              - label:
+                  x: 0
+                  y: 0
+                  text: "\U000F0335"
+                  text_font: icons24
+                  text_color: 0x888888
+              - label:
+                  x: 30
+                  y: 4
+                  text: "Luz Lateral"
+                  text_font: roboto14
+                  text_color: 0xCCCCCC
+              - button:
+                  id: btn_luz_lateral
+                  x: 0
+                  y: 38
+                  width: 165
+                  height: 32
+                  checkable: true
+                  checked:
+                    styles: btn_checked_style
+                  widgets:
+                    - label:
+                        id: lbl_luz_lateral
+                        align: center
+                        text: "DESLIGADO"
+                        text_font: roboto14
+
+        ## Card Luz Parede
+        - obj:
+            x: 405
+            y: 78
+            width: 185
+            height: 90
+            styles: card_style
+            scrollable: false
+            widgets:
+              - label:
+                  x: 0
+                  y: 0
+                  text: "\U000F0335"
+                  text_font: icons24
+                  text_color: 0xFFD700
+              - label:
+                  x: 30
+                  y: 4
+                  text: "Luz Parede"
+                  text_font: roboto14
+                  text_color: 0xCCCCCC
+              - button:
+                  id: btn_luz_parede
+                  x: 0
+                  y: 38
+                  width: 165
+                  height: 32
+                  checkable: true
+                  checked:
+                    styles: btn_checked_style
+                  widgets:
+                    - label:
+                        id: lbl_luz_parede
+                        align: center
+                        text: "LIGADO"
+                        text_font: roboto14
+
+        ## Card Spot Quadro
+        - obj:
+            x: 600
+            y: 78
+            width: 185
+            height: 90
+            styles: card_style
+            scrollable: false
+            widgets:
+              - label:
+                  x: 0
+                  y: 0
+                  text: "\U000F0335"
+                  text_font: icons24
+                  text_color: 0x888888
+              - label:
+                  x: 30
+                  y: 4
+                  text: "Spot Quadro"
+                  text_font: roboto14
+                  text_color: 0xCCCCCC
+              - button:
+                  id: btn_spot_quadro
+                  x: 0
+                  y: 38
+                  width: 165
+                  height: 32
+                  checkable: true
+                  checked:
+                    styles: btn_checked_style
+                  widgets:
+                    - label:
+                        id: lbl_spot_quadro
+                        align: center
+                        text: "DESLIGADO"
+                        text_font: roboto14
+
+        ## ============================================================
+        ## SECAO: FITAS LED 24V
+        ## ============================================================
+        - obj:
+            x: 15
+            y: 183
+            width: 200
+            height: 20
+            bg_opa: TRANSP
+            border_width: 0
+            widgets:
+              - label:
+                  x: 0
+                  y: 0
+                  text: "\U000F07D6"
+                  text_font: icons24
+                  text_color: 0x888888
+              - label:
+                  x: 28
+                  y: 2
+                  text: "Fitas LED 24V"
+                  text_font: roboto14
+                  text_color: 0x888888
+
+        ## Card LED Teto
+        - obj:
+            x: 15
+            y: 206
+            width: 185
+            height: 90
+            styles: card_style
+            scrollable: false
+            widgets:
+              - label:
+                  x: 0
+                  y: 0
+                  text: "\U000F07D6"
+                  text_font: icons24
+                  text_color: 0x2196F3
+              - label:
+                  x: 30
+                  y: 4
+                  text: "LED Teto"
+                  text_font: roboto14
+                  text_color: 0xCCCCCC
+              - slider:
+                  id: slider_led_teto
+                  x: 0
+                  y: 38
+                  width: 165
+                  height: 12
+                  min_value: 0
+                  max_value: 100
+                  value: 80
+              - label:
+                  id: lbl_led_teto
+                  x: 70
+                  y: 58
+                  text: "80%"
+                  text_font: roboto14
+                  text_color: 0xFFFFFF
+
+        ## Card LED Sanca
+        - obj:
+            x: 210
+            y: 206
+            width: 185
+            height: 90
+            styles: card_style
+            scrollable: false
+            widgets:
+              - label:
+                  x: 0
+                  y: 0
+                  text: "\U000F07D6"
+                  text_font: icons24
+                  text_color: 0x2196F3
+              - label:
+                  x: 30
+                  y: 4
+                  text: "LED Sanca"
+                  text_font: roboto14
+                  text_color: 0xCCCCCC
+              - slider:
+                  id: slider_led_sanca
+                  x: 0
+                  y: 38
+                  width: 165
+                  height: 12
+                  min_value: 0
+                  max_value: 100
+                  value: 60
+              - label:
+                  id: lbl_led_sanca
+                  x: 70
+                  y: 58
+                  text: "60%"
+                  text_font: roboto14
+                  text_color: 0xFFFFFF
+
+        ## Card LED Nicho
+        - obj:
+            x: 405
+            y: 206
+            width: 185
+            height: 90
+            styles: card_style
+            scrollable: false
+            widgets:
+              - label:
+                  x: 0
+                  y: 0
+                  text: "\U000F07D6"
+                  text_font: icons24
+                  text_color: 0x2196F3
+              - label:
+                  x: 30
+                  y: 4
+                  text: "LED Nicho"
+                  text_font: roboto14
+                  text_color: 0xCCCCCC
+              - slider:
+                  id: slider_led_nicho
+                  x: 0
+                  y: 38
+                  width: 165
+                  height: 12
+                  min_value: 0
+                  max_value: 100
+                  value: 100
+              - label:
+                  id: lbl_led_nicho
+                  x: 65
+                  y: 58
+                  text: "100%"
+                  text_font: roboto14
+                  text_color: 0xFFFFFF
+
+        ## Card LED Painel
+        - obj:
+            x: 600
+            y: 206
+            width: 185
+            height: 90
+            styles: card_style
+            scrollable: false
+            widgets:
+              - label:
+                  x: 0
+                  y: 0
+                  text: "\U000F07D6"
+                  text_font: icons24
+                  text_color: 0x2196F3
+              - label:
+                  x: 30
+                  y: 4
+                  text: "LED Painel"
+                  text_font: roboto14
+                  text_color: 0xCCCCCC
+              - slider:
+                  id: slider_led_painel
+                  x: 0
+                  y: 38
+                  width: 165
+                  height: 12
+                  min_value: 0
+                  max_value: 100
+                  value: 40
+              - label:
+                  id: lbl_led_painel
+                  x: 70
+                  y: 58
+                  text: "40%"
+                  text_font: roboto14
+                  text_color: 0xFFFFFF
+
+        ## ============================================================
+        ## SECAO: CLIMA E PERSIANAS
+        ## ============================================================
+        - obj:
+            x: 15
+            y: 303
+            width: 220
+            height: 20
+            bg_opa: TRANSP
+            border_width: 0
+            widgets:
+              - label:
+                  x: 0
+                  y: 0
+                  text: "\U000F0717"
+                  text_font: icons24
+                  text_color: 0x888888
+              - label:
+                  x: 28
+                  y: 2
+                  text: "Clima e Persianas"
+                  text_font: roboto14
+                  text_color: 0x888888
+
+        ## Card Ar Condicionado (Grande)
+        - obj:
+            x: 15
+            y: 326
+            width: 380
+            height: 130
+            styles: card_style_large
+            scrollable: false
+            widgets:
+              - label:
+                  x: 0
+                  y: 0
+                  text: "\U000F0717"
+                  text_font: icons24
+                  text_color: 0x00BFFF
+              - label:
+                  x: 30
+                  y: 4
+                  text: "Ar Condicionado"
+                  text_font: roboto18
+                  text_color: 0xCCCCCC
+              - label:
+                  id: lbl_ac_temp
+                  x: 155
+                  y: 35
+                  text: "22C"
+                  text_font: roboto30
+                  text_color: 0xFFFFFF
+              ## Botao Diminuir
+              - button:
+                  id: btn_ac_minus
+                  x: 0
+                  y: 78
+                  width: 80
+                  height: 35
+                  bg_color: 0x333333
+                  widgets:
+                    - label:
+                        align: center
+                        text: "-"
+                        text_font: roboto24
+                        text_color: 0xCCCCCC
+                  on_click:
+                    - logger.log: "AC: Diminuir temperatura"
+              ## Botao Liga/Desliga
+              - button:
+                  id: btn_ac_power
+                  x: 90
+                  y: 78
+                  width: 176
+                  height: 35
+                  checkable: true
+                  checked:
+                    styles: btn_checked_style
+                  widgets:
+                    - label:
+                        id: lbl_ac_power
+                        align: center
+                        text: "LIGADO"
+                        text_font: roboto14
+              ## Botao Aumentar
+              - button:
+                  id: btn_ac_plus
+                  x: 276
+                  y: 78
+                  width: 80
+                  height: 35
+                  bg_color: 0x333333
+                  widgets:
+                    - label:
+                        align: center
+                        text: "+"
+                        text_font: roboto24
+                        text_color: 0xCCCCCC
+                  on_click:
+                    - logger.log: "AC: Aumentar temperatura"
+
+        ## Card Persiana 1
+        - obj:
+            x: 405
+            y: 326
+            width: 185
+            height: 130
+            styles: card_style_large
+            scrollable: false
+            widgets:
+              - label:
+                  x: 0
+                  y: 0
+                  text: "\U000F1A2B"
+                  text_font: icons24
+                  text_color: 0x2196F3
+              - label:
+                  x: 30
+                  y: 4
+                  text: "Persiana 1"
+                  text_font: roboto14
+                  text_color: 0xCCCCCC
+              - slider:
+                  id: slider_persiana1
+                  x: 0
+                  y: 50
+                  width: 161
+                  height: 12
+                  min_value: 0
+                  max_value: 100
+                  value: 50
+              - label:
+                  id: lbl_persiana1
+                  x: 65
+                  y: 80
+                  text: "50%"
+                  text_font: roboto18
+                  text_color: 0xFFFFFF
+
+        ## Card Persiana 2
+        - obj:
+            x: 600
+            y: 326
+            width: 185
+            height: 130
+            styles: card_style_large
+            scrollable: false
+            widgets:
+              - label:
+                  x: 0
+                  y: 0
+                  text: "\U000F1A2B"
+                  text_font: icons24
+                  text_color: 0x2196F3
+              - label:
+                  x: 30
+                  y: 4
+                  text: "Persiana 2"
+                  text_font: roboto14
+                  text_color: 0xCCCCCC
+              - slider:
+                  id: slider_persiana2
+                  x: 0
+                  y: 50
+                  width: 161
+                  height: 12
+                  min_value: 0
+                  max_value: 100
+                  value: 30
+              - label:
+                  id: lbl_persiana2
+                  x: 65
+                  y: 80
+                  text: "30%"
+                  text_font: roboto18
+                  text_color: 0xFFFFFF
+
+## =============================================================================
+## SENSORES DO SISTEMA
+## =============================================================================
+
+sensor:
+  - platform: wifi_signal
+    name: "${friendly_name} WiFi Signal"
+    update_interval: 60s
+
+  - platform: uptime
+    name: "${friendly_name} Uptime"
+    update_interval: 60s
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "${friendly_name} IP Address"
+
+button:
+  - platform: restart
+    name: "${friendly_name} Restart"

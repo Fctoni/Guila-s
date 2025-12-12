@@ -1,0 +1,20 @@
+# Netlify
+.netlify/
+
+# Firebase (caso queira manter credenciais privadas)
+# Descomente a linha abaixo se quiser versionar sem as credenciais
+# script.js
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+

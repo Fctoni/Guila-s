@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras - Projeto</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 Lista de Compras</h1>
+            <p class="subtitle">Marque os itens conforme forem adquiridos</p>
+        </header>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+            <span class="progress-text" id="progressText">0 de 0 itens comprados</span>
+        </div>
+
+        <div class="items-list" id="itemsList">
+            <div class="loading">Carregando...</div>
+        </div>
+
+        <footer>
+            <button class="add-button" onclick="openModal()">➕ Adicionar Item</button>
+        </footer>
+    </div>
+
+    <!-- Modal para Adicionar/Editar -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Adicionar Item</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <form id="itemForm" onsubmit="saveItem(event)">
+                <div class="form-group">
+                    <label for="productName">Produto *</label>
+                    <input type="text" id="productName" required placeholder="Ex: Storage">
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">Quantidade *</label>
+                    <input type="number" id="quantity" required min="1" value="1" placeholder="Ex: 1">
+                </div>
+
+                <div class="form-group">
+                    <label for="link">Link</label>
+                    <input type="url" id="link" placeholder="https://www.amazon.com/...">
+                </div>
+
+                <div class="form-group">
+                    <label for="observations">Observações</label>
+                    <textarea id="observations" rows="3" placeholder="Ex: Comprar exatamente o do link"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status *</label>
+                    <select id="status" required>
+                        <option value="aprovado">✅ Aprovado</option>
+                        <option value="em-discussao">⚠️ Em discussão</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="btn-save">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Aviso - Item em Discussão -->
+    <div id="warningModal" class="modal">
+        <div class="modal-content modal-warning">
+            <div class="modal-header warning-header">
+                <h2>⚠️ Atenção</h2>
+                <span class="close" onclick="closeWarningModal()">&times;</span>
+            </div>
+            <div class="warning-body">
+                <p><strong>Este item ainda está em discussão.</strong></p>
+                <p>Não compre ainda. Aguarde a aprovação final.</p>
+                <p>Clique abaixo para ser redirecionado ao link do produto (apenas para consulta):</p>
+            </div>
+            <div class="warning-actions">
+                <button class="btn-cancel" onclick="closeWarningModal()">Cancelar</button>
+                <a id="warningLink" href="#" target="_blank" rel="noopener noreferrer" class="btn-proceed">
+                    Ver Produto
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module" src="script.js"></script>
+</body>
+</html>
+
