@@ -180,6 +180,43 @@ header h1 {
     color: #e65100;
 }
 
+.tag-badge {
+    font-size: 0.7em;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: white;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.tag-removable {
+    padding-right: 4px;
+}
+
+.tag-remove {
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2em;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 4px;
+    transition: background 0.2s;
+}
+
+.tag-remove:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
 .item-obs {
     font-size: 0.8em;
     color: #666;
@@ -237,6 +274,28 @@ header h1 {
 .btn-delete-small:hover {
     background: #f44336;
     color: white;
+    transform: scale(1.1);
+}
+
+.btn-link-multi {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    background: #667eea;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-link-multi:hover {
+    background: #5568d3;
     transform: scale(1.1);
 }
 
@@ -390,6 +449,124 @@ footer {
     border-color: #667eea;
 }
 
+/* Campos de Links Dinâmicos */
+.link-field {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.link-label {
+    flex: 1;
+    min-width: 120px;
+}
+
+.link-url {
+    flex: 2;
+}
+
+.btn-remove-link {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: #ffebee;
+    color: #d32f2f;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.btn-remove-link:hover {
+    background: #f44336;
+    color: white;
+    transform: scale(1.05);
+}
+
+.btn-add-link {
+    width: 100%;
+    padding: 10px;
+    background: #e3f2fd;
+    color: #1976D2;
+    border: 2px dashed #90caf9;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    margin-top: 5px;
+}
+
+.btn-add-link:hover {
+    background: #bbdefb;
+    border-color: #1976D2;
+}
+
+/* Sistema de Tags */
+.tags-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.selected-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-height: 32px;
+    padding: 8px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    border: 2px dashed #e0e0e0;
+}
+
+.selected-tags:empty::before {
+    content: 'Nenhuma tag selecionada';
+    color: #999;
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+.tags-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tag-suggestion {
+    padding: 6px 12px;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    color: #666;
+}
+
+.tag-suggestion:hover {
+    border-color: #667eea;
+    background: #f0f2ff;
+    color: #667eea;
+    transform: translateY(-1px);
+}
+
+.custom-tag-input {
+    padding: 10px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.9em;
+    transition: border-color 0.3s;
+}
+
+.custom-tag-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
 .form-actions {
     display: flex;
     gap: 15px;
@@ -462,6 +639,42 @@ footer {
     color: #666;
 }
 
+.warning-links {
+    padding: 10px 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.warning-link-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: #f5f5f5;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+.warning-link-button:hover {
+    background: #667eea;
+    border-color: #667eea;
+    color: white;
+    transform: translateX(5px);
+}
+
+.warning-link-label {
+    font-weight: 600;
+    flex: 1;
+}
+
+.warning-link-icon {
+    font-size: 1.2em;
+}
+
 .warning-actions {
     display: flex;
     gap: 15px;
@@ -469,7 +682,7 @@ footer {
     justify-content: center;
 }
 
-.btn-proceed {
+.btn-cancel-warning {
     padding: 12px 30px;
     border: none;
     border-radius: 8px;
@@ -477,16 +690,12 @@ footer {
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: #ff9800;
-    color: white;
-    text-decoration: none;
-    display: inline-block;
+    background: #e0e0e0;
+    color: #666;
 }
 
-.btn-proceed:hover {
-    background: #f57c00;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+.btn-cancel-warning:hover {
+    background: #d0d0d0;
 }
 
 /* Responsive */
@@ -572,12 +781,40 @@ footer {
         flex-direction: column;
     }
 
-    .btn-proceed {
+    .btn-cancel-warning {
         width: 100%;
     }
 
     .status-badge {
         font-size: 0.7em;
+    }
+
+    .tag-badge {
+        font-size: 0.65em;
+    }
+
+    .tags-suggestions {
+        gap: 4px;
+    }
+
+    .tag-suggestion {
+        font-size: 0.8em;
+        padding: 5px 10px;
+    }
+
+    .link-field {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .link-label,
+    .link-url {
+        width: 100%;
+    }
+
+    .btn-remove-link {
+        width: 100%;
+        height: 32px;
     }
 }
 

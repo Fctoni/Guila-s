@@ -3,7 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lista de compras para o projeto da casa">
+    <meta name="theme-color" content="#667eea">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Compras Casa">
+    
     <title>Lista de Compras - Projeto</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Favicons e Ícones -->
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512x512.png">
+    <link rel="apple-touch-icon" href="/icon-192x192.png">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -46,8 +63,11 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="link">Link</label>
-                    <input type="url" id="link" placeholder="https://www.amazon.com/...">
+                    <label>Links do Produto</label>
+                    <div id="linksContainer">
+                        <!-- Links serão adicionados aqui dinamicamente -->
+                    </div>
+                    <button type="button" class="btn-add-link" onclick="addLinkField()">➕ Adicionar Link</button>
                 </div>
 
                 <div class="form-group">
@@ -61,6 +81,22 @@
                         <option value="aprovado">✅ Aprovado</option>
                         <option value="em-discussao">⚠️ Em discussão</option>
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Tags</label>
+                    <div class="tags-input-container">
+                        <div id="selectedTags" class="selected-tags">
+                            <!-- Tags selecionadas aparecerão aqui -->
+                        </div>
+                        <div class="tags-suggestions">
+                            <button type="button" class="tag-suggestion" onclick="addTag('eua')">🇺🇸 EUA</button>
+                            <button type="button" class="tag-suggestion" onclick="addTag('local')">🇧🇷 Local</button>
+                            <button type="button" class="tag-suggestion" onclick="addTag('urgente')">⚡ Urgente</button>
+                            <button type="button" class="tag-suggestion" onclick="addTag('online')">🌐 Online</button>
+                        </div>
+                        <input type="text" id="customTagInput" class="custom-tag-input" placeholder="Ou digite uma tag personalizada..." onkeypress="handleTagInput(event)">
+                    </div>
                 </div>
 
                 <div class="form-actions">
@@ -81,19 +117,44 @@
             <div class="warning-body">
                 <p><strong>Este item ainda está em discussão.</strong></p>
                 <p>Não compre ainda. Aguarde a aprovação final.</p>
-                <p>Clique abaixo para ser redirecionado ao link do produto (apenas para consulta):</p>
+                <p>Escolha um dos links abaixo para consulta:</p>
+            </div>
+            <div id="warningLinksContainer" class="warning-links">
+                <!-- Links serão inseridos aqui -->
             </div>
             <div class="warning-actions">
-                <button class="btn-cancel" onclick="closeWarningModal()">Cancelar</button>
-                <a id="warningLink" href="#" target="_blank" rel="noopener noreferrer" class="btn-proceed">
-                    Ver Produto
-                </a>
+                <button class="btn-cancel-warning" onclick="closeWarningModal()">Fechar</button>
             </div>
         </div>
     </div>
 
     <!-- Firebase SDK -->
     <script type="module" src="script.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('ServiceWorker registrado com sucesso:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('Falha ao registrar ServiceWorker:', error);
+                    });
+            });
+        }
+
+        // Prompt de instalação
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Você pode mostrar um botão de instalação personalizado aqui
+            console.log('App pode ser instalado!');
+        });
+    </script>
 </body>
 </html>
 

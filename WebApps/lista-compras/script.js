@@ -40,6 +40,19 @@ const db = getFirestore(app);
 // VARIÁVEIS GLOBAIS
 // ==============================================
 let currentEditId = null;
+let linkFieldCounter = 0;
+let selectedTags = new Set();
+
+// Mapeamento de cores para tags
+const tagColors = {
+    'eua': '#2196F3',
+    'local': '#4CAF50',
+    'urgente': '#f44336',
+    'online': '#9C27B0',
+    'loja-fisica': '#FF9800',
+    'importado': '#00BCD4',
+    'nacional': '#8BC34A'
+};
 
 // ==============================================
 // FUNÇÕES PRINCIPAIS
@@ -101,11 +114,41 @@ function createItemCard(id, item) {
         ? '<span class="status-badge status-discussao">⚠️ Em discussão</span>'
         : '<span class="status-badge status-aprovado">✅ Aprovado</span>';
     
-    const linkButton = item.link 
-        ? (item.status === 'em-discussao' 
-            ? `<button class="btn-link" onclick="showWarning('${item.link.replace(/'/g, "\\'")}', event)" title="Ver produto (em discussão)">🔗</button>`
-            : `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="btn-link" title="Ver produto">🔗</a>`)
-        : '';
+    // Criar badges de tags
+    let tagsBadges = '';
+    if (item.tags && item.tags.length > 0) {
+        item.tags.forEach(tag => {
+            const color = tagColors[tag.toLowerCase()] || '#757575';
+            const icon = getTagIcon(tag);
+            tagsBadges += `<span class="tag-badge" style="background-color: ${color}">${icon}${tag}</span>`;
+        });
+    }
+    
+    // Lidar com links (novo formato array ou antigo formato string)
+    const links = item.links && item.links.length > 0 
+        ? item.links 
+        : (item.link ? [{ label: 'Ver produto', url: item.link }] : []);
+    
+    let linkButtons = '';
+    if (links.length > 0) {
+        if (item.status === 'em-discussao') {
+            // Em discussão: botão que abre modal de aviso
+            const linksJson = JSON.stringify(links).replace(/"/g, '&quot;');
+            linkButtons = `<button class="btn-link" onclick='showWarning(${linksJson}, event)' title="Ver opções (em discussão)">🔗${links.length > 1 ? ` ${links.length}` : ''}</button>`;
+        } else {
+            // Aprovado: mostrar links diretos
+            if (links.length === 1) {
+                linkButtons = `<a href="${links[0].url}" target="_blank" rel="noopener noreferrer" class="btn-link" title="${links[0].label}">🔗</a>`;
+            } else if (links.length <= 3) {
+                links.forEach((link, index) => {
+                    linkButtons += `<a href="${link.url}" target="_blank" rel="noopener noreferrer" class="btn-link-multi" title="${link.label}">🏪${index + 1}</a>`;
+                });
+            } else {
+                const linksJson = JSON.stringify(links).replace(/"/g, '&quot;');
+                linkButtons = `<button class="btn-link" onclick='showLinksDropdown(${linksJson}, event)' title="Ver ${links.length} opções">🔗 ${links.length}</button>`;
+            }
+        }
+    }
     
     card.innerHTML = `
         <div class="item-main">
@@ -120,11 +163,12 @@ function createItemCard(id, item) {
                 <div class="item-meta">
                     <span class="item-qty">Qtd: ${item.quantidade}</span>
                     ${statusBadge}
+                    ${tagsBadges}
                 </div>
                 ${item.observacoes ? `<span class="item-obs">💡 ${item.observacoes}</span>` : ''}
             </div>
             <div class="item-buttons">
-                ${linkButton}
+                ${linkButtons}
                 <button class="btn-edit-small" onclick="editItem('${id}')" title="Editar">✏️</button>
                 <button class="btn-delete-small" onclick="deleteItem('${id}')" title="Deletar">🗑️</button>
             </div>
@@ -132,6 +176,20 @@ function createItemCard(id, item) {
     `;
     
     return card;
+}
+
+// Obter ícone para tag
+function getTagIcon(tag) {
+    const icons = {
+        'eua': '🇺🇸 ',
+        'local': '🇧🇷 ',
+        'urgente': '⚡ ',
+        'online': '🌐 ',
+        'loja-fisica': '🏪 ',
+        'importado': '✈️ ',
+        'nacional': '🏠 '
+    };
+    return icons[tag.toLowerCase()] || '🏷️ ';
 }
 
 // Atualizar barra de progresso
@@ -158,16 +216,198 @@ window.toggleCheck = async function(id, checked) {
     }
 }
 
+// Adicionar campo de link no formulário
+window.addLinkField = function(label = '', url = '') {
+    const container = document.getElementById('linksContainer');
+    const fieldId = linkFieldCounter++;
+    
+    const linkField = document.createElement('div');
+    linkField.className = 'link-field';
+    linkField.id = `linkField${fieldId}`;
+    linkField.innerHTML = `
+        <input 
+            type="text" 
+            class="link-label" 
+            placeholder="Nome (ex: Amazon, Alternativa 1)" 
+            value="${label}"
+        >
+        <input 
+            type="url" 
+            class="link-url" 
+            placeholder="https://..." 
+            value="${url}"
+        >
+        <button type="button" class="btn-remove-link" onclick="removeLinkField(${fieldId})" title="Remover">❌</button>
+    `;
+    
+    container.appendChild(linkField);
+}
+
+// Remover campo de link
+window.removeLinkField = function(fieldId) {
+    const field = document.getElementById(`linkField${fieldId}`);
+    if (field) {
+        field.remove();
+    }
+}
+
+// Coletar links do formulário
+function collectLinks() {
+    const linkFields = document.querySelectorAll('.link-field');
+    const links = [];
+    
+    linkFields.forEach(field => {
+        const label = field.querySelector('.link-label').value.trim();
+        const url = field.querySelector('.link-url').value.trim();
+        
+        if (url) { // Só adiciona se tiver URL
+            links.push({
+                label: label || 'Ver produto',
+                url: url
+            });
+        }
+    });
+    
+    return links;
+}
+
+// Limpar campos de links
+function clearLinkFields() {
+    document.getElementById('linksContainer').innerHTML = '';
+    linkFieldCounter = 0;
+}
+
+// Adicionar tag
+window.addTag = function(tag) {
+    tag = tag.trim().toLowerCase();
+    if (!tag) return;
+    
+    selectedTags.add(tag);
+    renderSelectedTags();
+    
+    // Limpar input personalizado
+    const input = document.getElementById('customTagInput');
+    if (input) input.value = '';
+}
+
+// Remover tag
+window.removeTag = function(tag) {
+    selectedTags.delete(tag);
+    renderSelectedTags();
+}
+
+// Renderizar tags selecionadas
+function renderSelectedTags() {
+    const container = document.getElementById('selectedTags');
+    container.innerHTML = '';
+    
+    selectedTags.forEach(tag => {
+        const color = tagColors[tag] || '#757575';
+        const icon = getTagIcon(tag);
+        
+        const tagElement = document.createElement('span');
+        tagElement.className = 'tag-badge tag-removable';
+        tagElement.style.backgroundColor = color;
+        tagElement.innerHTML = `
+            ${icon}${tag}
+            <button type="button" class="tag-remove" onclick="removeTag('${tag}')">×</button>
+        `;
+        container.appendChild(tagElement);
+    });
+}
+
+// Limpar tags
+function clearTags() {
+    selectedTags.clear();
+    renderSelectedTags();
+}
+
+// Carregar tags
+function loadTags(tags) {
+    selectedTags.clear();
+    if (tags && Array.isArray(tags)) {
+        tags.forEach(tag => selectedTags.add(tag));
+    }
+    renderSelectedTags();
+}
+
+// Handle enter em input de tag personalizada
+window.handleTagInput = function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        const input = event.target;
+        const tag = input.value.trim().toLowerCase();
+        if (tag) {
+            addTag(tag);
+        }
+    }
+}
+
 // Mostrar modal de aviso para itens em discussão
-window.showWarning = function(link, event) {
+window.showWarning = function(links, event) {
     if (event) event.preventDefault();
-    document.getElementById('warningLink').href = link;
+    
+    const container = document.getElementById('warningLinksContainer');
+    container.innerHTML = '';
+    
+    links.forEach(link => {
+        const linkButton = document.createElement('a');
+        linkButton.href = link.url;
+        linkButton.target = '_blank';
+        linkButton.rel = 'noopener noreferrer';
+        linkButton.className = 'warning-link-button';
+        linkButton.innerHTML = `
+            <span class="warning-link-label">${link.label}</span>
+            <span class="warning-link-icon">🔗</span>
+        `;
+        container.appendChild(linkButton);
+    });
+    
     document.getElementById('warningModal').classList.add('show');
+}
+
+// Mostrar dropdown de links (para itens aprovados com 4+ links)
+window.showLinksDropdown = function(links, event) {
+    if (event) event.preventDefault();
+    
+    const container = document.getElementById('warningLinksContainer');
+    const modal = document.getElementById('warningModal');
+    
+    // Mudar título e texto para modo "aprovado"
+    document.querySelector('.warning-header h2').textContent = '🔗 Escolha uma opção';
+    document.querySelector('.warning-body p:first-child').innerHTML = '<strong>Múltiplas opções disponíveis</strong>';
+    document.querySelector('.warning-body p:nth-child(2)').textContent = 'Escolha uma das lojas/alternativas abaixo:';
+    document.querySelector('.warning-body p:nth-child(3)').style.display = 'none';
+    
+    container.innerHTML = '';
+    
+    links.forEach(link => {
+        const linkButton = document.createElement('a');
+        linkButton.href = link.url;
+        linkButton.target = '_blank';
+        linkButton.rel = 'noopener noreferrer';
+        linkButton.className = 'warning-link-button';
+        linkButton.innerHTML = `
+            <span class="warning-link-label">${link.label}</span>
+            <span class="warning-link-icon">🔗</span>
+        `;
+        container.appendChild(linkButton);
+    });
+    
+    modal.classList.add('show');
 }
 
 // Fechar modal de aviso
 window.closeWarningModal = function() {
     document.getElementById('warningModal').classList.remove('show');
+    
+    // Restaurar texto padrão do modal
+    setTimeout(() => {
+        document.querySelector('.warning-header h2').textContent = '⚠️ Atenção';
+        document.querySelector('.warning-body p:first-child').innerHTML = '<strong>Este item ainda está em discussão.</strong>';
+        document.querySelector('.warning-body p:nth-child(2)').textContent = 'Não compre ainda. Aguarde a aprovação final.';
+        document.querySelector('.warning-body p:nth-child(3)').style.display = 'block';
+    }, 300);
 }
 
 // Abrir modal para adicionar
@@ -176,6 +416,9 @@ window.openModal = function() {
     document.getElementById('modalTitle').textContent = 'Adicionar Item';
     document.getElementById('itemForm').reset();
     document.getElementById('status').value = 'aprovado'; // Default aprovado
+    clearLinkFields();
+    addLinkField(); // Adicionar um campo vazio
+    clearTags(); // Limpar tags
     document.getElementById('modal').classList.add('show');
 }
 
@@ -197,9 +440,25 @@ window.editItem = async function(id) {
             document.getElementById('modalTitle').textContent = 'Editar Item';
             document.getElementById('productName').value = itemData.produto;
             document.getElementById('quantity').value = itemData.quantidade;
-            document.getElementById('link').value = itemData.link || '';
             document.getElementById('observations').value = itemData.observacoes || '';
             document.getElementById('status').value = itemData.status || 'aprovado';
+            
+            // Carregar links
+            clearLinkFields();
+            if (itemData.links && itemData.links.length > 0) {
+                itemData.links.forEach(link => {
+                    addLinkField(link.label, link.url);
+                });
+            } else if (itemData.link) {
+                // Compatibilidade com formato antigo
+                addLinkField('Ver produto', itemData.link);
+            } else {
+                addLinkField(); // Adicionar um campo vazio
+            }
+            
+            // Carregar tags
+            loadTags(itemData.tags || []);
+            
             document.getElementById('modal').classList.add('show');
         }
     } catch (error) {
@@ -212,6 +471,7 @@ window.editItem = async function(id) {
 window.closeModal = function() {
     document.getElementById('modal').classList.remove('show');
     document.getElementById('itemForm').reset();
+    clearTags();
     currentEditId = null;
 }
 
@@ -221,16 +481,17 @@ window.saveItem = async function(event) {
     
     const produto = document.getElementById('productName').value.trim();
     const quantidade = parseInt(document.getElementById('quantity').value);
-    const link = document.getElementById('link').value.trim();
     const observacoes = document.getElementById('observations').value.trim();
     const status = document.getElementById('status').value;
+    const links = collectLinks();
     
     const itemData = {
         produto,
         quantidade,
-        link: link || '',
+        links: links,
         observacoes: observacoes || '',
         status: status,
+        tags: Array.from(selectedTags),
         comprado: false
     };
     
