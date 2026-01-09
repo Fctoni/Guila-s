@@ -1,0 +1,57 @@
+# Diretrizes do Projeto
+
+## Biblioteca a Seguir
+- Nome: Esphome
+- Documentação: https://esphome.io/components/
+- Versão: latest release
+
+## Padrões de Código Obrigatórios
+- Comentar o código para ficar entendível e legível
+- Foco: desenvolvedores com experiência média
+- Evitar comentários desnecessários ou redundantes
+
+## Exemplos de Código Esperado
+pages:
+    - id: main_page ## SALA
+      width: 100%
+      height: 90%
+      widgets:
+        - obj: ##temperatura medida-sala
+            scrollable: false
+            width: 100
+            height: 55
+            align: top_left
+            widgets:
+              - label: ##temperatura medida sala (id temp_text2)
+                  scrollable: false
+                  text_font: roboto23
+                  text: "--.-"
+                  id: temp_text2
+                  align: center
+                  text_align: 'CENTER'
+                  text_color: 0xFFFFFF 
+
+
+## O que NÃO fazer
+- NÃO gerar código quando houver dúvidas
+- SEMPRE perguntar antes de implementar
+- Só implementar quando não restar nenhuma dúvida
+
+## Instruções para a IA
+Ao gerar, modificar ou revisar código neste projeto:
+1. SEMPRE consulte a documentação oficial da [biblioteca]
+2. Priorize os padrões listados acima
+3. Se tiver dúvida entre duas abordagens, pergunte
+4. Explique quando usar funcionalidades específicas da biblioteca
+
+## Tipo de projeto
+Projeto de display touchscreen com ESPHome, usando a biblioteca LVGL.
+
+## Hardware
+- Display: ESP32-3248S035
+- Resolução: 480x320
+- Plataforma: ESP32
+
+## Biblioteca
+- ESPHome: https://esphome.io/
+- LVGL: https://lvgl.io/

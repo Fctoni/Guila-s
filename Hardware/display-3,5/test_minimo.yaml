@@ -1,0 +1,44 @@
+# CONFIGURAÇÃO MÍNIMA PARA TESTE
+# Use este arquivo se o disp_3.5.yaml ainda der boot loop
+
+substitutions:
+  devicename: test-display-minimal
+
+esphome:
+  name: ${devicename}
+
+esp32:
+  board: esp32dev  # Compatível com XH-32S (ESP32 clássico)
+  framework:
+    type: arduino
+
+logger:
+
+api:
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: "Toniezzer"
+  password: "caroletoni"
+
+# Backlight básico
+output:
+  - platform: ledc
+    pin: GPIO2
+    id: backlight_pwm
+
+light:
+  - platform: monochromatic
+    output: backlight_pwm
+    name: "Backlight"
+    id: backlight
+    restore_mode: ALWAYS_ON
+
+# Status LED para debug
+status_led:
+  pin:
+    number: GPIO1
+    inverted: true
+

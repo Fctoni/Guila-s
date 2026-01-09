@@ -1,0 +1,215 @@
+## ESP32-3248S035C - Display 3.5" Touch Capacitivo ##
+## Arquivo de Teste: TERMOSTATO - Debug v3 ##
+
+substitutions:
+  devicename: termostato-piso
+  friendly_name: "Termostato Piso"
+
+esphome:
+  name: ${devicename}
+  platformio_options:
+    build_flags: "-DBOARD_HAS_PSRAM"
+    board_build.esp-idf.memory_type: qio_opi
+    board_build.flash_mode: dio
+    board_upload.maximum_ram_size: 524288
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+globals:
+  - id: target_temp
+    type: float
+    initial_value: '22.0'
+  - id: current_temp
+    type: float
+    initial_value: '20.5'
+  - id: is_heating
+    type: bool
+    initial_value: 'false'
+
+logger:
+
+api:
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: "Toniezzer"
+  password: "caroletoni"
+
+font:
+  - file:
+      type: gfonts
+      family: Roboto
+    id: roboto24
+    size: 24
+    bpp: 4
+    extras:
+      - file: "fonts/materialdesignicons-webfont.ttf"
+        glyphs: ["\U000F0141", "\U000F0142", "\U000F0238"]
+
+  - file: "fonts/materialdesignicons-webfont.ttf"
+    id: icons_40
+    size: 40
+    bpp: 4
+    glyphs: ["\U000F0238", "\U000F0142", "\U000F0419", "\U000F0415"]
+
+  - file:
+      type: gfonts
+      family: Roboto
+      weight: 700
+    id: roboto_huge
+    size: 90
+    bpp: 4
+  
+  - file: "gfonts://Roboto"
+    id: roboto_medium
+    size: 28
+    bpp: 4
+
+  - file: "gfonts://Roboto"
+    id: roboto_small
+    size: 20
+    bpp: 4
+
+image:
+  - file: "images/dashboard_480x320.jpg"
+    id: disp_bg
+    type: RGB565
+
+spi:
+  - id: tft
+    clk_pin: 14
+    mosi_pin: 13
+    miso_pin: 12
+
+i2c:
+  sda: GPIO33
+  scl: GPIO32
+  scan: true
+
+output:
+  - platform: ledc
+    pin: 27
+    frequency: 300
+    id: gpio_backlight_pwm
+
+light:
+  - platform: monochromatic
+    output: gpio_backlight_pwm
+    name: ${devicename} Display Backlight
+    id: back_light
+    restore_mode: ALWAYS_ON
+
+display:
+  - id: main_display
+    platform: ili9xxx
+    model: ST7796
+    spi_id: tft
+    cs_pin: 15
+    dc_pin: 2
+    invert_colors: false
+    update_interval: never
+    auto_clear_enabled: false
+    rotation: 270
+
+touchscreen:
+  - id: main_touchscreen
+    platform: gt911
+    reset_pin: GPIO25
+    address: 0x5D
+    display: main_display
+    transform:
+      swap_xy: true
+      mirror_x: true
+    on_release:
+      - if:
+          condition: lvgl.is_paused
+          then:
+            - lvgl.resume:
+            - lvgl.widget.redraw:
+            - light.turn_on: back_light
+
+lvgl:
+  pages:
+    - id: main_page
+      bg_color: 0x111827
+      widgets:
+        - label:
+            id: lv_label_0
+            x: 180
+            y: 10
+            width: 120
+            height: 30
+            text: "ESTILO 1: DIAL"
+            text_color: 0x888888
+            text_align: CENTER
+            text_opa: 100%
+            text_font: roboto_small
+
+        - tileview:
+            id: lv_tileview_6
+            x: 121
+            y: 45
+            width: 290
+            height: 250
+            bg_color: 0x1E293B
+            tiles:
+              - id: tile_0_0
+                row: 0
+                column: 0
+                widgets:
+                  - led:
+                      id: lv_led_7
+                      x: 4
+                      y: 9
+                      width: 40
+                      height: 40
+                      color: 0xFF0000
+                  - led:
+                      id: lv_led_9
+                      x: 49
+                      y: 9
+                      width: 40
+                      height: 40
+                      color: 0xFF0000
+                  - led:
+                      id: lv_led_8
+                      x: 95
+                      y: 9
+                      width: 40
+                      height: 40
+                      color: 0xFF0000
+                  - buttonmatrix:
+                      id: lv_buttonmatrix_10
+                      x: 31
+                      y: 75
+                      width: 210
+                      height: 150
+                      rows:
+                        - buttons:
+                          - id: btn_1
+                            text: "Btn 1"
+                          - id: btn_2
+                            text: "Btn 2"
+                          - id: btn_3
+                            text: "Btn 3"
+                        - buttons:
+                          - id: btn_4
+                            text: "Btn 4"
+                          - id: btn_5
+                            text: "Btn 5"
+                          - id: btn_6
+                            text: "Btn 6"
+              - id: tile_0_1
+                row: 0
+                column: 1
+              - id: tile_1_0
+                row: 1
+                column: 0
+              - id: tile_1_1
+                row: 1
+                column: 1

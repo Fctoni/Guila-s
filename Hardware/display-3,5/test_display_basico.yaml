@@ -1,0 +1,94 @@
+# TESTE BÁSICO - ESP32-3248S035C
+# Apenas display + touch para validar pinos
+
+substitutions:
+  devicename: test-esp32-3248s035c
+
+esphome:
+  name: ${devicename}
+
+# ESP32-S3 sem PSRAM para liberar GPIO32/33
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: ESP32S3
+  flash_size: 4MB
+  framework:
+    type: arduino
+
+logger:
+
+api:
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: "Toniezzer"
+  password: "caroletoni"
+
+# Dois barramentos SPI
+spi:
+  - id: tft
+    clk_pin: GPIO14
+    mosi_pin: GPIO13
+    miso_pin: GPIO12
+  - id: touch_spi
+    clk_pin: GPIO18
+    mosi_pin: GPIO23
+    miso_pin: GPIO19
+
+# Backlight
+output:
+  - platform: ledc
+    pin: GPIO27
+    id: backlight_pwm
+
+light:
+  - platform: monochromatic
+    output: backlight_pwm
+    name: "Backlight"
+    id: backlight
+    restore_mode: ALWAYS_ON
+
+# I2C para touch (GPIO32/33 precisam ser liberados)
+i2c:
+  sda: GPIO33
+  scl: GPIO32
+
+# Display ST7796
+display:
+  - platform: ili9xxx
+    model: ST7796
+    id: my_display
+    cs_pin: GPIO15
+    dc_pin: GPIO2
+    spi_id: tft
+    dimensions:
+      width: 480
+      height: 320
+    lambda: |-
+      it.print(240, 160, id(my_font), "Display OK!");
+
+# Touch GT911
+touchscreen:
+  - platform: gt911
+    id: my_touchscreen
+    interrupt_pin: GPIO21
+    reset_pin: GPIO25
+    on_touch:
+      - logger.log: "Touch detected!"
+
+# Fonte simples para teste
+font:
+  - file: "gfonts://Roboto"
+    id: my_font
+    size: 24
+
+
+
+
+
+
+
+
+

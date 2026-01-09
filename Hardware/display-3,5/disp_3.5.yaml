@@ -1,0 +1,4713 @@
+## ESP32-3248S035C - Display 3.5" Touch Capacitivo ##
+## Adaptado de disp_7.yaml (800x480) para 480x320 ##
+## Display: ST7796 SPI | Touch: GT911 I2C ##
+
+substitutions:
+  devicename: esp32-3248s035c
+
+  friendly_name: "Display 3.5 Capacitivo"
+  device_description: "ESP32-3248S035C 480x320"
+  menu: "\U000F035C"
+  menu_close: "\U000F0BAB"
+
+
+  lightbulb: "\U000F0335"
+  ceiling_light: "\U000F0769"
+  lamp: "\U000F06B5"
+  floor_lamp: "\U000F08DD"
+  string_lights: "\U000F12BA"
+  clock: "\U000F0150"
+  ceiling_fan: "\U000F1797"
+  light_recessed: "\U000F179B"
+  blinds_horizontal: "\U000F1A2B"
+  blinds_horizontal_closed: "\U000F1A2C"
+  curtains_closed: "\U000F1847"
+  curtains: "\U000F1846"
+  wallsconce: "\U000F091C"
+  bed: "\U000F02E3"
+  bed_empty: "\U000F08A0"
+  thermometer_high: "\U000F10C2"
+  humidity: "\U000F058E"
+  wallsconce_variant: "\U000F091E"
+  kiss: "\U000F0C73"
+  hvac: "\U000F0D43"
+  pump_icon: "\U000F058F"
+  homeicon: "\U000F02DC"
+  lefticon: "\U000F0141"
+  righticon: "\U000F0142"
+
+  #colocar aqui o nome de cada botão, seguido do nome da entity do HA de cada um
+  p1b1name: "Bancada"
+  p1b1entity: "light.bancada_2"  
+  p1b2name: "Central"
+  p1b2entity: "light.sala_central"
+  p1b3name: "Hall"
+  p1b3entity: "light.hall"
+  p1b4name: "Janelas"
+  p1b4entity: "light.janelas"
+  p1b5name: "Mesa"
+  p1b5entity: "light.mesa"
+  p1b6name: "Pedras"
+  p1b6entity: "light.pedras"
+  p1b7name: "Sacada"
+  p1b7entity: "light.sacada"
+  p1b8name: "Sanca 1"
+  p1b8entity: "light.sanca_sala"
+  p1b9name: "Sofa"
+  p1b9entity: "light.sofa"
+  p1b10name: "TV"
+  p1b10entity: "light.iluminacao_tv"
+  p2b1name: "A. Servico"
+  p2b1entity: "light.area_de_servico"
+  p2b2name: "Central"
+  p2b2entity: "light.cozinha_2"
+  p2b3name: "Fita LED"
+  p2b3entity: "light.fita_led_cozinha"
+  p2b4name: "Lav - Ex"
+  p2b4entity: "light.exaustor_lavabo"
+  p2b5name: "Lav - Luz"
+  p2b5entity: "light.luz_lavabo_3"
+  p2b6name: "Pia"
+  p2b6entity: "light.pia_2"
+  # p2b7name: "Sacada 2"
+  # p2b7entity: "light.sacada"
+  # p2b8name: "Sanca 1-2"
+  # p2b8entity: "light.sanca_sala"
+  # p2b9name: "Sanca 2-2"
+  # p2b9entity: "light.sanca2_2"
+  # p2b10name: "TV 2"
+  # p2b10entity: "light.iluminacao_tv"
+  p3b1name: "Computador"
+  p3b1entity: "light.corredor_computador"
+  p3b2name: "Corredor"
+  p3b2entity: "light.corredor_quartos"
+  p3b3name: "Sanca"
+  p3b3entity: "light.sanca_escritorio"
+  p3b4name: "Sapateiro"
+  p3b4entity: "light.sapateiro"
+  # p3b5name: "Escritorio 5"
+  # p3b5entity: "light.escritorio_5"
+  # p3b6name: "Escritorio 6"
+  # p3b6entity: "light.escritorio_6"
+  # p3b7name: "Escritorio 7"
+  # p3b7entity: "light.escritorio_7"
+  # p3b8name: "Escritorio 8"
+  # p3b8entity: "light.escritorio_8"
+  # p3b9name: "Escritorio 9"
+  # p3b9entity: "light.escritorio_9"
+  # p3b10name: "Escritorio 10"
+  # p3b10entity: "light.escritorio_10"  
+  p4b1name: "Cabeceira"
+  p4b1entity: "light.fita_led_cabeceira"
+  p4b2name: "Central"
+  p4b2entity: "light.quarto_central"
+  p4b3name: "Closet"
+  p4b3entity: "light.closet"
+  p4b4name: "Dicroica"
+  p4b4entity: "light.Dicroica"
+  p4b5name: "Pend. Carol"
+  p4b5entity: "light.pendente_carol"
+  p4b6name: "Pend. Toni"
+  p4b6entity: "light.pendente_toni"
+  #p4b7name: ""
+  #p4b7entity: ""
+  p4b8name: "Box"
+  p4b8entity: "light.banheiro_box"
+  p4b9name: "Pia"
+  p4b9entity: "light.pia_banheiro"
+  p4b10name: "Vento Kit"
+  p4b10entity: "light.vento_kit"
+  p5b1name: "Cabeceira"
+  p5b1entity: "light.cabeceira_quarto_2" 
+  p5b2name: "Central"
+  p5b2entity: "light.quarto_2_central_4"
+  p5b8name: "Box"
+  p5b8entity: "light.banheiro_social_box"
+  p5b9name: "Central"
+  p5b9entity: "light.banheiro_social_central"
+  p5b15name: "Central"
+  p5b15entity: "light.quarto3_central"
+  p5b16name: "Dicroica"
+  p5b16entity: "light.quarto3_auxiliar"  
+
+  #climatização
+
+  p1ac: climate.ar_sala
+  p3ac: climate.ar_quarto3
+  p4ac: climate.ar_quarto
+  p6ac: climate.ar_quarto_davi_quarto_2  
+
+
+esphome:
+  name: ${devicename}
+
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: ESP32S3
+  flash_size: 4MB
+  framework:
+    type: arduino
+
+logger:
+
+api:
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: "Toniezzer"
+  password: "caroletoni"
+
+
+
+
+font:
+
+
+  - file:
+      type: gfonts
+      family: Roboto
+    id: roboto24
+    size: 24
+    bpp: 4
+    extras:
+      - file: "fonts/materialdesignicons-webfont.ttf" # http://materialdesignicons.com/cdn/7.4.47/
+        glyphs: [
+            "\U000F171D", # fan-auto   
+            "\U000F1472", # mdi-fan-speed-1
+            "\U000F1473", # mdi-fan-speed-2
+            "\U000F1474", # mdi-fan-speed-3        
+            "\U000F004B",
+            "\U000F006E",
+            "\U000F012C",
+            "\U000F179B",
+            "\U000F0748",
+            "\U000F1A1B",
+            "\U000F02DC",
+            "\U000F0A02",
+            "\U000F035F",
+            "\U000F0156",
+            "\U000F0C5F",
+            "\U000f0084",
+            "\U000f0091",
+            "\U000F058E",
+            "\U000F10C3",
+            "\U000F03F0", # mdi-percent
+            "\U000F0504", # mdi- celcius
+            "\U000F091E",
+            "\U000F0140", # mdi-arrow_down
+            "\U000F0141", # mdi-arrow_left
+            "\U000F0142", # mdi-arrow_right
+            "\U000F0143", # mdi-arrow_up
+            "\U000F0238", # mdi-fire
+            "\U000F0717", # mdi-snowflake   
+            "\U000F159E", # mdi-hvac-off
+            "\U000F035C", # mdi-menu
+            "\U000F0BAB", # mdi-menu-close    
+            "\U000F0E4F", # mdi-lightbulb-off               
+
+          ]
+  - file: "fonts/materialdesignicons-webfont.ttf" # http://materialdesignicons.com/cdn/7.4.47/
+    id: weather70
+    size: 70
+    bpp: 4
+    glyphs: &mdi-weather-glyphs
+      - "\U000F0590" # mdi-weather-cloudy
+      - "\U000F0F2F" # mdi-weather-cloudy-alert
+      - "\U000F0E6E" # mdi-weather-cloudy-arrow-right
+      - "\U000F0591" # mdi-weather-fog
+      - "\U000F0592" # mdi-weather-hail
+      - "\U000F0F30" # mdi-weather-hazy
+      - "\U000F0898" # mdi-weather-hurricane
+      - "\U000F0593" # mdi-weather-lightning
+      - "\U000F067E" # mdi-weather-lightning-rainy
+      - "\U000F0594" # mdi-weather-clear-night
+      - "\U000F0F31" # mdi-weather-night-partly-cloudy
+      - "\U000F0595" # mdi-weather-partly-cloudy
+      - "\U000F0F32" # mdi-weather-partly-lightning
+      - "\U000F0F33" # mdi-weather-partly-rainy
+      - "\U000F0F34" # mdi-weather-partly-snowy
+      - "\U000F0F35" # mdi-weather-partly-snowy-rainy
+      - "\U000F0596" # mdi-weather-pouring
+      - "\U000F0597" # mdi-weather-rainy
+      - "\U000F0598" # mdi-weather-snowy
+      - "\U000F0F36" # mdi-weather-snowy-heavy
+      - "\U000F067F" # mdi-weather-snowy-rainy
+      - "\U000F0599" # mdi-weather-sunny
+      - "\U000F0F37" # mdi-weather-sunny-alert
+      - "\U000F14E4" # mdi-weather-sunny-off
+      - "\U000F059A" # mdi-weather-sunset
+      - "\U000F059B" # mdi-weather-sunset-down
+      - "\U000F059C" # mdi-weather-sunset-up
+      - "\U000F0F38" # mdi-weather-tornado
+      - "\U000F059D" # mdi-weather-windy
+      - "\U000F059E" # mdi-weather-windy-variant
+
+  - file: "fonts/materialdesignicons-webfont.ttf" # http://materialdesignicons.com/cdn/7.4.47/
+    id: light32
+    size: 32
+    bpp: 4
+    glyphs: [
+        "\U000F0335", # mdi-lightbulb
+        "\U000F0769", # mdi-ceiling-light
+        "\U000F08DD", # mdi-floor-lamp
+        "\U000F12BA", # mdi-string-lights
+        "\U000F0150", # mdi-clock
+        "\U000F1797", # mdi-ceiling_fan
+        "\U000F179B", # mdi-light_recessed
+        "\U000F1A2B", # mdi-blinds_horizontal
+        "\U000F1A2C", # mdi-blinds_horizontal_closed
+        "\U000F1847", # mdi-curtains_closed
+        "\U000F1846", # mdi-curtains
+        "\U000F091C", # mdi-wallsconce
+        "\U000F02E3", # mdi-bed
+        "\U000F08A0", # mdi-bed_empty
+        "\U000F10C2", # mdi-thermometer_high
+        "\U000F058E", # mdi-humidity
+        "\U000F091E", # mdi-wallsconce_variant
+        "\U000F0C73", # mdi-kiss
+        "\U000F0D43", # mdi- hvac
+        "\U000F058F", # mdi-water_pump
+      ]
+
+  - file: "fonts/materialdesignicons-webfont.ttf" # http://materialdesignicons.com/cdn/7.4.47/
+    id: light64
+    size: 64
+    bpp: 4
+    glyphs: [
+        "\U000F0335", # mdi-lightbulb
+        "\U000F0769", # mdi-ceiling-light
+        "\U000F08DD", # mdi-floor-lamp
+        "\U000F12BA", # mdi-string-lights
+        "\U000F0150", # mdi-clock
+        "\U000F1797", # mdi-ceiling_fan
+        "\U000F179B", # mdi-light_recessed
+        "\U000F1A2B", # mdi-blinds_horizontal
+        "\U000F1A2C", # mdi-blinds_horizontal_closed
+        "\U000F1847", # mdi-curtains_closed
+        "\U000F1846", # mdi-curtains
+        "\U000F091C", # mdi-wallsconce
+        "\U000F02E3", # mdi-bed
+        "\U000F08A0", # mdi-bed_empty
+        "\U000F10C2", # mdi-thermometer_high
+        "\U000F058E", # mdi-humidity
+        "\U000F091E", # mdi-wallsconce_variant
+        "\U000F0C73", # mdi-kiss
+        "\U000F0D43", # mdi- hvac
+        "\U000F058F", # mdi-water_pump
+        "\U000F0238", # mdi-fire
+        "\U000F0717", # mdi-snowflake
+        "\U000F159E", # mdi-hvac-off        
+      ]
+
+
+  - file: "gfonts://Roboto"
+    id: roboto10
+    size: 10
+    bpp: 4
+
+  - file: "gfonts://Roboto"
+    id: roboto22
+    size: 22
+    bpp: 4
+
+  - file:
+      type: gfonts
+      family: Roboto
+      weight: 900
+    id: roboto90
+    size: 90
+    bpp: 4
+
+  - file:
+      type: gfonts
+      family: Roboto
+      weight: 900
+    id: roboto55bold
+    bpp: 4
+    size: 55
+
+  - file: "gfonts://Roboto"
+    id: roboto23
+    size: 22
+    extras:
+      - file: "fonts/materialdesignicons-webfont.ttf" # http://materialdesignicons.com/cdn/7.4.47/
+        glyphs: [
+            "\U000F004B",
+            "\U000F006E",
+            "\U000F012C",
+            "\U000F179B",
+            "\U000F0748",
+            "\U000F1A1B",
+            "\U000F02DC",
+            "\U000F0A02",
+            "\U000F035F",
+            "\U000F0156",
+            "\U000F0C5F",
+            "\U000f0084",
+            "\U000f0091",
+            "\U000F058E",
+            "\U000F10C3",
+            "\U000F03F0", # mdi-percent
+            "\U000F0504", # mdi- celcius
+            "\U000F091E",
+            "\U000F0140", # mdi-arrow_down
+            "\U000F0141", # mdi-arrow_left
+            "\U000F0142", # mdi-arrow_right
+            "\U000F0143", # mdi-arrow_up
+            "\U000F035C", # mdi-menu
+            "\U000F0BAB", # mdi-menu-close
+          ]
+
+  - file:
+      type: gfonts
+      family: Roboto
+      weight: 900
+    id: roboto40bold
+    size: 40
+    extras:
+      - file: "fonts/materialdesignicons-webfont.ttf" # http://materialdesignicons.com/cdn/7.4.47/
+        glyphs: [
+            "\U000F09C2",   #RIGHT ARROW        
+            "\U000F004B",
+            "\U000F006E",
+            "\U000F012C",
+            "\U000F179B",
+            "\U000F0748",
+            "\U000F1A1B",
+            "\U000F02DC",
+            "\U000F0A02",
+            "\U000F035F",
+            "\U000F0156",
+            "\U000F0C5F",
+            "\U000f0084",
+            "\U000f0091",
+            "\U000F058E",
+            "\U000F10C3",
+            "\U000F03F0", # mdi-percent
+            "\U000F0504", # mdi- celcius
+            "\U000F091E",
+            "\U000F0140", # mdi-arrow_down
+            "\U000F0141", # mdi-arrow_left
+            "\U000F0142", # mdi-arrow_right
+            "\U000F0143", # mdi-arrow_up
+          ]    
+
+  - file: "gfonts://Roboto"
+    bpp: 4
+    id: roboto40
+    size: 40
+
+  - file:
+      type: gfonts
+      family: Roboto
+      weight: 900
+    id: roboto30bold
+    bpp: 4
+    size: 30
+
+  - file: "gfonts://Roboto"
+    id: roboto30
+    bpp: 4
+    size: 30
+
+image:
+  - file: "images/dashboard_480x320.jpg"
+    id: disp_bg
+    resize: 480x320
+    type: RGB565
+
+# Dois barramentos SPI separados
+spi:
+  - id: tft
+    clk_pin: GPIO14
+    mosi_pin: GPIO13
+    miso_pin: GPIO12
+ # - id: touch_spi
+ #   clk_pin: GPIO18
+ #   mosi_pin: GPIO23
+ #   miso_pin: GPIO19
+
+# I2C para touch GT911 (GPIO32/33 funcionam sem PSRAM)
+i2c:
+  sda: GPIO33
+  scl: GPIO32
+  scan: true
+
+# Backlight PWM
+output:
+  - platform: ledc
+    pin: GPIO27
+    frequency: 300
+    id: gpio_backlight_pwm
+
+light:
+  - platform: monochromatic
+    output: gpio_backlight_pwm
+    name: ${devicename} Display Backlight
+    id: back_light
+    restore_mode: ALWAYS_ON
+
+# Touch GT911 capacitivo via I2C
+touchscreen:
+  - platform: gt911
+    id: my_touchscreen
+    interrupt_pin: GPIO21
+    reset_pin: GPIO25
+    display: main_display
+    
+    on_release:
+      - if:
+          condition: lvgl.is_paused
+          then:
+            - logger.log: "LVGL resuming"
+            - lvgl.resume:
+            - lvgl.widget.redraw:
+            - light.turn_on: back_light    
+
+# Display ST7796 via SPI
+display:
+  - platform: ili9xxx
+    model: ST7796
+    id: main_display
+    spi_id: tft
+    cs_pin: GPIO15
+    dc_pin: GPIO2
+    rotation: 0
+    dimensions:
+      width: 480
+      height: 320
+    invert_colors: false
+    update_interval: never
+    auto_clear_enabled: false
+
+lvgl:
+  on_idle: ## desliga a tela após o tempo definido na variável display_timeout
+    timeout: !lambda "return (id(display_timeout).state * 1000);"
+    then:
+      - logger.log: "LVGL is idle"
+      - light.turn_off: back_light
+      - lvgl.pause:
+  color_depth: 16
+  disp_bg_image: disp_bg
+  #page_wrap: true
+  bg_opa: TRANSP
+  style_definitions:
+    - id: style_line
+      line_color: 0x0000FF
+      line_width: 8
+      line_rounded: true
+    - id: date_style
+      text_font: roboto24
+      align: center
+      text_color: 0x333333
+      bg_opa: cover
+      radius: 4
+      pad_all: 2
+    - id: header_footer
+      bg_color: 0x1b1b1b
+      bg_grad_color: 0x1b1b1b
+      bg_grad_dir: VER
+      bg_opa: COVER
+      border_width: 0
+      radius: 0
+      pad_all: 0
+      pad_row: 0
+      pad_column: 0
+      border_color: 0x0077b3
+      text_color: 0xFFFFFF
+      width: 100%
+      height: 40
+    - id: light_button
+      bg_color: 0x000000
+      bg_opa: 30%
+      border_width: 0
+      radius: 10
+      pad_all: 0
+      border_color: 0x0077b3
+      text_color: 0x0064FF
+    - id: light_button_checked
+      bg_color: 0x000000
+      bg_opa: 30%
+      border_width: 0
+      pad_all: 0
+      border_color: 0x0077b3
+      #text_color: 0x00FF64 #LIGHT GREEN
+      text_color: 0xFFFF00
+      radius: 10
+  theme:
+    buttonmatrix:
+      bg_opa: TRANSP
+      # border_color: 0x0077b3
+      # border_width: 0
+      text_color: 0xFFFFFF
+      pad_all: 0
+      items: # set all your buttonmatrix buttons to use your custom defined styles and font
+        bg_color: 0x1b1b1b
+        bg_grad_color: 0x1b1b1b
+        bg_grad_dir: VER
+        bg_opa: COVER
+        # border_color: 0x0077b3
+        # border_width: 1
+        text_color: 0xFFFFFF
+        text_font: roboto24
+        pressed:
+          #bg_color: 0xFF6700
+          #bg_grad_color: 0x03324A
+          text_color: 0x00FF00
+        checked:
+          #bg_color: 0xFF6700
+          #bg_grad_color: 0x03324A
+          text_color: 0x00FF00
+    button:
+      text_font: roboto24
+      scroll_on_focus: true
+      radius: 10
+      width: 100
+      height: 100
+      pad_left: 10px
+      pad_top: 10px
+      pad_bottom: 10px
+      pad_right: 10px
+      shadow_width: 0
+      bg_color: 0x000000
+      border_width: 3
+      border_color: white
+      border_side: ['TOP', 'BOTTOM', 'LEFT', 'RIGHT']
+      text_color: text_color
+      checked:
+        #bg_color: 0xCC5E14   # Orange
+        # bg_color: green   # Green
+        # bg_color: 0x026a6e    # Dark Green
+        #bg_color: 0x0000FF   # Blue
+        #bg_color: 0x3792CB   # Blue
+        text_color: 0xFFFFFF
+    obj:
+      scrollable: false
+      bg_color: 0x000000
+      border_width: 3
+      border_color: white
+      scrollbar_mode: "OFF"      
+    label:
+      scrollable: false
+      scrollbar_mode: "OFF"
+
+  top_layer:
+    scrollable: false
+    widgets:
+      - buttonmatrix:
+          align: bottom_mid
+          styles: header_footer
+          pad_all: 0
+          outline_width: 0
+          id: top_layer
+          items:
+            styles: header_footer
+          rows:
+            - buttons:
+                - id: page_prev
+                  text: $lefticon
+                  on_press:
+                    then:
+                      - lvgl.page.previous:
+                          animation: OUT_RIGHT
+                          time: 10ms
+                - id: page_home
+                  text: $homeicon
+                  on_press:
+                    then:
+                      lvgl.page.show: main_page
+                - id: page_next
+                  text: $righticon
+                  on_press:
+                    then:
+                      - lvgl.page.next:
+                          animation: OUT_LEFT
+                          time: 20ms
+      - obj: ##relógio
+          scrollable: false
+          id: lv_clock_obj
+          width: 100
+          height: 55
+          align: top_right
+          widgets:
+            - label: ##relógio
+                scrollable: false
+                text_font: roboto23
+                text: "00:00"
+                id: display_time
+                align: center
+                #text_align: center
+                text_color: 0xFFFFFF
+      - button: ## botão menu cômodos
+          id: menu_comodos
+          checkable: true
+          bg_opa: 0%
+          border_opa: 0%
+          checked:
+            bg_opa: 0%
+          x: 0
+          y: 92%
+          width: 100
+          height: 40
+          on_click:
+            then:
+              - if:
+                  condition:
+                    lambda: 'return x;' # checked
+                  then:
+                    - lvgl.widget.update:
+                        id: popup_menu_comodos
+                        hidden: false
+                  else:
+                    - lvgl.widget.update:
+                        id: popup_menu_comodos
+                        hidden: true
+          on_value:
+            then:
+              - if:
+                  condition:
+                    lambda: 'return x;' # checked
+                  then:
+                    - lvgl.label.update:
+                        id: menu_comodos_label
+                        text: $menu_close
+                  else:
+                    - lvgl.label.update:
+                        id: menu_comodos_label
+                        text: $menu
+          widgets:
+            - label:
+                align: center
+                id: menu_comodos_label
+                text: $menu
+                text_align: 'CENTER'
+                text_font: roboto24
+                text_color: 0xFFFFFF
+                #styles: header_footer
+      - button: ## botão desliga tudo
+          bg_opa: 0%
+          border_opa: 0%
+          checked:
+            bg_opa: 0%
+          x: 90%
+          y: 92%
+          width: 100
+          height: 40
+          on_click:
+            then:
+              - homeassistant.service:
+                  service: light.turn_off
+                  data:
+                    entity_id: light.grupo_desliga_tudo  
+              - delay: 1s     
+              - homeassistant.service:
+                  service: light.turn_off
+                  data:
+                    entity_id: light.grupo_desliga_tudo  
+              - delay: 1s       
+              - homeassistant.service:
+                  service: light.turn_off
+                  data:
+                    entity_id: light.grupo_desliga_tudo      
+              - delay: 1s       
+              - homeassistant.service:
+                  service: light.turn_off
+                  data:
+                    entity_id: light.grupo_desliga_tudo    
+              - delay: 1s       
+              - homeassistant.service:
+                  service: light.turn_off
+                  data:
+                    entity_id: light.grupo_desliga_tudo    
+              - delay: 1s       
+              - homeassistant.service:
+                  service: light.turn_off
+                  data:
+                    entity_id: light.grupo_desliga_tudo                                                                                          
+
+          widgets:
+            - label:
+                align: center
+                text: "\U000F0E4F"
+                text_align: 'CENTER'
+                text_font: roboto24
+                text_color: 0x8f2803
+                #styles: header_footer
+
+
+
+
+
+      - obj: # Popup container - Menu cômodos
+          hidden: true
+          align: bottom_left
+          width: 25%
+          height: size_content
+          border_opa: 0%                
+
+          id: popup_menu_comodos            
+          x: -10
+          y: -48  
+          #y: 250
+          #id: ac_popup_container_comodos   
+          bg_color: 0x000000
+          bg_opa: 95%  
+          border_color: 0xFFFFFF
+          border_width: 3
+          radius: 15    
+          layout: # enable the FLEX layout for the children widgets
+            type: FLEX
+            flex_flow: column # the order of the widgets starts top left
+            flex_align_cross: CENTER # they sould be centered  
+            flex_align_main: SPACE_EVENLY # distribute buttons evenly 
+            flex_align_track: CENTER
+          widgets:
+            - button: ## botão menu 'SALA'
+                width: 150
+                height: 40
+                border_width: 3
+                border_color: 0xFFFFFF
+                bg_opa: 40%
+                on_click:
+                    then:
+                      - script.execute: update_menu_comodos
+                      - lvgl.page.show: main_page   
+      
+                widgets:
+                  - label: ## menu 'SALA'
+                      text: "SALA"
+                      text_font: roboto22
+                      align: center
+                      text_color: 0xFFFFFF
+            - button: ## botão menu 'COZINHA'
+                width: 150                
+                height: 40                
+                border_width: 3
+                border_color: 0xFFFFFF
+                bg_opa: 40%
+                on_click:
+                    then:
+                      - script.execute: update_menu_comodos
+                      - lvgl.page.show: second_page           
+
+                widgets:
+                  - label: ## menu 'COZINHA'
+                      text: "COZINHA"
+                      text_font: roboto22
+                      align: center
+                      text_color: 0xFFFFFF
+            - button: ## botão 'menu escritório'
+                width: 150                
+                height: 40                
+                border_width: 3
+                border_color: 0xFFFFFF
+                bg_opa: 40%
+                on_click:
+                      then:
+                        - script.execute: update_menu_comodos
+                        - lvgl.page.show: third_page                
+
+                widgets:
+                  - label: ## menu 'ESCRITÓRIO'
+                      text: "ESCRITORIO"
+                      text_font: roboto22
+                      align: center
+                      text_color: 0xFFFFFF
+            - button: ## botão 'menu suite'
+                width: 150                
+                height: 40                
+                border_width: 3
+                border_color: 0xFFFFFF
+                bg_opa: 40%
+                on_click:
+                      then:
+                        - script.execute: update_menu_comodos
+                        - lvgl.page.show: fourth_page                
+
+                widgets:
+                  - label: ## menu 'SUITE'
+                      text: "SUITE"
+                      text_font: roboto22
+                      align: center
+                      text_color: 0xFFFFFF
+            - button: ## botão 'menu quartos'
+                width: 150                
+                height: 40                
+                border_width: 3
+                border_color: 0xFFFFFF
+                bg_opa: 40%
+                on_click:
+                      then:
+                        - script.execute: update_menu_comodos
+                        - lvgl.page.show: fifth_page                
+
+                widgets:
+                  - label: ## menu 'QUARTOS'
+                      text: "QUARTOS"
+                      text_font: roboto22
+                      align: center
+                      text_color: 0xFFFFFF
+            - button: ## botão menu 'desliga tudo'
+                width: 150                
+                height: 40                
+                border_width: 3
+                border_color: 0xFF0000
+                bg_opa: 40%
+                # on_click:
+                #       then:
+                #         - script.execute: update_menu_comodos
+                #         - lvgl.page.show: third_page                
+
+                widgets:
+                  - label: ## desliga tudo'
+                      text: "Desliga Tudo"
+                      text_font: roboto22
+                      align: center
+                      text_color: 0xFFFFFF
+
+
+  pages:
+    - id: main_page ## SALA
+      width: 100%
+      height: 90%
+      widgets:
+        - obj: ##temperatura medida-sala
+            scrollable: false
+            width: 100
+            height: 55
+            align: top_left
+            widgets:
+              - label: ##temperatura medida sala (id temp_text2)
+                  scrollable: false
+                  text_font: roboto23
+                  text: "--.-"
+                  id: temp_text2
+                  align: center
+                  text_align: 'CENTER'
+                  text_color: 0xFFFFFF 
+        - obj: ##título-sala
+            scrollable: false        
+            #checkable: true
+            width: 300
+            height: 55
+            align: top_mid
+            widgets:
+              - label: ##título-sala
+                  text_font: roboto23
+                  text: "SALA"
+                  align: center
+                  text_color: 0xFFFFFF
+        - button: ## botão para acionar p1b1
+            x: 30
+            y: 80
+            checkable: true
+            id: lv_p1b1
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p1b1_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p1b1name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p1b1_text                
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p1b1entity
+        - button: ## botão para acionar p1b2
+            x: 140
+            y: 80
+            checkable: true
+            id: lv_p1b2
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p1b2_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p1b2name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p1b2entity
+        - button: ## botão para acionar p1b3
+            x: 250
+            y: 80
+            checkable: true
+            id: lv_p1b3
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p1b3_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p1b3name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p1b3entity
+        - button: ## botão para acionar p1b4
+            x: 360
+            y: 80
+            checkable: true
+            id: lv_p1b4
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p1b4_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p1b4name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p1b4entity
+        - button: ## botão para acionar p1b5
+            x: 470
+            y: 80
+            checkable: true
+            id: lv_p1b5
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p1b5_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p1b5name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p1b5entity
+        - button: ## botão para acionar p1b6
+            x: 580
+            y: 80
+            checkable: true
+            id: lv_p1b6
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p1b6_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p1b6name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p1b6entity
+        - button: ## botão para acionar p1b7
+            x: 690
+            y: 80
+            checkable: true
+            id: lv_p1b7
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p1b7_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p1b7name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p1b7entity
+        - button: ## botão para acionar p1b8
+            x: 30
+            y: 190
+            checkable: true
+            id: lv_p1b8
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p1b8_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p1b8name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p1b8entity
+        - button: ## botão para acionar p1b9
+            x: 140
+            y: 190
+            checkable: true
+            id: lv_p1b9
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p1b9_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p1b9name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p1b9entity
+        - button: ## botão para acionar p1b10
+            x: 250
+            y: 190
+            checkable: true
+            id: lv_p1b10
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p1b10_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p1b10name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p1b10entity
+              - homeassistant.service:
+                  service: switch.toggle
+                  data:
+                    entity_id: switch.water_pump_switch_1
+        - obj: ## botão do ar condicionado
+            x: 690
+            y: 300
+            radius: 10
+            styles: light_button
+            checkable: true
+            id: botao_ac_sala
+            width: 100
+            height: 100
+            widgets:
+              - label: ##temperatura medida sala (id temp_text)
+                  text_font: roboto23
+                  text: "--.-"
+                  id: ac_p1ac1label
+                  align: top_mid
+                  text_align: 'CENTER'
+                  text_color: 0xFFFFFF
+              - label: ##texto A/C
+                  text_font: roboto22
+                  text: "A/C"
+                  align: bottom_mid
+                  text_align: 'CENTER'
+                  text_color: 0x00FFFF
+              - label: ##símbolo HVAC
+                  text_font: light64
+                  align: center
+                  text: "\U000F0D43"  # HVAC icon
+                  text_color: 0x00FFFF
+                  id: p1_ac_icon
+            on_long_press:
+              - homeassistant.service:
+                  service: climate.toggle
+                  data:
+                    entity_id: $p1ac
+            # on_short_click:    
+            #   - lvgl.widget.update: 
+            #       id: ac_popup_container
+            #       hidden: false
+        - obj: # popup ar condicionado - sala
+            id: ac_popup_container
+            hidden: true
+            width: 500
+            height: 300
+            align: center
+            bg_color: 0x000000
+            bg_opa: 90%  # Semi-transparent background  
+            border_color: 0xFFFFFF
+            border_width: 3
+            radius: 15
+            widgets:
+              - label: ## Título
+                  align: top_mid
+                  text: "AR SALA"
+                  text_font: roboto30bold
+                  text_color: 0xFFFFFF
+              - button: ## Botão de fechar
+                  id: p1ac_close_btn
+                  width: 40
+                  height: 40
+                  radius: 20
+                  x: 420
+                  y: 15
+                  bg_color: 0xFF0000
+                  bg_opa: 50%
+                  widgets:
+                    - label:
+                        text: "X"
+                        text_font: roboto24
+                        align: center
+                        text_color: 0xFFFFFF
+                  on_click:
+                    - lvgl.widget.update: 
+                        id: ac_popup_container
+                        hidden: true
+              - obj: # Temperatura medida e desejada
+                  align: top_mid
+                  border_width: 0
+                  bg_opa: 000%
+                  bg_color: 0x000000
+                  height: 100
+                  width: 300
+                  y: 60
+                  layout: # enable the FLEX layout for the children widgets
+                    type: FLEX
+                    flex_flow: row # the order of the widgets starts top left
+                    flex_align_cross: CENTER # they sould be centered  
+                    flex_align_main: SPACE_EVENLY # distribute buttons evenly
+                  widgets: ## temperatura medida e desejada
+                    # - label: ## Temperatura medida
+                    #     id: temp_text2
+                    #     text: "--°C"
+                    #     text_font: roboto40bold
+                    #     text_color: 0xFFFFFF
+                    # - label: ## FLECHA
+                    #     text: " \U000F09C2 "
+                    #     text_font: roboto40bold
+                    #     text_color: 0xFFFFFF                      
+                    - label:  ## Temperatura desejada 
+                        text: "--.-"
+                        id: ac_p1ac1poplabel
+                        text_font: roboto40bold
+                        text_color: 0xFFFFFF
+              - obj: # Botões de modo e aumentar e diminuir temperatura
+                  align: top_mid
+                  border_width: 0
+                  bg_opa: 000%
+                  bg_color: 0x000000
+                  height: 70
+                  width: 300
+                  y: 130
+                  layout: # enable the FLEX layout for the children widgets
+                    type: FLEX
+                    flex_flow: row # the order of the widgets starts top left
+                    flex_align_cross: CENTER # they sould be centered  
+                    flex_align_main: SPACE_EVENLY # distribute buttons evenly
+                  widgets: ## Botões de aumentar e diminuir temperatura
+                    - button: ## off button
+                        id: p1_mode_off_btn
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F159E" # mdi-hvac-off
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_hvac_mode
+                              data:
+                                entity_id: $p1ac
+                                hvac_mode: "off"
+                    - button: ## cool button
+                        id: p1_mode_cool_btn
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F0717" # mdi-snowflake   
+                              text_font: roboto24
+                              align: center
+                              text_color: 0x0000FF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_hvac_mode
+                              data:
+                                entity_id: $p1ac
+                                hvac_mode: "cool"
+                    - button: ## heat button
+                        id: p1_mode_heat_btn 
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F0238" # mdi-fire
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFF0000
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_hvac_mode
+                              data:
+                                entity_id: $p1ac
+                                hvac_mode: "heat"
+
+                    - button: ## botão reduz temperatura
+                        id: temp_down_btn
+                        width: 40
+                        height: 40
+                        radius: 20
+                        bg_color: 0x1b1b1b
+                        widgets:
+                          - label:
+                              text: "-"
+                              text_font: roboto30bold
+                              align: center
+                              text_color: 0xFFFFFF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_temperature
+                              data:
+                                entity_id: $p1ac
+                                temperature: !lambda |-
+                                  return id(p1ac_target_temp).state - 1;
+                    - button: ## botão aumenta temperatura
+                        id: temp_up_btn
+                        width: 40
+                        height: 40
+                        radius: 20
+                        bg_color: 0x1b1b1b
+                        widgets:
+                          - label:
+                              text: "+"
+                              text_font: roboto30bold
+                              align: center
+                              text_color: 0xFFFFFF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_temperature
+                              data:
+                                entity_id: $p1ac
+                                temperature: !lambda |-
+                                  return id(p1ac_target_temp).state + 1;
+              - obj: # Botões de fan (velocidade)
+                  align: top_mid
+                  border_width: 0
+                  bg_opa: 000%
+                  bg_color: 0x000000
+                  height: 70
+                  width: 250
+                  y: 200
+                  layout: # enable the FLEX layout for the children widgets
+                    type: FLEX
+                    flex_flow: row # the order of the widgets starts top left
+                    flex_align_cross: CENTER # they sould be centered  
+                    flex_align_main: SPACE_EVENLY # distribute buttons evenly
+                  widgets: ## botões de fan
+                    - button: ## off button
+                        id: p1_fan_auto_btn
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F171D" # mdi-fan-off
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_fan_mode
+                              data:
+                                entity_id: $p1ac
+                                fan_mode: "auto"
+                    - button: ## low button
+                        id: p1_fan_low_btn
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F1472" # mdi-fan-speed-1
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF    
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_fan_mode
+                              data:
+                                entity_id: $p1ac
+                                fan_mode: "low"                                              
+                    - button: ## med button
+                        id: p1_fan_med_btn 
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F1473" # mdi-fan-speed-2
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF      
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_fan_mode
+                              data:
+                                entity_id: $p1ac
+                                fan_mode: "med"                               
+
+                    - button: ## fan_high_button
+                        id: p1_fan_high_btn
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F1474" # mdi-fan-speed-3
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF    
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_fan_mode
+                              data:
+                                entity_id: $p1ac
+                                fan_mode: "high"
+    - id: second_page ## COZINHA
+      width: 100%
+      height: 90%
+      widgets:
+        - obj: ##título-tela2
+            checkable: true
+            scrollable: false               
+            width: 300
+            height: 55
+            align: top_mid
+            widgets:
+              - label: ##título-sala
+                  text_font: roboto23
+                  text: "COZINHA"
+                  align: center
+                  text_color: 0xFFFFFF
+        - button: ## botão para acionar p2b1
+            x: 30
+            y: 80
+            checkable: true
+            id: lv_p2b1
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p2b1_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p2b1name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p2b1_text                
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p2b1entity
+        - button: ## botão para acionar p2b2
+            x: 140
+            y: 80
+            checkable: true
+            id: lv_p2b2
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p2b2_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p2b2name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p2b2entity
+        - button: ## botão para acionar p2b3
+            x: 250
+            y: 80
+            checkable: true
+            id: lv_p2b3
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p2b3_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p2b3name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p2b3entity
+        - button: ## botão para acionar p2b4
+            x: 360
+            y: 80
+            checkable: true
+            id: lv_p2b4
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p2b4_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p2b4name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p2b4entity
+        - button: ## botão para acionar p2b5
+            x: 470
+            y: 80
+            checkable: true
+            id: lv_p2b5
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p2b5_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p2b5name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p2b5entity
+        - button: ## botão para acionar p2b6
+            x: 580
+            y: 80
+            checkable: true
+            id: lv_p2b6
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p2b6_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p2b6name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p2b6entity
+        # - button: ## botão para acionar p2b7
+        #     x: 690
+        #     y: 80
+        #     checkable: true
+        #     id: lv_p2b7
+        #     styles: light_button
+        #     checked:
+        #       styles: light_button_checked
+        #     widgets:
+        #       - label:
+        #           text_font: light64
+        #           align: top_mid
+        #           text: $lightbulb
+        #           id: lv_p2b7_icon
+        #       - label:
+        #           text_font: roboto22
+        #           align: bottom_mid
+        #           text: $p2b7name
+        #           long_mode: dot
+        #           text_color: 0xFFFFFF
+        #     on_click:
+        #       - homeassistant.service:
+        #           service: light.toggle
+        #           data:
+        #             entity_id: $p2b7entity
+        # - button: ## botão para acionar p2b8
+        #     x: 30
+        #     y: 190
+        #     checkable: true
+        #     id: lv_p2b8
+        #     styles: light_button
+        #     checked:
+        #       styles: light_button_checked
+        #     widgets:
+        #       - label:
+        #           text_font: light64
+        #           align: top_mid
+        #           text: $lightbulb
+        #           id: lv_p2b8_icon
+        #       - label:
+        #           text_font: roboto22
+        #           align: bottom_mid
+        #           text: $p2b8name
+        #           long_mode: dot
+        #           text_color: 0xFFFFFF
+        #     on_click:
+        #       - homeassistant.service:
+        #           service: light.toggle
+        #           data:
+        #             entity_id: $p2b8entity
+        # - button: ## botão para acionar p2b9
+        #     x: 140
+        #     y: 190
+        #     checkable: true
+        #     id: lv_p2b9
+        #     styles: light_button
+        #     checked:
+        #       styles: light_button_checked
+        #     widgets:
+        #       - label:
+        #           text_font: light64
+        #           align: top_mid
+        #           text: $lightbulb
+        #           id: lv_p2b9_icon
+        #       - label:
+        #           text_font: roboto22
+        #           align: bottom_mid
+        #           text: $p2b9name
+        #           long_mode: dot
+        #           text_color: 0xFFFFFF
+        #     on_click:
+        #       - homeassistant.service:
+        #           service: light.toggle
+        #           data:
+        #             entity_id: $p2b9entity
+        # - button: ## botão para acionar p2b10
+        #     x: 250
+        #     y: 190
+        #     checkable: true
+        #     id: lv_p2b10
+        #     styles: light_button
+        #     checked:
+        #       styles: light_button_checked
+        #     widgets:
+        #       - label:
+        #           text_font: light64
+        #           align: top_mid
+        #           text: $lightbulb
+        #           id: lv_p2b10_icon
+        #       - label:
+        #           text_font: roboto22
+        #           align: bottom_mid
+        #           text: $p2b10name
+        #           long_mode: dot
+        #           text_color: 0xFFFFFF
+        #     on_click:
+        #       - homeassistant.service:
+        #           service: light.toggle
+        #           data:
+        #             entity_id: $p2b10entity
+    - id: third_page ## ESCRITORIO
+      width: 100%
+      height: 90%
+      widgets:
+        - obj: ## fundo preto
+            bg_color: 0x000000
+            bg_opa: 100%
+            width: 100%
+            height: 100%
+        - obj: ##título-terceira-página
+            scrollable: false
+            width: 300
+            height: 55
+            align: top_mid
+            widgets:
+              - label:
+                  text_font: roboto23
+                  text: "ESCRITORIO"
+                  align: center
+                  text_color: 0xFFFFFF
+        - button: ## botão para acionar p3b1
+            x: 30
+            y: 80
+            checkable: true
+            id: lv_p3b1
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p3b1_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p3b1name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p3b1_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p3b1entity
+        - button: ## botão para acionar p3b2
+            x: 140
+            y: 80
+            checkable: true
+            id: lv_p3b2
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p3b2_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p3b2name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p3b2_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p3b2entity
+        - button: ## botão para acionar p3b3
+            x: 250
+            y: 80
+            checkable: true
+            id: lv_p3b3
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p3b3_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p3b3name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p3b3_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p3b3entity
+        - button: ## botão para acionar p3b4
+            x: 360
+            y: 80
+            checkable: true
+            id: lv_p3b4
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p3b4_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p3b4name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p3b4_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p3b4entity
+        # - button: ## botão para acionar p3b5
+        #     x: 470
+        #     y: 80
+        #     checkable: true
+        #     id: lv_p3b5
+        #     styles: light_button
+        #     checked:
+        #       styles: light_button_checked
+        #     widgets:
+        #       - label:
+        #           text_font: light64
+        #           align: top_mid
+        #           text: $lightbulb
+        #           id: lv_p3b5_icon
+        #       - label:
+        #           text_font: roboto22
+        #           align: bottom_mid
+        #           text: $p3b5name
+        #           long_mode: dot
+        #           text_color: 0xFFFFFF
+        #           id: lv_p3b5_text
+        #     on_click:
+        #       - homeassistant.service:
+        #           service: light.toggle
+        #           data:
+        #             entity_id: $p3b5entity
+        # - button: ## botão para acionar p3b6
+        #     x: 580
+        #     y: 80
+        #     checkable: true
+        #     id: lv_p3b6
+        #     styles: light_button
+        #     checked:
+        #       styles: light_button_checked
+        #     widgets:
+        #       - label:
+        #           text_font: light64
+        #           align: top_mid
+        #           text: $lightbulb
+        #           id: lv_p3b6_icon
+        #       - label:
+        #           text_font: roboto22
+        #           align: bottom_mid
+        #           text: $p3b6name
+        #           long_mode: dot
+        #           text_color: 0xFFFFFF
+        #           id: lv_p3b6_text
+        #     on_click:
+        #       - homeassistant.service:
+        #           service: light.toggle
+        #           data:
+        #             entity_id: $p3b6entity
+        # - button: ## botão para acionar p3b7
+        #     x: 690
+        #     y: 80
+        #     checkable: true
+        #     id: lv_p3b7
+        #     styles: light_button
+        #     checked:
+        #       styles: light_button_checked
+        #     widgets:
+        #       - label:
+        #           text_font: light64
+        #           align: top_mid
+        #           text: $lightbulb
+        #           id: lv_p3b7_icon
+        #       - label:
+        #           text_font: roboto22
+        #           align: bottom_mid
+        #           text: $p3b7name
+        #           long_mode: dot
+        #           text_color: 0xFFFFFF
+        #           id: lv_p3b7_text
+        #     on_click:
+        #       - homeassistant.service:
+        #           service: light.toggle
+        #           data:
+        #             entity_id: $p3b7entity
+        # - button: ## botão para acionar p3b8
+        #     x: 30
+        #     y: 190
+        #     checkable: true
+        #     id: lv_p3b8
+        #     styles: light_button
+        #     checked:
+        #       styles: light_button_checked
+        #     widgets:
+        #       - label:
+        #           text_font: light64
+        #           align: top_mid
+        #           text: $lightbulb
+        #           id: lv_p3b8_icon
+        #       - label:
+        #           text_font: roboto22
+        #           align: bottom_mid
+        #           text: $p3b8name
+        #           long_mode: dot
+        #           text_color: 0xFFFFFF
+        #           id: lv_p3b8_text
+        #     on_click:
+        #       - homeassistant.service:
+        #           service: light.toggle
+        #           data:
+        #             entity_id: $p3b8entity
+        # - button: ## botão para acionar p3b9
+        #     x: 140
+        #     y: 190
+        #     checkable: true
+        #     id: lv_p3b9
+        #     styles: light_button
+        #     checked:
+        #       styles: light_button_checked
+        #     widgets:
+        #       - label:
+        #           text_font: light64
+        #           align: top_mid
+        #           text: $lightbulb
+        #           id: lv_p3b9_icon
+        #       - label:
+        #           text_font: roboto22
+        #           align: bottom_mid
+        #           text: $p3b9name
+        #           long_mode: dot
+        #           text_color: 0xFFFFFF
+        #           id: lv_p3b9_text
+        #     on_click:
+        #       - homeassistant.service:
+        #           service: light.toggle
+        #           data:
+        #             entity_id: $p3b9entity
+        # - button: ## botão para acionar p3b10
+        #     x: 250
+        #     y: 190
+        #     checkable: true
+        #     id: lv_p3b10
+        #     styles: light_button
+        #     checked:
+        #       styles: light_button_checked
+        #     widgets:
+        #       - label:
+        #           text_font: light64
+        #           align: top_mid
+        #           text: $lightbulb
+        #           id: lv_p3b10_icon
+        #       - label:
+        #           text_font: roboto22
+        #           align: bottom_mid
+        #           text: $p3b10name
+        #           long_mode: dot
+        #           text_color: 0xFFFFFF
+        #           id: lv_p3b10_text
+        #     on_click:
+        #       - homeassistant.service:
+        #           service: light.toggle
+        #           data:
+        #             entity_id: $p3b10entity
+    - id: fourth_page ## SUITE MASTER
+      width: 100%
+      height: 90%
+      widgets:
+        - obj: ##título
+            scrollable: false
+            width: 300
+            height: 55
+            align: top_mid
+            widgets:
+              - label:
+                  text_font: roboto23
+                  text: "SUITE MASTER"
+                  align: center
+                  text_color: 0xFFFFFF
+        - button: ## botão para acionar p4b1
+            x: 30
+            y: 80
+            checkable: true
+            id: lv_p4b1
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p4b1_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p4b1name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p4b1_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p4b1entity
+        - button: ## botão para acionar p4b2
+            x: 140
+            y: 80
+            checkable: true
+            id: lv_p4b2
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p4b2_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p4b2name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p4b2_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p4b2entity
+        - button: ## botão para acionar p4b3
+            x: 250
+            y: 80
+            checkable: true
+            id: lv_p4b3
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p4b3_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p4b3name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p4b3_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p4b3entity
+        - button: ## botão para acionar p4b4
+            x: 360
+            y: 80
+            checkable: true
+            id: lv_p4b4
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p4b4_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p4b4name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p4b4_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p4b4entity
+        - button: ## botão para acionar p4b5
+            x: 470
+            y: 80
+            checkable: true
+            id: lv_p4b5
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p4b5_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p4b5name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p4b5_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p4b5entity
+        - button: ## botão para acionar p4b6
+            x: 580
+            y: 80
+            checkable: true
+            id: lv_p4b6
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p4b6_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p4b6name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p4b6_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p4b6entity
+        - obj: ## obj fake para esconder os comentários 
+            hidden: true
+            # - button: ## botão para acionar p4b7
+            #     x: 690
+            #     y: 80
+            #     checkable: true
+            #     id: lv_p4b7
+            #     styles: light_button
+            #     checked:
+            #       styles: light_button_checked
+            #     widgets:
+            #       - label:
+            #           text_font: light64
+            #           align: top_mid
+            #           text: $lightbulb
+            #           id: lv_p4b7_icon
+            #       - label:
+            #           text_font: roboto22
+            #           align: bottom_mid
+            #           text: $p4b7name
+            #           long_mode: dot
+            #           text_color: 0xFFFFFF
+            #           id: lv_p4b7_text
+            #     on_click:
+            #       - homeassistant.service:
+            #           service: light.toggle
+            #           data:
+            #             entity_id: $p4b7entity
+        - button: ## botão para acionar p4b8
+            x: 30
+            y: 190
+            checkable: true
+            id: lv_p4b8
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p4b8_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p4b8name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p4b8_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p4b8entity
+        - button: ## botão para acionar p4b9
+            x: 140
+            y: 190
+            checkable: true
+            id: lv_p4b9
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p4b9_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p4b9name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p4b9_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p4b9entity
+        - button: ## botão para acionar p4b10
+            x: 250
+            y: 190
+            checkable: true
+            id: lv_p4b10
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p4b10_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p4b10name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p4b10_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p4b10entity
+        - obj: ## botão do ar condicionado
+            x: 690
+            y: 300
+            radius: 10
+            styles: light_button
+            checkable: true
+            id: botao_ac_suite
+            width: 100
+            height: 100
+            widgets:
+              - label: ##temperatura medida suite master (id temp_text)
+                  text_font: roboto23
+                  text: "--.-"
+                  id: ac_p4ac1label
+                  align: top_mid
+                  text_align: 'CENTER'
+                  text_color: 0xFFFFFF
+              - label: ##texto A/C
+                  text_font: roboto22
+                  text: "A/C"
+                  align: bottom_mid
+                  text_align: 'CENTER'
+                  text_color: 0x00FFFF
+              - label: ##símbolo HVAC
+                  text_font: light64
+                  align: center
+                  text: "\U000F0D43"  # HVAC icon
+                  text_color: 0x00FFFF
+                  id: p4_ac_icon
+            on_long_press:
+              - homeassistant.service:
+                  service: climate.toggle
+                  data:
+                    entity_id: $p4ac
+            on_short_click:    
+              - lvgl.widget.update: 
+                  id: acp4_popup_container
+                  hidden: false
+        - obj: # popup ar condicionado - sala
+            id: acp4_popup_container
+            hidden: true
+            width: 500
+            height: 300
+            align: center
+            bg_color: 0x000000
+            bg_opa: 90%  # Semi-transparent background  
+            border_color: 0xFFFFFF
+            border_width: 3
+            radius: 15
+            widgets:
+              - label: ## Título
+                  align: top_mid
+                  text: "AR SUITE"
+                  text_font: roboto30bold
+                  text_color: 0xFFFFFF
+              - button: ## Botão de fechar
+                  id: p4_ac_close_btn
+                  width: 40
+                  height: 40
+                  radius: 20
+                  x: 420
+                  y: 15
+                  bg_color: 0xFF0000
+                  bg_opa: 50%
+                  widgets:
+                    - label:
+                        text: "X"
+                        text_font: roboto24
+                        align: center
+                        text_color: 0xFFFFFF
+                  on_click:
+                    - lvgl.widget.update: 
+                        id: acp4_popup_container
+                        hidden: true
+              - obj: # Temperatura medida e desejada
+                  align: top_mid
+                  border_width: 0
+                  bg_opa: 000%
+                  bg_color: 0x000000
+                  height: 100
+                  width: 300
+                  y: 60
+                  layout: # enable the FLEX layout for the children widgets
+                    type: FLEX
+                    flex_flow: row # the order of the widgets starts top left
+                    flex_align_cross: CENTER # they sould be centered  
+                    flex_align_main: SPACE_EVENLY # distribute buttons evenly
+                  widgets: ## temperatura medida e desejada
+                    # - label: ## Temperatura medida
+                    #     id: temp_text2
+                    #     text: "--°C"
+                    #     text_font: roboto40bold
+                    #     text_color: 0xFFFFFF
+                    # - label: ## FLECHA
+                    #     text: " \U000F09C2 "
+                    #     text_font: roboto40bold
+                    #     text_color: 0xFFFFFF                      
+                    - label:  ## Temperatura desejada 
+                        text: "--.-"
+                        id: ac_p4ac1poplabel
+                        text_font: roboto40bold
+                        text_color: 0xFFFFFF
+              - obj: # Botões de modo e aumentar e diminuir temperatura
+                  align: top_mid
+                  border_width: 0
+                  bg_opa: 000%
+                  bg_color: 0x000000
+                  height: 70
+                  width: 300
+                  y: 130
+                  layout: # enable the FLEX layout for the children widgets
+                    type: FLEX
+                    flex_flow: row # the order of the widgets starts top left
+                    flex_align_cross: CENTER # they sould be centered  
+                    flex_align_main: SPACE_EVENLY # distribute buttons evenly
+                  widgets: ## Botões de aumentar e diminuir temperatura
+                    - button: ## off button
+                        id: p4_mode_off_btn
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F159E" # mdi-hvac-off
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_hvac_mode
+                              data:
+                                entity_id: $p4ac
+                                hvac_mode: "off"
+                    - button: ## cool button
+                        id: p4_mode_cool_btn
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F0717" # mdi-snowflake   
+                              text_font: roboto24
+                              align: center
+                              text_color: 0x0000FF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_hvac_mode
+                              data:
+                                entity_id: $p4ac
+                                hvac_mode: "cool"
+                    - button: ## heat button
+                        id: p4_mode_heat_btn 
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F0238" # mdi-fire
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFF0000
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_hvac_mode
+                              data:
+                                entity_id: $p4ac
+                                hvac_mode: "heat"
+
+                    - button: ## botão reduz temperatura
+                        #id: temp_down_btn
+                        width: 40
+                        height: 40
+                        radius: 20
+                        bg_color: 0x1b1b1b
+                        widgets:
+                          - label:
+                              text: "-"
+                              text_font: roboto30bold
+                              align: center
+                              text_color: 0xFFFFFF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_temperature
+                              data:
+                                entity_id: $p4ac
+                                temperature: !lambda |-
+                                  return id(p4ac_target_temp).state - 1;
+                    - button: ## botão aumenta temperatura
+                        #id: temp_up_btn
+                        width: 40
+                        height: 40
+                        radius: 20
+                        bg_color: 0x1b1b1b
+                        widgets:
+                          - label:
+                              text: "+"
+                              text_font: roboto30bold
+                              align: center
+                              text_color: 0xFFFFFF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_temperature
+                              data:
+                                entity_id: $p4ac
+                                temperature: !lambda |-
+                                  return id(p4ac_target_temp).state + 1;
+              - obj: # Botões de fan (velocidade)
+                  align: top_mid
+                  border_width: 0
+                  bg_opa: 000%
+                  bg_color: 0x000000
+                  height: 70
+                  width: 250
+                  y: 200
+                  layout: # enable the FLEX layout for the children widgets
+                    type: FLEX
+                    flex_flow: row # the order of the widgets starts top left
+                    flex_align_cross: CENTER # they sould be centered  
+                    flex_align_main: SPACE_EVENLY # distribute buttons evenly
+                  widgets: ## botões de fan
+                    - button: ## off button
+                        id: p4_fan_auto_btn
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F171D" # mdi-fan-off
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_fan_mode
+                              data:
+                                entity_id: $p4ac
+                                fan_mode: "auto"
+                    - button: ## low button
+                        id: p4_fan_low_btn
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F1472" # mdi-fan-speed-1
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF    
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_fan_mode
+                              data:
+                                entity_id: $p4ac
+                                fan_mode: "low"                                              
+                    - button: ## med button
+                        id: p4_fan_med_btn 
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F1473" # mdi-fan-speed-2
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF      
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_fan_mode
+                              data:
+                                entity_id: $p4ac
+                                fan_mode: "med"                               
+
+                    - button: ## fan_high_button
+                        id: p4_fan_high_btn
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F1474" # mdi-fan-speed-3
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF    
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_fan_mode
+                              data:
+                                entity_id: $p4ac
+                                fan_mode: "high"
+
+    - id: fifth_page ## QUARTOS # nesta página as posições x e y dos botões foram ajustadas manualmente, saindo do padrão do resto do código
+      width: 100%
+      height: 90%
+      widgets:
+        - obj: ##título
+            scrollable: false
+            width: 300
+            height: 55
+            align: top_mid
+            widgets:
+              - label:
+                  text_font: roboto23
+                  text: "QUARTOS"
+                  align: center
+                  text_color: 0xFFFFFF
+
+        - obj: ## borda quarto Davi
+            x: 110
+            y: 70
+            width: 550
+            height: 120
+            border_color: 0xFFFFFF
+            border_width: 2
+            radius: 5
+            bg_opa: 0%
+            widgets:
+              - label:
+                  text_font: roboto23
+                  text: "Quarto Davi"
+                  align: left_mid
+                  text_color: 0xFFFFFF
+        - obj: ## borda banheiro social
+            x: 110
+            y: 180
+            width: 440
+            height: 120
+            border_color: 0xFFFFFF
+            border_width: 2
+            radius: 5
+            bg_opa: 0%
+            widgets:
+              - label:
+                  text_font: roboto23
+                  text: "Banheiro Social"
+                  align: left_mid
+                  text_color: 0xFFFFFF
+        - obj: ## borda quarto 3
+            x: 110
+            y: 290
+            width: 550
+            height: 120
+            border_color: 0xFFFFFF
+            border_width: 2
+            radius: 5
+            bg_opa: 0%
+            widgets:
+              - label:
+                  text_font: roboto23
+                  text: "Quarto 3"
+                  align: left_mid
+                  text_color: 0xFFFFFF
+        - button: ## botão para acionar p5b1
+            x: 330
+            y: 80
+            checkable: true
+            id: lv_p5b1
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p5b1_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p5b1name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p5b1_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p5b1entity
+        - button: ## botão para acionar p5b2
+            x: 440
+            y: 80
+            checkable: true
+            id: lv_p5b2
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p5b2_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p5b2name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p5b2_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p5b2entity
+          # - button: ## botão para acionar p5b3
+          #     x: 250
+          #     y: 80
+          #     checkable: true
+          #     id: lv_p5b3
+          #     styles: light_button
+          #     checked:
+          #       styles: light_button_checked
+          #     widgets:
+          #       - label:
+          #           text_font: light64
+          #           align: top_mid
+          #           text: $lightbulb
+          #           id: lv_p5b3_icon
+          #       - label:
+          #           text_font: roboto22
+          #           align: bottom_mid
+          #           text: $p5b3name
+          #           long_mode: dot
+          #           text_color: 0xFFFFFF
+          #           id: lv_p5b3_text
+          #     on_click:
+          #       - homeassistant.service:
+          #           service: light.toggle
+          #           data:
+          #             entity_id: $p5b3entity
+          # - button: ## botão para acionar p5b4
+          #     x: 360
+          #     y: 80
+          #     checkable: true
+          #     id: lv_p5b4
+          #     styles: light_button
+          #     checked:
+          #       styles: light_button_checked
+          #     widgets:
+          #       - label:
+          #           text_font: light64
+          #           align: top_mid
+          #           text: $lightbulb
+          #           id: lv_p5b4_icon
+          #       - label:
+          #           text_font: roboto22
+          #           align: bottom_mid
+          #           text: $p5b4name
+          #           long_mode: dot
+          #           text_color: 0xFFFFFF
+          #           id: lv_p5b4_text
+          #     on_click:
+          #       - homeassistant.service:
+          #           service: light.toggle
+          #           data:
+          #             entity_id: $p5b4entity
+          # - button: ## botão para acionar p5b5
+          #     x: 470
+          #     y: 80
+          #     checkable: true
+          #     id: lv_p5b5
+          #     styles: light_button
+          #     checked:
+          #       styles: light_button_checked
+          #     widgets:
+          #       - label:
+          #           text_font: light64
+          #           align: top_mid
+          #           text: $lightbulb
+          #           id: lv_p5b5_icon
+          #       - label:
+          #           text_font: roboto22
+          #           align: bottom_mid
+          #           text: $p5b5name
+          #           long_mode: dot
+          #           text_color: 0xFFFFFF
+          #           id: lv_p5b5_text
+          #     on_click:
+          #       - homeassistant.service:
+          #           service: light.toggle
+          #           data:
+          #             entity_id: $p5b5entity
+          # - button: ## botão para acionar p5b6
+          #     x: 580
+          #     y: 80
+          #     checkable: true
+          #     id: lv_p5b6
+          #     styles: light_button
+          #     checked:
+          #       styles: light_button_checked
+          #     widgets:
+          #       - label:
+          #           text_font: light64
+          #           align: top_mid
+          #           text: $lightbulb
+          #           id: lv_p5b6_icon
+          #       - label:
+          #           text_font: roboto22
+          #           align: bottom_mid
+          #           text: $p5b6name
+          #           long_mode: dot
+          #           text_color: 0xFFFFFF
+          #           id: lv_p5b6_text
+          #     on_click:
+          #       - homeassistant.service:
+          #           service: light.toggle
+          #           data:
+          #             entity_id: $p5b6entity
+          # - button: ## botão para acionar p5b7
+          #     x: 690
+          #     y: 80
+          #     checkable: true
+          #     id: lv_p5b7
+          #     styles: light_button
+          #     checked:
+          #       styles: light_button_checked
+          #     widgets:
+          #       - label:
+          #           text_font: light64
+          #           align: top_mid
+          #           text: $lightbulb
+          #           id: lv_p5b7_icon
+          #       - label:
+          #           text_font: roboto22
+          #           align: bottom_mid
+          #           text: $p5b7name
+          #           long_mode: dot
+          #           text_color: 0xFFFFFF
+          #           id: lv_p5b7_text
+          #     on_click:
+          #       - homeassistant.service:
+          #           service: light.toggle
+          #           data:
+          #             entity_id: $p5b7entity
+        - button: ## botão para acionar p5b8
+            x: 330
+            y: 190
+            checkable: true
+            id: lv_p5b8
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p5b8_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p5b8name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p5b8_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p5b8entity
+        - button: ## botão para acionar p5b9
+            x: 440
+            y: 190
+            checkable: true
+            id: lv_p5b9
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p5b9_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p5b9name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p5b9_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p5b9entity
+          # - button: ## botão para acionar p5b10
+          #     x: 250
+          #     y: 190
+          #     checkable: true
+          #     id: lv_p5b10
+          #     styles: light_button
+          #     checked:
+          #       styles: light_button_checked
+          #     widgets:
+          #       - label:
+          #           text_font: light64
+          #           align: top_mid
+          #           text: $lightbulb
+          #           id: lv_p5b10_icon
+          #       - label:
+          #           text_font: roboto22
+          #           align: bottom_mid
+          #           text: $p5b10name
+          #           long_mode: dot
+          #           text_color: 0xFFFFFF
+          #           id: lv_p5b10_text
+          #     on_click:
+          #       - homeassistant.service:
+          #           service: light.toggle
+          #           data:
+          #             entity_id: $p5b10entity
+        - button: ## botão para acionar p5b15
+            x: 330
+            y: 300
+            checkable: true
+            id: lv_p5b15
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p5b15_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p5b15name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p5b15_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p5b15entity
+        - button: ## botão para acionar p5b16
+            x: 440
+            y: 300
+            checkable: true
+            id: lv_p5b16
+            styles: light_button
+            checked:
+              styles: light_button_checked
+            widgets:
+              - label:
+                  text_font: light64
+                  align: top_mid
+                  text: $lightbulb
+                  id: lv_p5b16_icon
+              - label:
+                  text_font: roboto22
+                  align: bottom_mid
+                  text: $p5b16name
+                  long_mode: dot
+                  text_color: 0xFFFFFF
+                  id: lv_p5b16_text
+            on_click:
+              - homeassistant.service:
+                  service: light.toggle
+                  data:
+                    entity_id: $p5b16entity
+
+          # - obj: ##ar condicionado
+          #     x: 690
+          #     y: 300
+          #     radius: 10
+          #     styles: light_button
+          #     checkable: true
+          #     #id: lv_room_obj_2
+          #     width: 100
+          #     height: 100
+          #     widgets:
+          #       - label:
+          #           text_font: roboto23
+          #           text: "22ºC"
+          #           #id: temp_text
+          #           align: top_mid
+          #           text_align: 'CENTER'
+          #           text_color: 0xFFFFFF
+          #       - label:
+          #           text_font: roboto22
+          #           text: "A/C"
+          #           align: bottom_mid
+          #           text_align: 'CENTER'
+          #           text_color: 0x00FFFF
+          #       - label:
+          #           text_font: light64
+          #           align: center
+          #           text: "\U000F0D43"  # HVAC icon
+          #           text_color: 0x00FFFF
+          #           #id: ac_icon_2
+          #     on_click:
+          #       - lvgl.page.show: 
+          #           id: ac_popup_page
+        - obj: ## botão do ar condicionado q3
+            x: 550
+            y: 300
+            radius: 10
+            styles: light_button
+            checkable: true
+            id: botao_ac_p3ac1
+            width: 100
+            height: 100
+            widgets:
+              - label: ##temperatura medida sala (id temp_text)
+                  text_font: roboto23
+                  text: "--.-"
+                  id: ac_p3ac1label
+                  align: top_mid
+                  text_align: 'CENTER'
+                  text_color: 0xFFFFFF
+              - label: ##texto A/C
+                  text_font: roboto22
+                  text: "A/C"
+                  align: bottom_mid
+                  text_align: 'CENTER'
+                  text_color: 0x00FFFF
+              - label: ##símbolo HVAC
+                  text_font: light64
+                  align: center
+                  text: "\U000F0D43"  # HVAC icon
+                  text_color: 0x00FFFF
+                  id: p3_ac_icon
+            on_short_click:
+              - homeassistant.service:
+                  service: climate.toggle
+                  data:
+                    entity_id: $p3ac
+            on_long_press:    
+              - lvgl.widget.update: 
+                  id: p3_ac_popup_container
+                  hidden: false
+        - obj: ## botão do ar condicionado - q2
+            x: 550
+            y: 80
+            radius: 10
+            styles: light_button
+            checkable: true
+            id: botao_ac_p6ac1
+            width: 100
+            height: 100
+            widgets:
+              - label: ##temperatura medida sala (id temp_text)
+                  text_font: roboto23
+                  text: "--.-"
+                  id: ac_p6ac1label
+                  align: top_mid
+                  text_align: 'CENTER'
+                  text_color: 0xFFFFFF
+              - label: ##texto A/C
+                  text_font: roboto22
+                  text: "A/C"
+                  align: bottom_mid
+                  text_align: 'CENTER'
+                  text_color: 0x00FFFF
+              - label: ##símbolo HVAC
+                  text_font: light64
+                  align: center
+                  text: "\U000F0D43"  # HVAC icon
+                  text_color: 0x00FFFF
+                  id: p6_ac_icon
+            on_short_click:
+              - homeassistant.service:
+                  service: climate.toggle
+                  data:
+                    entity_id: $p6ac
+            on_long_press:    
+              - lvgl.widget.update: 
+                  id: p6_ac_popup_container
+                  hidden: false
+        - obj: # popup ar condicionado - q2
+            id: p6_ac_popup_container
+            hidden: true
+            width: 500
+            height: 300
+            align: center
+            bg_color: 0x000000
+            bg_opa: 90%  # Semi-transparent background  
+            border_color: 0xFFFFFF
+            border_width: 3
+            radius: 15
+            widgets:
+              - label: ## Título
+                  align: top_mid
+                  text: "AR QUARTO DAVI"
+                  text_font: roboto30bold
+                  text_color: 0xFFFFFF
+              - button: ## Botão de fechar
+                  #id: p6_ac_close_btn
+                  width: 40
+                  height: 40
+                  radius: 20
+                  x: 420
+                  y: 15
+                  bg_color: 0xFF0000
+                  bg_opa: 50%
+                  widgets:
+                    - label:
+                        text: "X"
+                        text_font: roboto24
+                        align: center
+                        text_color: 0xFFFFFF
+                  on_click:
+                    - lvgl.widget.update: 
+                        id: p6_ac_popup_container
+                        hidden: true
+              - obj: # Temperatura medida e desejada
+                  align: top_mid
+                  border_width: 0
+                  bg_opa: 000%
+                  bg_color: 0x000000
+                  height: 100
+                  width: 300
+                  y: 60
+                  layout: # enable the FLEX layout for the children widgets
+                    type: FLEX
+                    flex_flow: row # the order of the widgets starts top left
+                    flex_align_cross: CENTER # they sould be centered  
+                    flex_align_main: SPACE_EVENLY # distribute buttons evenly
+                  widgets: ## temperatura medida e desejada
+                    # - label: ## Temperatura medida
+                    #     id: temp_text2
+                    #     text: "--°C"
+                    #     text_font: roboto40bold
+                    #     text_color: 0xFFFFFF
+                    # - label: ## FLECHA
+                    #     text: " \U000F09C2 "
+                    #     text_font: roboto40bold
+                    #     text_color: 0xFFFFFF                      
+                    - label:  ## Temperatura desejada 
+                        text: "--.-"
+                        id: ac_p6ac1poplabel
+                        text_font: roboto40bold
+                        text_color: 0xFFFFFF
+              - obj: # Botões de modo e aumentar e diminuir temperatura
+                  align: top_mid
+                  border_width: 0
+                  bg_opa: 000%
+                  bg_color: 0x000000
+                  height: 70
+                  width: 300
+                  y: 130
+                  layout: # enable the FLEX layout for the children widgets
+                    type: FLEX
+                    flex_flow: row # the order of the widgets starts top left
+                    flex_align_cross: CENTER # they sould be centered  
+                    flex_align_main: SPACE_EVENLY # distribute buttons evenly
+                  widgets: ## Botões de aumentar e diminuir temperatura
+                    - button: ## off button
+                        id: p6_mode_off_btn
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F159E" # mdi-hvac-off
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_hvac_mode
+                              data:
+                                entity_id: $p6ac
+                                hvac_mode: "off"
+                    - button: ## cool button
+                        id: p6_mode_cool_btn
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F0717" # mdi-snowflake   
+                              text_font: roboto24
+                              align: center
+                              text_color: 0x0000FF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_hvac_mode
+                              data:
+                                entity_id: $p6ac
+                                hvac_mode: "cool"
+                    - button: ## heat button
+                        id: p6_mode_heat_btn 
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F0238" # mdi-fire
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFF0000
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_hvac_mode
+                              data:
+                                entity_id: $p6ac
+                                hvac_mode: "heat"
+
+                    - button: ## botão reduz temperatura
+                        #id: temp_down_btn
+                        width: 40
+                        height: 40
+                        radius: 20
+                        bg_color: 0x1b1b1b
+                        widgets:
+                          - label:
+                              text: "-"
+                              text_font: roboto30bold
+                              align: center
+                              text_color: 0xFFFFFF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_temperature
+                              data:
+                                entity_id: $p6ac
+                                temperature: !lambda |-
+                                  return id(p6ac_target_temp).state - 1;
+                    - button: ## botão aumenta temperatura
+                        #id: temp_up_btn
+                        width: 40
+                        height: 40
+                        radius: 20
+                        bg_color: 0x1b1b1b
+                        widgets:
+                          - label:
+                              text: "+"
+                              text_font: roboto30bold
+                              align: center
+                              text_color: 0xFFFFFF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_temperature
+                              data:
+                                entity_id: $p6ac
+                                temperature: !lambda |-
+                                  return id(p6ac_target_temp).state + 1;
+              - obj: # Botões de fan (velocidade)
+                  align: top_mid
+                  border_width: 0
+                  bg_opa: 000%
+                  bg_color: 0x000000
+                  height: 70
+                  width: 250
+                  y: 200
+                  layout: # enable the FLEX layout for the children widgets
+                    type: FLEX
+                    flex_flow: row # the order of the widgets starts top left
+                    flex_align_cross: CENTER # they sould be centered  
+                    flex_align_main: SPACE_EVENLY # distribute buttons evenly
+                  widgets: ## botões de fan
+                    - button: ## off button
+                        id: p6_fan_auto_btn
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F171D" # mdi-fan-off
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_fan_mode
+                              data:
+                                entity_id: $p6ac
+                                fan_mode: "auto"
+                    - button: ## low button
+                        id: p6_fan_low_btn
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F1472" # mdi-fan-speed-1
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF    
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_fan_mode
+                              data:
+                                entity_id: $p6ac
+                                fan_mode: "low"                                              
+                    - button: ## med button
+                        id: p6_fan_med_btn 
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F1473" # mdi-fan-speed-2
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF      
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_fan_mode
+                              data:
+                                entity_id: $p6ac
+                                fan_mode: "med"                               
+
+                    - button: ## fan_high_button
+                        id: p6_fan_high_btn
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F1474" # mdi-fan-speed-3
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF    
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_fan_mode
+                              data:
+                                entity_id: $p6ac
+                                fan_mode: "high"        
+        - obj: # popup ar condicionado - q3
+            id: p3_ac_popup_container
+            hidden: true
+            width: 500
+            height: 300
+            align: center
+            bg_color: 0x000000
+            bg_opa: 90%  # Semi-transparent background  
+            border_color: 0xFFFFFF
+            border_width: 3
+            radius: 15
+            widgets:
+              - label: ## Título
+                  align: top_mid
+                  text: "AR QUARTO 3"
+                  text_font: roboto30bold
+                  text_color: 0xFFFFFF
+              - button: ## Botão de fechar
+                  #id: p3_ac_close_btn
+                  width: 40
+                  height: 40
+                  radius: 20
+                  x: 420
+                  y: 15
+                  bg_color: 0xFF0000
+                  bg_opa: 50%
+                  widgets:
+                    - label:
+                        text: "X"
+                        text_font: roboto24
+                        align: center
+                        text_color: 0xFFFFFF
+                  on_click:
+                    - lvgl.widget.update: 
+                        id: p3_ac_popup_container
+                        hidden: true
+              - obj: # Temperatura medida e desejada
+                  align: top_mid
+                  border_width: 0
+                  bg_opa: 000%
+                  bg_color: 0x000000
+                  height: 100
+                  width: 300
+                  y: 60
+                  layout: # enable the FLEX layout for the children widgets
+                    type: FLEX
+                    flex_flow: row # the order of the widgets starts top left
+                    flex_align_cross: CENTER # they sould be centered  
+                    flex_align_main: SPACE_EVENLY # distribute buttons evenly
+                  widgets: ## temperatura medida e desejada
+                    # - label: ## Temperatura medida
+                    #     id: temp_text2
+                    #     text: "--°C"
+                    #     text_font: roboto40bold
+                    #     text_color: 0xFFFFFF
+                    # - label: ## FLECHA
+                    #     text: " \U000F09C2 "
+                    #     text_font: roboto40bold
+                    #     text_color: 0xFFFFFF                      
+                    - label:  ## Temperatura desejada 
+                        text: "--.-"
+                        id: ac_p3ac1poplabel
+                        text_font: roboto40bold
+                        text_color: 0xFFFFFF
+              - obj: # Botões de modo e aumentar e diminuir temperatura
+                  align: top_mid
+                  border_width: 0
+                  bg_opa: 000%
+                  bg_color: 0x000000
+                  height: 70
+                  width: 300
+                  y: 130
+                  layout: # enable the FLEX layout for the children widgets
+                    type: FLEX
+                    flex_flow: row # the order of the widgets starts top left
+                    flex_align_cross: CENTER # they sould be centered  
+                    flex_align_main: SPACE_EVENLY # distribute buttons evenly
+                  widgets: ## Botões de aumentar e diminuir temperatura
+                    - button: ## off button
+                        id: p3_mode_off_btn
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F159E" # mdi-hvac-off
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_hvac_mode
+                              data:
+                                entity_id: $p3ac
+                                hvac_mode: "off"
+                    - button: ## cool button
+                        id: p3_mode_cool_btn
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F0717" # mdi-snowflake   
+                              text_font: roboto24
+                              align: center
+                              text_color: 0x0000FF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_hvac_mode
+                              data:
+                                entity_id: $p3ac
+                                hvac_mode: "cool"
+                    - button: ## heat button
+                        id: p3_mode_heat_btn 
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F0238" # mdi-fire
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFF0000
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_hvac_mode
+                              data:
+                                entity_id: $p3ac
+                                hvac_mode: "heat"
+
+                    - button: ## botão reduz temperatura
+                        #id: temp_down_btn
+                        width: 40
+                        height: 40
+                        radius: 20
+                        bg_color: 0x1b1b1b
+                        widgets:
+                          - label:
+                              text: "-"
+                              text_font: roboto30bold
+                              align: center
+                              text_color: 0xFFFFFF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_temperature
+                              data:
+                                entity_id: $p3ac
+                                temperature: !lambda |-
+                                  return id(p3ac_target_temp).state - 1;
+                    - button: ## botão aumenta temperatura
+                        #id: temp_up_btn
+                        width: 40
+                        height: 40
+                        radius: 20
+                        bg_color: 0x1b1b1b
+                        widgets:
+                          - label:
+                              text: "+"
+                              text_font: roboto30bold
+                              align: center
+                              text_color: 0xFFFFFF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_temperature
+                              data:
+                                entity_id: $p3ac
+                                temperature: !lambda |-
+                                  return id(p3ac_target_temp).state + 1;
+              - obj: # Botões de fan (velocidade)
+                  align: top_mid
+                  border_width: 0
+                  bg_opa: 000%
+                  bg_color: 0x000000
+                  height: 70
+                  width: 250
+                  y: 200
+                  layout: # enable the FLEX layout for the children widgets
+                    type: FLEX
+                    flex_flow: row # the order of the widgets starts top left
+                    flex_align_cross: CENTER # they sould be centered  
+                    flex_align_main: SPACE_EVENLY # distribute buttons evenly
+                  widgets: ## botões de fan
+                    - button: ## off button
+                        id: p3_fan_auto_btn
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F171D" # mdi-fan-off
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_fan_mode
+                              data:
+                                entity_id: $p3ac
+                                fan_mode: "auto"
+                    - button: ## low button
+                        id: p3_fan_low_btn
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F1472" # mdi-fan-speed-1
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF    
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_fan_mode
+                              data:
+                                entity_id: $p3ac
+                                fan_mode: "low"                                              
+                    - button: ## med button
+                        id: p3_fan_med_btn 
+                        align: center
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F1473" # mdi-fan-speed-2
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF      
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_fan_mode
+                              data:
+                                entity_id: $p3ac
+                                fan_mode: "med"                               
+
+                    - button: ## fan_high_button
+                        id: p3_fan_high_btn
+                        width: 40
+                        height: 40
+                        bg_color: 0x333333
+                        widgets:
+                          - label:
+                              text: "\U000F1474" # mdi-fan-speed-3
+                              text_font: roboto24
+                              align: center
+                              text_color: 0xFFFFFF    
+                        on_click:
+                          - homeassistant.service:
+                              service: climate.set_fan_mode
+                              data:
+                                entity_id: $p3ac
+                                fan_mode: "high"        
+
+
+
+
+
+sensor:
+  - platform: homeassistant ##AR CONDICIONADO SALA
+    entity_id: $p1ac
+    attribute: temperature
+    id: p1ac_target_temp
+    on_value:
+      - lvgl.label.update:
+          id: ac_p1ac1poplabel
+          text:
+            format: "%.0f°C"
+            args: ["x"]
+      - lvgl.label.update:
+          id: ac_p1ac1label
+          text:
+            format: "%.0f°C"
+            args: ["x"]
+
+  - platform: homeassistant ##AR CONDICIONADO SUITE
+    entity_id: $p4ac
+    attribute: temperature
+    id: p4ac_target_temp
+    on_value:
+      - lvgl.label.update:
+          id: ac_p4ac1poplabel
+          text:
+            format: "%.0f°C"
+            args: ["x"]
+      - lvgl.label.update:
+          id: ac_p4ac1label
+          text:
+            format: "%.0f°C"
+            args: ["x"]
+
+
+  - platform: homeassistant ##AR CONDICIONADO QUARTO 3
+    entity_id: $p3ac
+    attribute: temperature
+    id: p3ac_target_temp
+    on_value:
+      - lvgl.label.update:
+          id: ac_p3ac1poplabel
+          text:
+            format: "%.0f°C"
+            args: ["x"]
+      - lvgl.label.update:
+          id: ac_p3ac1label
+          text:
+            format: "%.0f°C"
+            args: ["x"]            
+
+
+    # - platform: homeassistant  ##TEMPERATURA EXTERNA MEDIDA
+    #   entity_id: sensor.temperatura_externo_temperature
+    #   #attribute: temperature
+    #   id: outdoor_temp
+    #   on_value:
+    #     - lvgl.label.update:
+    #         id: weather_label
+    #         text:
+    #           format: "%.1f\U000F0504"
+    #           args: ["x"]
+
+    # - platform: homeassistant
+    #   entity_id: weather.casa
+    #   attribute: humidity
+    #   id: outdoor_humi
+    #   on_value:
+    #     - lvgl.label.update:
+    #         id: weather_humidity_label
+    #         text:
+    #           format: "%.0f\U000F03F0"
+    #           args: ["x"]
+  - platform: homeassistant ##AR CONDICIONADO QUARTO 2
+    entity_id: $p6ac
+    attribute: temperature
+    id: p6ac_target_temp
+    on_value:
+      - lvgl.label.update:
+          id: ac_p6ac1poplabel
+          text:
+            format: "%.0f°C"
+            args: ["x"]
+      - lvgl.label.update:
+          id: ac_p6ac1label
+          text:
+            format: "%.0f°C"
+            args: ["x"]            
+
+
+    # - platform: homeassistant  ##TEMPERATURA EXTERNA MEDIDA
+    #   entity_id: sensor.temperatura_externo_temperature
+    #   #attribute: temperature
+    #   id: outdoor_temp
+    #   on_value:
+    #     - lvgl.label.update:
+    #         id: weather_label
+    #         text:
+    #           format: "%.1f\U000F0504"
+    #           args: ["x"]
+
+    # - platform: homeassistant
+    #   entity_id: weather.casa
+    #   attribute: humidity
+    #   id: outdoor_humi
+    #   on_value:
+    #     - lvgl.label.update:
+    #         id: weather_humidity_label
+    #         text:
+    #           format: "%.0f\U000F03F0"
+    #           args: ["x"]
+
+  - platform: homeassistant ##SENSOR TEMPERATURA SALA
+    entity_id: sensor.sensor_temperatura_sala2_temperatura_sala
+    id: bedroom_temp
+    on_value:
+      # - lvgl.label.update:
+      #     id: temp_text
+      #     text:
+      #       format: "%.0f°C"
+      #       args: ["x"]
+      - lvgl.label.update:
+          id: temp_text2
+          text:
+            format: "%.0f°C"
+            args: ["x"]            
+  - platform: homeassistant ##SENSOR TEMPERATURA QUARTO 1 - UMIDADE
+    entity_id: sensor.temperatura_quarto1_humidity
+    id: bedroom_humi
+    # on_value:
+    #   - lvgl.label.update:
+    #       id: humidity_text
+    #       text:
+    #         format: "%.0f \U000F03F0"
+    #         args: ["x"]
+
+
+
+
+ #todos sensores homeassistant do exemplo, commented
+  # - platform: homeassistant
+  #   entity_id: sensor.pv_daily_production
+  #   id: pv_units_today
+  #   on_value:
+  #     - lvgl.label.update:
+  #         id: pv_units_today_text
+  #         text:
+  #           format: "%.1fkWh"
+  #           args: ["x"]
+
+  # - platform: homeassistant
+  #   entity_id: sensor.grid_reverse_meter
+  #   id: grid_sold
+  #   on_value:
+  #     - lvgl.label.update:
+  #         id: grid_sold_text
+  #         text:
+  #           format: "%.1fkWh"
+  #           args: ["x"]
+
+  # - platform: homeassistant
+  #   entity_id: sensor.grid_forward_meter
+  #   id: grid_bought
+  #   on_value:
+  #     - lvgl.label.update:
+  #         id: grid_bought_text
+  #         text:
+  #           format: "%.1fkWh"
+  #           args: ["x"]
+
+  # - platform: homeassistant
+  #   entity_id: sensor.daily_home_energy
+  #   id: total_unit_consumed
+  #   on_value:
+  #     - lvgl.label.update:
+  #         id: total_unit_consumed_text
+  #         text:
+  #           format: "%.1fkWh"
+  #           args: ["x"]
+
+
+  # - platform: wifi_signal
+  #   name: "WiFi Signal"
+  #   id: wifi_signal_db
+  #   update_interval: 60s
+  #   entity_category: diagnostic
+  #   internal: true
+
+  # - platform: copy
+  #   source_id: wifi_signal_db
+  #   name: "WiFi Strength"
+  #   filters:
+  #     - lambda: return min(max(2 * (x + 100.0), 0.0), 100.0);
+  #   unit_of_measurement: "%"
+  #   entity_category: diagnostic
+
+  # - platform: homeassistant
+  #     entity_id: sensor.current_load
+  #     id: current_load
+  #     on_value:
+  #       - lvgl.label.update:
+  #           id: current_load_text
+  #           text:
+  #             format: "%.0fW"
+  #             args: ["x"]
+
+  #   - platform: homeassistant
+  #     entity_id: sensor.grid_meter_phase_a_power_2
+  #     id: grid_power
+  #     on_value:
+  #       - lvgl.label.update:
+  #           id: grid_power_text
+  #           text:
+  #             format: "%.3fkW"
+  #             args: ["x"]
+
+  #   - platform: homeassistant
+  #     entity_id: sensor.solar_inverter_pv_output_power
+  #     id: pv_power
+  #     on_value:
+  #       - lvgl.label.update:
+  #           id: pv_power_text
+  #           text:
+  #             format: "%.0fW"
+  #             args: ["x"]
+
+  #   - platform: homeassistant
+  #     entity_id: sensor.max_pv_power
+  #     id: max_pv_power
+  #     on_value:
+  #       - lvgl.label.update:
+  #           id: max_pv_power_text
+  #           text:
+  #             format: "%.0fW"    
+
+
+
+
+
+
+text_sensor:
+
+  - platform: homeassistant ## AR CONDICIONADO SALA
+    entity_id: $p1ac
+    #attribute: hvac_mode
+    id: ac_mode
+    on_value:
+      - lvgl.label.update:
+          id: p1_ac_icon
+          text: !lambda |-
+            std::string mode = x;
+            if (mode == "off") return  "\U000F159E";
+            if (mode == "cool") return "\U000F0717";
+            if (mode == "heat") return "\U000F0238";
+            return mode.c_str();   
+          text_color: !lambda |-
+            std::string mode = x;
+            if (mode == "off") return lv_color_hex(0xFF0000);   // azul
+            if (mode == "cool") return lv_color_hex(0x0000FF);  // ciano
+            if (mode == "heat") return lv_color_hex(0xFF4500);  // laranja
+            return lv_color_hex(0xFFFFFF);  // padrão: branco
+      - lvgl.widget.update:
+          id: p1_mode_off_btn  
+          border_color: !lambda |-
+            std::string mode = x;
+            if (mode == "off") return lv_color_hex(0xFFFFFF);   // branco
+            return lv_color_hex(0x333333);  // padrão: cinza escuro
+      - lvgl.widget.update:
+          id: p1_mode_cool_btn   
+          border_color: !lambda |-
+            std::string mode = x;
+            if (mode == "cool") return lv_color_hex(0xFFFFFF);   // branco
+            return lv_color_hex(0x333333);  // padrão: cinza escuro
+      - lvgl.widget.update:
+          id: p1_mode_heat_btn   
+          border_color: !lambda |-
+            std::string mode = x;
+            if (mode == "heat") return lv_color_hex(0xFFFFFF);   // branco
+            return lv_color_hex(0x333333);  // padrão: cinza escuro          
+  - platform: homeassistant ## AR CONDICIONADO SALA
+    entity_id: $p1ac
+    attribute: fan_mode
+    id: p1_ac_fan_mode
+    on_value:
+      - lvgl.widget.update:
+          id: p1_fan_auto_btn   
+          border_color: !lambda |-
+            std::string fan = x;
+            if (fan == "auto") return lv_color_hex(0xFFFFFF);   // white
+            return lv_color_hex(0x333333);  // default: dark gray
+      - lvgl.widget.update:
+          id: p1_fan_low_btn   
+          border_color: !lambda |-
+            std::string fan = x;
+            if (fan == "low") return lv_color_hex(0xFFFFFF);   // white
+            return lv_color_hex(0x333333);  // default: dark gray
+      - lvgl.widget.update:
+          id: p1_fan_med_btn   
+          border_color: !lambda |-
+            std::string fan = x;
+            if (fan == "med" || fan == "medium") return lv_color_hex(0xFFFFFF);   // white
+            return lv_color_hex(0x333333);  // default: dark gray
+      - lvgl.widget.update:
+          id: p1_fan_high_btn   
+          border_color: !lambda |-
+            std::string fan = x;
+            if (fan == "high") return lv_color_hex(0xFFFFFF);   // white
+            return lv_color_hex(0x333333);  // default: dark gray
+  - platform: homeassistant ## AR CONDICIONADO QUARTO 3
+    entity_id: $p3ac
+    #attribute: hvac_mode
+    id: p3_ac_mode
+    on_value:
+      - lvgl.label.update:
+          id: p3_ac_icon
+          text: !lambda |-
+            std::string mode = x;
+            if (mode == "off") return  "\U000F159E";
+            if (mode == "cool") return "\U000F0717";
+            if (mode == "heat") return "\U000F0238";
+            return mode.c_str();   
+          text_color: !lambda |-
+            std::string mode = x;
+            if (mode == "off") return lv_color_hex(0xFF0000);   // azul
+            if (mode == "cool") return lv_color_hex(0x0000FF);  // ciano
+            if (mode == "heat") return lv_color_hex(0xFF4500);  // laranja
+            return lv_color_hex(0xFFFFFF);  // padrão: branco
+      - lvgl.widget.update:
+          id: p3_mode_off_btn  
+          border_color: !lambda |-
+            std::string mode = x;
+            if (mode == "off") return lv_color_hex(0xFFFFFF);   // branco
+            return lv_color_hex(0x333333);  // padrão: cinza escuro
+      - lvgl.widget.update:
+          id: p3_mode_cool_btn   
+          border_color: !lambda |-
+            std::string mode = x;
+            if (mode == "cool") return lv_color_hex(0xFFFFFF);   // branco
+            return lv_color_hex(0x333333);  // padrão: cinza escuro
+      - lvgl.widget.update:
+          id: p3_mode_heat_btn   
+          border_color: !lambda |-
+            std::string mode = x;
+            if (mode == "heat") return lv_color_hex(0xFFFFFF);   // branco
+            return lv_color_hex(0x333333);  // padrão: cinza escuro          
+  - platform: homeassistant ## AR CONDICIONADO QUARTO 3
+    entity_id: $p3ac
+    attribute: fan_mode
+    id: p3_ac_fan_mode
+    on_value:
+      - lvgl.widget.update:
+          id: p3_fan_auto_btn   
+          border_color: !lambda |-
+            std::string fan = x;
+            if (fan == "diffuse") return lv_color_hex(0xFFFFFF);   // white
+            return lv_color_hex(0x333333);  // default: dark gray
+      - lvgl.widget.update:
+          id: p3_fan_low_btn   
+          border_color: !lambda |-
+            std::string fan = x;
+            if (fan == "low") return lv_color_hex(0xFFFFFF);   // white
+            return lv_color_hex(0x333333);  // default: dark gray
+      - lvgl.widget.update:
+          id: p3_fan_med_btn   
+          border_color: !lambda |-
+            std::string fan = x;
+            if (fan == "med" || fan == "medium") return lv_color_hex(0xFFFFFF);   // white
+            return lv_color_hex(0x333333);  // default: dark gray
+      - lvgl.widget.update:
+          id: p3_fan_high_btn   
+          border_color: !lambda |-
+            std::string fan = x;
+            if (fan == "high") return lv_color_hex(0xFFFFFF);   // white
+            return lv_color_hex(0x333333);  // default: dark gray
+  - platform: homeassistant ## AR CONDICIONADO QUARTO 2
+    entity_id: $p6ac
+    #attribute: hvac_mode
+    id: p6_ac_mode
+    on_value:
+      - lvgl.label.update:
+          id: p6_ac_icon
+          text: !lambda |-
+            std::string mode = x;
+            if (mode == "off") return  "\U000F159E";
+            if (mode == "cool") return "\U000F0717";
+            if (mode == "heat") return "\U000F0238";
+            return mode.c_str();   
+          text_color: !lambda |-
+            std::string mode = x;
+            if (mode == "off") return lv_color_hex(0xFF0000);   // azul
+            if (mode == "cool") return lv_color_hex(0x0000FF);  // ciano
+            if (mode == "heat") return lv_color_hex(0xFF4500);  // laranja
+            return lv_color_hex(0xFFFFFF);  // padrão: branco
+      - lvgl.widget.update:
+          id: p6_mode_off_btn  
+          border_color: !lambda |-
+            std::string mode = x;
+            if (mode == "off") return lv_color_hex(0xFFFFFF);   // branco
+            return lv_color_hex(0x333333);  // padrão: cinza escuro
+      - lvgl.widget.update:
+          id: p6_mode_cool_btn   
+          border_color: !lambda |-
+            std::string mode = x;
+            if (mode == "cool") return lv_color_hex(0xFFFFFF);   // branco
+            return lv_color_hex(0x333333);  // padrão: cinza escuro
+      - lvgl.widget.update:
+          id: p6_mode_heat_btn   
+          border_color: !lambda |-
+            std::string mode = x;
+            if (mode == "heat") return lv_color_hex(0xFFFFFF);   // branco
+            return lv_color_hex(0x333333);  // padrão: cinza escuro          
+  - platform: homeassistant ## AR CONDICIONADO QUARTO 2
+    entity_id: $p6ac
+    attribute: fan_mode
+    id: p6_ac_fan_mode
+    on_value:
+      - lvgl.widget.update:
+          id: p6_fan_auto_btn   
+          border_color: !lambda |-
+            std::string fan = x;
+            if (fan == "diffuse") return lv_color_hex(0xFFFFFF);   // white
+            return lv_color_hex(0x333333);  // default: dark gray
+      - lvgl.widget.update:
+          id: p6_fan_low_btn   
+          border_color: !lambda |-
+            std::string fan = x;
+            if (fan == "low") return lv_color_hex(0xFFFFFF);   // white
+            return lv_color_hex(0x333333);  // default: dark gray
+      - lvgl.widget.update:
+          id: p6_fan_med_btn   
+          border_color: !lambda |-
+            std::string fan = x;
+            if (fan == "med" || fan == "medium") return lv_color_hex(0xFFFFFF);   // white
+            return lv_color_hex(0x333333);  // default: dark gray
+      - lvgl.widget.update:
+          id: p6_fan_high_btn   
+          border_color: !lambda |-
+            std::string fan = x;
+            if (fan == "high") return lv_color_hex(0xFFFFFF);   // white
+            return lv_color_hex(0x333333);  // default: dark gray
+
+  - platform: homeassistant ## AR CONDICIONADO SUITE
+    entity_id: $p4ac
+    #attribute: hvac_mode
+    id: p4_ac_mode
+    on_value:
+      - lvgl.label.update:
+          id: p4_ac_icon
+          text: !lambda |-
+            std::string mode = x;
+            if (mode == "off") return  "\U000F159E";
+            if (mode == "cool") return "\U000F0717";
+            if (mode == "heat") return "\U000F0238";
+            return mode.c_str();   
+          text_color: !lambda |-
+            std::string mode = x;
+            if (mode == "off") return lv_color_hex(0xFF0000);   // azul
+            if (mode == "cool") return lv_color_hex(0x0000FF);  // ciano
+            if (mode == "heat") return lv_color_hex(0xFF4500);  // laranja
+            return lv_color_hex(0xFFFFFF);  // padrão: branco
+      - lvgl.widget.update:
+          id: p4_mode_off_btn  
+          border_color: !lambda |-
+            std::string mode = x;
+            if (mode == "off") return lv_color_hex(0xFFFFFF);   // branco
+            return lv_color_hex(0x333333);  // padrão: cinza escuro
+      - lvgl.widget.update:
+          id: p4_mode_cool_btn   
+          border_color: !lambda |-
+            std::string mode = x;
+            if (mode == "cool") return lv_color_hex(0xFFFFFF);   // branco
+            return lv_color_hex(0x333333);  // padrão: cinza escuro
+      - lvgl.widget.update:
+          id: p4_mode_heat_btn   
+          border_color: !lambda |-
+            std::string mode = x;
+            if (mode == "heat") return lv_color_hex(0xFFFFFF);   // branco
+            return lv_color_hex(0x333333);  // padrão: cinza escuro          
+  - platform: homeassistant ## AR CONDICIONADO SUITE
+    entity_id: $p4ac
+    attribute: fan_mode
+    id: p4_ac_fan_mode
+    on_value:
+      - lvgl.widget.update:
+          id: p4_fan_auto_btn   
+          border_color: !lambda |-
+            std::string fan = x;
+            if (fan == "auto") return lv_color_hex(0xFFFFFF);   // white
+            return lv_color_hex(0x333333);  // default: dark gray
+      - lvgl.widget.update:
+          id: p4_fan_low_btn   
+          border_color: !lambda |-
+            std::string fan = x;
+            if (fan == "low") return lv_color_hex(0xFFFFFF);   // white
+            return lv_color_hex(0x333333);  // default: dark gray
+      - lvgl.widget.update:
+          id: p4_fan_med_btn   
+          border_color: !lambda |-
+            std::string fan = x;
+            if (fan == "med" || fan == "medium") return lv_color_hex(0xFFFFFF);   // white
+            return lv_color_hex(0x333333);  // default: dark gray
+      - lvgl.widget.update:
+          id: p4_fan_high_btn   
+          border_color: !lambda |-
+            std::string fan = x;
+            if (fan == "high") return lv_color_hex(0xFFFFFF);   // white
+            return lv_color_hex(0x333333);  // default: dark gray
+
+
+
+  - platform: template
+    name: "Time"
+    id: time_text
+    update_interval: 20s
+    lambda: |-
+        static char time_buf[17];
+        auto now = id(sntp_time).now();
+        bool is_pm = now.hour >= 12;
+        snprintf(time_buf, sizeof(time_buf), "%02d:%02d", now.hour, now.minute);
+        return {time_buf};
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
+      entity_category: diagnostic
+    ssid:
+      name: "Connected SSID"
+      entity_category: diagnostic
+    mac_address:
+      name: "Mac Address"
+      entity_category: diagnostic        
+
+
+
+
+
+number:
+  - platform: template
+    name: LVGL Screen timeout
+    optimistic: true
+    id: display_timeout
+    unit_of_measurement: "s"
+    initial_value: 45
+    restore_value: true
+    min_value: 10
+    max_value: 180
+    step: 5
+    mode: box
+
+binary_sensor:
+
+
+  - platform: homeassistant ##botão p1b1  
+    id: button_p1b1
+    entity_id: $p1b1entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p1b1
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p1b2  
+    id: button_p1b2
+    entity_id: $p1b2entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p1b2
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p1b3  
+    id: button_p1b3
+    entity_id: $p1b3entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p1b3
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p1b4  
+    id: button_p1b4
+    entity_id: $p1b4entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p1b4
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p1b5  
+    id: button_p1b5
+    entity_id: $p1b5entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p1b5
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p1b6  
+    id: button_p1b6
+    entity_id: $p1b6entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p1b6
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p1b7  
+    id: button_p1b7
+    entity_id: $p1b7entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p1b7
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p1b8  
+    id: button_p1b8
+    entity_id: $p1b8entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p1b8
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p1b9  
+    id: button_p1b9
+    entity_id: $p1b9entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p1b9
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p1b10  
+    id: button_p1b10
+    entity_id: $p1b10entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p1b10
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p2b1  
+    id: button_p2b1
+    entity_id: $p2b1entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p2b1
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p2b2  
+    id: button_p2b2
+    entity_id: $p2b2entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p2b2
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p2b3  
+    id: button_p2b3
+    entity_id: $p2b3entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p2b3
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p2b4  
+    id: button_p2b4
+    entity_id: $p2b4entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p2b4
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p2b5  
+    id: button_p2b5
+    entity_id: $p2b5entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p2b5
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p2b6  
+    id: button_p2b6
+    entity_id: $p2b6entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p2b6
+          state:
+            checked: !lambda return x;
+  # - platform: homeassistant ##botão p2b7  
+  #   id: button_p2b7
+  #   entity_id: $p2b7entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p2b7
+  #         state:
+  #           checked: !lambda return x;
+  # - platform: homeassistant ##botão p2b8  
+  #   id: button_p2b8
+  #   entity_id: $p2b8entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p2b8
+  #         state:
+  #           checked: !lambda return x;
+  # - platform: homeassistant ##botão p2b9  
+  #   id: button_p2b9
+  #   entity_id: $p2b9entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p2b9
+  #         state:
+  #           checked: !lambda return x;
+  # - platform: homeassistant ##botão p2b10  
+  #   id: button_p2b10
+  #   entity_id: $p2b10entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p2b10
+  #         state:
+  #           checked: !lambda return x;
+
+  - platform: homeassistant ##botão p3b1  
+    id: button_p3b1
+    entity_id: $p3b1entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p3b1
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p3b2  
+    id: button_p3b2
+    entity_id: $p3b2entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p3b2
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p3b3  
+    id: button_p3b3
+    entity_id: $p3b3entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p3b3
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p3b4  
+    id: button_p3b4
+    entity_id: $p3b4entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p3b4
+          state:
+            checked: !lambda return x;
+  # - platform: homeassistant ##botão p3b5  
+  #   id: button_p3b5
+  #   entity_id: $p3b5entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p3b5
+  #         state:
+  #           checked: !lambda return x;
+  # - platform: homeassistant ##botão p3b6  
+  #   id: button_p3b6
+  #   entity_id: $p3b6entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p3b6
+  #         state:
+  #           checked: !lambda return x;
+  # - platform: homeassistant ##botão p3b7  
+  #   id: button_p3b7
+  #   entity_id: $p3b7entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p3b7
+  #         state:
+  #           checked: !lambda return x;
+  # - platform: homeassistant ##botão p3b8  
+  #   id: button_p3b8
+  #   entity_id: $p3b8entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p3b8
+  #         state:
+  #           checked: !lambda return x;
+  # - platform: homeassistant ##botão p3b9  
+  #   id: button_p3b9
+  #   entity_id: $p3b9entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p3b9
+  #         state:
+  #           checked: !lambda return x;
+  # - platform: homeassistant ##botão p3b10  
+  #   id: button_p3b10
+  #   entity_id: $p3b10entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p3b10
+  #         state:
+  #           checked: !lambda return x;  
+
+  - platform: homeassistant ##botão p4b1  
+    id: button_p4b1
+    entity_id: $p4b1entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p4b1
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p4b2  
+    id: button_p4b2
+    entity_id: $p4b2entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p4b2
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p4b3  
+    id: button_p4b3
+    entity_id: $p4b3entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p4b3
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p4b4  
+    id: button_p4b4
+    entity_id: $p4b4entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p4b4
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p4b5  
+    id: button_p4b5
+    entity_id: $p4b5entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p4b5
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p4b6  
+    id: button_p4b6
+    entity_id: $p4b6entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p4b6
+          state:
+            checked: !lambda return x;
+  # - platform: homeassistant ##botão p4b7  
+  #   id: button_p4b7
+  #   entity_id: $p4b7entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p4b7
+  #         state:
+  #           checked: !lambda return x;
+  - platform: homeassistant ##botão p4b8  
+    id: button_p4b8
+    entity_id: $p4b8entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p4b8
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p4b9  
+    id: button_p4b9
+    entity_id: $p4b9entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p4b9
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p4b10  
+    id: button_p4b10
+    entity_id: $p4b10entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p4b10
+          state:
+            checked: !lambda return x;  
+  - platform: homeassistant ##botão p5b1  
+    id: button_p5b1
+    entity_id: $p5b1entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p5b1
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p5b2  
+    id: button_p5b2
+    entity_id: $p5b2entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p5b2
+          state:
+            checked: !lambda return x;
+  # - platform: homeassistant ##botão p5b3  
+  #   id: button_p5b3
+  #   entity_id: $p5b3entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p5b3
+  #         state:
+  #           checked: !lambda return x;
+  # - platform: homeassistant ##botão p5b4  
+  #   id: button_p5b4
+  #   entity_id: $p5b4entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p5b4
+  #         state:
+  #           checked: !lambda return x;
+  # - platform: homeassistant ##botão p5b5  
+  #   id: button_p5b5
+  #   entity_id: $p5b5entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p5b5
+  #         state:
+  #           checked: !lambda return x;
+  # - platform: homeassistant ##botão p5b6  
+  #   id: button_p5b6
+  #   entity_id: $p5b6entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p5b6
+  #         state:
+  #           checked: !lambda return x;
+  # - platform: homeassistant ##botão p5b7  
+  #   id: button_p5b7
+  #   entity_id: $p5b7entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p5b7
+  #         state:
+  #           checked: !lambda return x;
+  - platform: homeassistant ##botão p5b8  
+    id: button_p5b8
+    entity_id: $p5b8entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p5b8
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p5b9  
+    id: button_p5b9
+    entity_id: $p5b9entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p5b9
+          state:
+            checked: !lambda return x;
+  # - platform: homeassistant ##botão p5b10  
+  #   id: button_p5b10
+  #   entity_id: $p5b10entity  
+  #   trigger_on_initial_state: true
+  #   on_state:
+  #     then:
+  #       lvgl.widget.update:
+  #         id: lv_p5b10
+  #         state:
+  #           checked: !lambda return x;  
+  - platform: homeassistant ##botão p5b15  
+    id: button_p5b15
+    entity_id: $p5b15entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p5b15
+          state:
+            checked: !lambda return x;
+  - platform: homeassistant ##botão p5b16  
+    id: button_p5b16
+    entity_id: $p5b16entity  
+    trigger_on_initial_state: true
+    on_state:
+      then:
+        lvgl.widget.update:
+          id: lv_p5b16
+          state:
+            checked: !lambda return x;            
+
+
+
+color:
+  - id: text_color
+    hex: FFFFFF
+  - id: light_red
+    hex: FF3340
+  - id: red
+    hex: FF0000
+  - id: white
+    hex: FFFFFF
+  - id: light_blue
+    hex: 009EFF
+  - id: grey
+    hex: 989898
+  - id: light_green
+    hex: A8F698
+  - id: orange
+    hex: CC5E14
+  - id: green
+    hex: 2CAE65
+  - id: blue
+    hex: 3792CB
+  - id: dark_blue
+    hex: 0000FF
+
+
+
+time:
+  - platform: sntp
+    id: sntp_time
+    timezone: "America/Sao_Paulo"
+    on_time_sync:
+      then:
+        - script.execute: time_update
+    on_time:
+      - seconds: 0
+        minutes: "*"
+        then:
+          - script.execute: time_update
+
+script:
+  - id: time_update
+    then:
+      - lvgl.label.update:
+          id: display_time
+          text: !lambda |-
+            static char time_buf[17];
+            auto now = id(sntp_time).now();
+            bool is_pm = now.hour >= 12;
+            int hour_12 = now.hour % 24;
+            if (hour_12 == 0) { hour_12 = 12; }
+            snprintf(time_buf, sizeof(time_buf), "%02d:%02d", hour_12, now.minute);
+            return time_buf;
+  
+  - id: update_menu_comodos
+    then:
+      - lvgl.label.update:
+          id: menu_comodos_label
+          text: $menu
+      - lvgl.widget.update: 
+          id: menu_comodos 
+          state: 
+            checked: false   
+      - lvgl.widget.update:
+          id: popup_menu_comodos
+          hidden: true                       
+

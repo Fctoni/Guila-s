@@ -1,0 +1,86 @@
+# TESTE COM I2C EM PINOS ALTERNATIVOS
+# Se GPIO32/33 não funcionarem, usar pinos alternativos
+
+substitutions:
+  devicename: test-i2c-alt
+
+esphome:
+  name: ${devicename}
+
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: ESP32S3
+  flash_size: 4MB
+  framework:
+    type: arduino
+
+logger:
+
+api:
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: "Toniezzer"
+  password: "caroletoni"
+
+# Dois barramentos SPI
+spi:
+  - id: tft
+    clk_pin: GPIO14
+    mosi_pin: GPIO13
+    miso_pin: GPIO12
+
+# Backlight
+output:
+  - platform: ledc
+    pin: GPIO27
+    id: backlight_pwm
+
+light:
+  - platform: monochromatic
+    output: backlight_pwm
+    name: "Backlight"
+
+# I2C em pinos alternativos (NÃO 32/33)
+i2c:
+  sda: GPIO8   # Pino alternativo
+  scl: GPIO9   # Pino alternativo
+
+# Display ST7796
+display:
+  - platform: ili9xxx
+    model: ST7796
+    id: my_display
+    cs_pin: GPIO15
+    dc_pin: GPIO2
+    spi_id: tft
+    dimensions:
+      width: 480
+      height: 320
+    lambda: |-
+      it.print(240, 160, id(my_font), "Display OK!");
+
+# Touch GT911 - AVISO: Pinos diferentes do hardware!
+touchscreen:
+  - platform: gt911
+    id: my_touchscreen
+    # interrupt_pin: GPIO21  # Comentado para teste
+    # reset_pin: GPIO25      # Comentado para teste
+    on_touch:
+      - logger.log: "Touch!"
+
+font:
+  - file: "gfonts://Roboto"
+    id: my_font
+    size: 24
+
+
+
+
+
+
+
+
+
