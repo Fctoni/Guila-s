@@ -1,0 +1,1109 @@
+## UEDX48480040E-WB-A - Display 4" 480x480 Touch Capacitivo ##
+## Termostato Piso Aquecido - Interface LVGL Otimizada ##
+## Driver: GC9503V (RGB Paralelo) + FT6336U (Touch I2C) ##
+
+substitutions:
+  devicename: termostato-piso
+  friendly_name: "Termostato Piso"
+
+esphome:
+  name: ${devicename}
+  friendly_name: ${friendly_name}
+  platformio_options:
+    build_flags: "-DBOARD_HAS_PSRAM"
+    board_build.arduino.memory_type: qio_opi
+    board_build.flash_mode: dio
+
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: esp32s3
+  flash_size: 16MB
+  framework:
+    type: esp-idf
+
+psram:
+  mode: octal
+  speed: 80MHz
+
+# ============================================
+# Variaveis Globais - Termostato
+# ============================================
+globals:
+  - id: target_temp
+    type: float
+    initial_value: '22.0'
+    restore_value: true
+  - id: current_temp
+    type: float
+    initial_value: '20.5'
+  - id: is_heating
+    type: bool
+    initial_value: 'false'
+  - id: is_enabled
+    type: bool
+    initial_value: 'true'
+    restore_value: true
+  # Configuracoes
+  - id: histerese
+    type: float
+    initial_value: '0.5'
+    restore_value: true
+  - id: temp_min
+    type: float
+    initial_value: '18.0'
+    restore_value: true
+  - id: temp_max
+    type: float
+    initial_value: '25.0'
+    restore_value: true
+
+# ============================================
+# Logging e Conectividade
+# ============================================
+logger:
+  level: INFO
+
+api:
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: "${devicename}-AP"
+    password: "termostato123"
+
+captive_portal:
+
+# ============================================
+# Sensor de Temperatura do Home Assistant
+# ============================================
+sensor:
+  - platform: homeassistant
+    id: ha_temp_sensor
+    entity_id: sensor.piso_temperatura
+    on_value:
+      then:
+        - globals.set:
+            id: current_temp
+            value: !lambda 'return x;'
+        - script.execute: check_heating
+        - lvgl.label.update:
+            id: lbl_current_temp
+            text:
+              format: "%.1f"
+              args: ['id(current_temp)']
+
+  # Sensor WiFi Signal para info
+  - platform: wifi_signal
+    name: "${friendly_name} WiFi Signal"
+    id: wifi_signal_db
+    update_interval: 60s
+
+# ============================================
+# Rele do Aquecimento - GPIO45
+# ============================================
+switch:
+  - platform: gpio
+    pin: GPIO45
+    id: heating_relay
+    name: "${friendly_name} Aquecimento"
+    restore_mode: ALWAYS_OFF
+    on_turn_on:
+      - globals.set:
+          id: is_heating
+          value: 'true'
+      - lvgl.widget.show: icon_heating
+    on_turn_off:
+      - globals.set:
+          id: is_heating
+          value: 'false'
+      - lvgl.widget.hide: icon_heating
+
+  # Switch para ligar/desligar termostato
+  - platform: template
+    name: "${friendly_name} Habilitado"
+    id: thermostat_enabled
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_ON
+    on_turn_on:
+      - globals.set:
+          id: is_enabled
+          value: 'true'
+      - script.execute: check_heating
+      - lvgl.widget.update:
+          id: btn_power
+          state:
+            checked: true
+    on_turn_off:
+      - globals.set:
+          id: is_enabled
+          value: 'false'
+      - switch.turn_off: heating_relay
+      - lvgl.widget.update:
+          id: btn_power
+          state:
+            checked: false
+
+# ============================================
+# Scripts
+# ============================================
+script:
+  - id: check_heating
+    then:
+      - if:
+          condition:
+            lambda: 'return id(is_enabled);'
+          then:
+            - if:
+                condition:
+                  lambda: 'return id(current_temp) < (id(target_temp) - id(histerese));'
+                then:
+                  - switch.turn_on: heating_relay
+            - if:
+                condition:
+                  lambda: 'return id(current_temp) >= (id(target_temp) + id(histerese));'
+                then:
+                  - switch.turn_off: heating_relay
+
+  - id: increase_temp
+    then:
+      - if:
+          condition:
+            lambda: 'return id(target_temp) < id(temp_max);'
+          then:
+            - globals.set:
+                id: target_temp
+                value: !lambda 'return id(target_temp) + 0.5;'
+            - lvgl.label.update:
+                id: lbl_target_temp
+                text:
+                  format: "%.1f"
+                  args: ['id(target_temp)']
+            - script.execute: check_heating
+
+  - id: decrease_temp
+    then:
+      - if:
+          condition:
+            lambda: 'return id(target_temp) > id(temp_min);'
+          then:
+            - globals.set:
+                id: target_temp
+                value: !lambda 'return id(target_temp) - 0.5;'
+            - lvgl.label.update:
+                id: lbl_target_temp
+                text:
+                  format: "%.1f"
+                  args: ['id(target_temp)']
+            - script.execute: check_heating
+
+# ============================================
+# Number para expor temperatura alvo ao HA
+# ============================================
+number:
+  - platform: template
+    name: "${friendly_name} Temperatura Alvo"
+    id: ha_target_temp
+    min_value: 18
+    max_value: 25
+    step: 0.5
+    unit_of_measurement: "°C"
+    optimistic: true
+    restore_value: true
+    set_action:
+      - globals.set:
+          id: target_temp
+          value: !lambda 'return x;'
+      - lvgl.label.update:
+          id: lbl_target_temp
+          text:
+            format: "%.1f"
+            args: ['x']
+      - script.execute: check_heating
+
+# ============================================
+# SPI para inicializacao do display GC9503V
+# ============================================
+spi:
+  id: my_spi
+  clk_pin: 48
+  mosi_pin: 47
+
+# ============================================
+# I2C para Touchscreen FT6336U
+# ============================================
+i2c:
+  sda: GPIO40
+  scl: GPIO41
+  scan: true
+  id: i2c_touch
+
+# ============================================
+# Backlight (PWM)
+# ============================================
+output:
+  - platform: ledc
+    pin: GPIO38
+    frequency: 10000Hz
+    id: backlight_pwm
+
+light:
+  - platform: monochromatic
+    output: backlight_pwm
+    name: "${friendly_name} Backlight"
+    id: backlight
+    restore_mode: ALWAYS_ON
+    default_transition_length: 500ms
+
+# ============================================
+# Display GC9503V - RGB Paralelo 480x480
+# ============================================
+display:
+  - platform: mipi_rgb
+    model: CUSTOM
+    id: main_display
+    color_order: RGB
+    dimensions:
+      width: 480
+      height: 480  
+    de_pin:
+      number: 18
+      inverted: false
+    hsync_pin:
+      number: 16
+      inverted: false
+    vsync_pin:
+      number: 17
+      inverted: false
+    pclk_pin: 21
+    pclk_inverted: false
+    pclk_frequency: 17MHz
+    hsync_pulse_width: 8
+    hsync_back_porch: 40
+    hsync_front_porch: 40
+    vsync_pulse_width: 2
+    vsync_back_porch: 4
+    vsync_front_porch: 16
+    data_pins:
+      red: [4, 3, 2, 1, 0]
+      green: [10, 9, 8, 7, 6, 5]
+      blue: [15, 14, 13, 12, 11]
+    spi_id: my_spi
+    cs_pin: 39
+    reset_pin: 44
+    init_sequence:
+      - delay 150ms
+      - [0xf0, 0x55, 0xaa, 0x52, 0x08, 0x00]
+      - [0xf6, 0x5a, 0x87]
+      - [0xc1, 0x3f]
+      - [0xc2, 0x0e]
+      - [0xc6, 0xf8]
+      - [0xc9, 0x10]
+      - [0xcd, 0x25]
+      - [0xf8, 0x8a]
+      - [0xac, 0x45]
+      - [0xa0, 0xdd]
+      - [0xa7, 0x47]
+      - [0xfa, 0x00, 0x00, 0x00, 0x04]
+      - [0x86, 0x99, 0xa3, 0xa3, 0x51]
+      - [0xa3, 0xee]
+      - [0xfd, 0x3c, 0x3c, 0x00]
+      - [0x71, 0x48]
+      - [0x72, 0x48]
+      - [0x73, 0x00, 0x44]
+      - [0x97, 0xee]
+      - [0x83, 0x93]
+      - [0x9a, 0x72]
+      - [0x9b, 0x5a]
+      - [0x82, 0x2c, 0x2c]
+      - [0x6d, 0x00, 0x1f, 0x19, 0x1a, 0x10, 0x0e, 0x0c, 0x0a, 0x02, 0x07, 0x1e, 0x1e, 0x1e, 0x1e, 0x1e, 0x1e, 0x1e,
+                        0x1e, 0x1e, 0x1e, 0x1e, 0x1e, 0x08, 0x01, 0x09, 0x0b, 0x0d, 0x0f, 0x1a, 0x19, 0x1f, 0x00]
+      - [0x64, 0x38, 0x05, 0x01, 0xdb, 0x03, 0x03, 0x38, 0x04, 0x01, 0xdc, 0x03, 0x03, 0x7a, 0x7a, 0x7a, 0x7a]
+      - [0x65, 0x38, 0x03, 0x01, 0xdd, 0x03, 0x03, 0x38, 0x02, 0x01, 0xde, 0x03, 0x03, 0x7a, 0x7a, 0x7a, 0x7a]
+      - [0x66, 0x38, 0x01, 0x01, 0xdf, 0x03, 0x03, 0x38, 0x00, 0x01, 0xe0, 0x03, 0x03, 0x7a, 0x7a, 0x7a, 0x7a]
+      - [0x67, 0x30, 0x01, 0x01, 0xe1, 0x03, 0x03, 0x30, 0x02, 0x01, 0xe2, 0x03, 0x03, 0x7a, 0x7a, 0x7a, 0x7a]
+      - [0x68, 0x00, 0x08, 0x15, 0x08, 0x15, 0x7a, 0x7a, 0x08, 0x15, 0x08, 0x15, 0x7a, 0x7a]
+      - [0x60, 0x38, 0x08, 0x7a, 0x7a, 0x38, 0x09, 0x7a, 0x7a]
+      - [0x63, 0x31, 0xe4, 0x7a, 0x7a, 0x31, 0xe5, 0x7a, 0x7a]
+      - [0x69, 0x04, 0x22, 0x14, 0x22, 0x14, 0x22, 0x08]
+      - [0x6b, 0x07]
+      - [0x7a, 0x08, 0x13]
+      - [0x7b, 0x08, 0x13]
+      - [0xd1, 0x00, 0x00, 0x00, 0x04, 0x00, 0x12, 0x00, 0x18, 0x00, 0x21, 0x00, 0x2a, 0x00, 0x35, 0x00, 0x47, 0x00,
+            0x56, 0x00, 0x90, 0x00, 0xe5, 0x01, 0x68, 0x01, 0xd5, 0x01, 0xd7, 0x02, 0x36, 0x02, 0xa6, 0x02, 0xee,
+            0x03, 0x48, 0x03, 0xa0, 0x03, 0xba, 0x03, 0xc5, 0x03, 0xd0, 0x03, 0xe0, 0x03, 0xea, 0x03, 0xfa, 0x03, 0xff]
+      - [0xd2, 0x00, 0x00, 0x00, 0x04, 0x00, 0x12, 0x00, 0x18, 0x00, 0x21, 0x00, 0x2a, 0x00, 0x35, 0x00, 0x47, 0x00,
+            0x56, 0x00, 0x90, 0x00, 0xe5, 0x01, 0x68, 0x01, 0xd5, 0x01, 0xd7, 0x02, 0x36, 0x02, 0xa6, 0x02, 0xee,
+            0x03, 0x48, 0x03, 0xa0, 0x03, 0xba, 0x03, 0xc5, 0x03, 0xd0, 0x03, 0xe0, 0x03, 0xea, 0x03, 0xfa, 0x03, 0xff]
+      - [0xd3, 0x00, 0x00, 0x00, 0x04, 0x00, 0x12, 0x00, 0x18, 0x00, 0x21, 0x00, 0x2a, 0x00, 0x35, 0x00, 0x47, 0x00,
+            0x56, 0x00, 0x90, 0x00, 0xe5, 0x01, 0x68, 0x01, 0xd5, 0x01, 0xd7, 0x02, 0x36, 0x02, 0xa6, 0x02, 0xee,
+            0x03, 0x48, 0x03, 0xa0, 0x03, 0xba, 0x03, 0xc5, 0x03, 0xd0, 0x03, 0xe0, 0x03, 0xea, 0x03, 0xfa, 0x03, 0xff]
+      - [0xd4, 0x00, 0x00, 0x00, 0x04, 0x00, 0x12, 0x00, 0x18, 0x00, 0x21, 0x00, 0x2a, 0x00, 0x35, 0x00, 0x47, 0x00,
+            0x56, 0x00, 0x90, 0x00, 0xe5, 0x01, 0x68, 0x01, 0xd5, 0x01, 0xd7, 0x02, 0x36, 0x02, 0xa6, 0x02, 0xee,
+            0x03, 0x48, 0x03, 0xa0, 0x03, 0xba, 0x03, 0xc5, 0x03, 0xd0, 0x03, 0xe0, 0x03, 0xea, 0x03, 0xfa, 0x03, 0xff]
+      - [0xd5, 0x00, 0x00, 0x00, 0x04, 0x00, 0x12, 0x00, 0x18, 0x00, 0x21, 0x00, 0x2a, 0x00, 0x35, 0x00, 0x47, 0x00,
+            0x56, 0x00, 0x90, 0x00, 0xe5, 0x01, 0x68, 0x01, 0xd5, 0x01, 0xd7, 0x02, 0x36, 0x02, 0xa6, 0x02, 0xee,
+            0x03, 0x48, 0x03, 0xa0, 0x03, 0xba, 0x03, 0xc5, 0x03, 0xd0, 0x03, 0xe0, 0x03, 0xea, 0x03, 0xfa, 0x03, 0xff]
+      - [0xd6, 0x00, 0x00, 0x00, 0x04, 0x00, 0x12, 0x00, 0x18, 0x00, 0x21, 0x00, 0x2a, 0x00, 0x35, 0x00, 0x47, 0x00,
+            0x56, 0x00, 0x90, 0x00, 0xe5, 0x01, 0x68, 0x01, 0xd5, 0x01, 0xd7, 0x02, 0x36, 0x02, 0xa6, 0x02, 0xee,
+            0x03, 0x48, 0x03, 0xa0, 0x03, 0xba, 0x03, 0xc5, 0x03, 0xd0, 0x03, 0xe0, 0x03, 0xea, 0x03, 0xfa, 0x03, 0xff]
+      - [0x11]
+      - delay 120ms
+      - [0x29]
+      - delay 20ms
+      - [0x00]
+
+# ============================================
+# Touchscreen FT6336U
+# ============================================
+touchscreen:
+  - platform: ft63x6
+    id: main_touch
+    i2c_id: i2c_touch
+    display: main_display
+    on_release:
+      - if:
+          condition: lvgl.is_paused
+          then:
+            - lvgl.resume:
+            - lvgl.widget.redraw:
+            - light.turn_on: backlight
+
+# ============================================
+# Fontes - Otimizadas para 480x480
+# ============================================
+font:
+  # Labels pequenos
+  - file: "gfonts://Roboto"
+    id: font_small
+    size: 20
+    bpp: 4
+
+  # Labels medios
+  - file: "gfonts://Roboto"
+    id: font_medium
+    size: 28
+    bpp: 4
+
+  # Labels grandes
+  - file: "gfonts://Roboto@500"
+    id: font_large
+    size: 42
+    bpp: 4
+
+  # Temperatura ENORME no centro
+  - file: "gfonts://Roboto@300"
+    id: font_temp_huge
+    size: 140
+    bpp: 4
+
+  # Temperatura grande
+  - file: "gfonts://Roboto@300"
+    id: font_temp_large
+    size: 72
+    bpp: 4
+
+  # Graus Celsius
+  - file: "gfonts://Roboto@300"
+    id: font_celsius
+    size: 48
+    bpp: 4
+
+  # Icones Material Design
+  - file: "fonts/materialdesignicons-webfont.ttf"
+    id: icons_32
+    size: 32
+    bpp: 4
+    glyphs: [
+      "\U000F0238",  # fire
+      "\U000F0E0E",  # fire-off  
+      "\U000F050F",  # thermometer
+      "\U000F08BB",  # cog (config)
+      "\U000F0374",  # minus
+      "\U000F0415",  # plus
+      "\U000F004D",  # arrow-left
+      "\U000F0054",  # arrow-right
+      "\U000F0156",  # check
+      "\U000F0F52",  # home-thermometer
+      "\U000F18B6"   # floor-lamp (piso)
+
+    ]
+
+  - file: "fonts/materialdesignicons-webfont.ttf"
+    id: icons_48
+    size: 48
+    bpp: 4
+    glyphs: [
+      "\U000F0238",  # fire
+      "\U000F0374",  # minus
+      "\U000F0415",  # plus
+      "\U000F0F52"   # home-thermometer
+    ]
+
+  - file: "fonts/materialdesignicons-webfont.ttf"
+    id: icons_80
+    size: 80
+    bpp: 4
+    glyphs: [
+      "\U000F0374",  # minus
+      "\U000F0415"   # plus
+    ]
+
+# ============================================
+# LVGL - Interface Grafica
+# ============================================
+lvgl:
+  displays:
+    - main_display
+  touchscreens:
+    - touchscreen_id: main_touch
+  buffer_size: 25%
+  log_level: WARN
+  disp_bg_color: 0x000000
+  default_font: font_medium
+
+  # ==========================================
+  # Definicoes de Estilo
+  # ==========================================
+  style_definitions:
+    # Estilo dos cards/containers
+    - id: style_card
+      bg_color: 0x808080
+      radius: 16
+      border_width: 1
+      border_color: 0x0f3460
+      pad_all: 12
+
+    # Estilo dos botoes circulares
+    - id: style_btn_circle
+      radius: 50
+      bg_color: 0x808080
+      border_width: 2
+      border_color: 0x1a1a2e
+
+    # Estilo dos botoes de configuracao
+    - id: style_btn_config
+      bg_color: 0x16213e
+      radius: 12
+      border_width: 1
+      border_color: 0x808080
+      pad_all: 16
+
+  # ==========================================
+  # Idle timeout - desliga backlight
+  # ==========================================
+  on_idle:
+    - timeout: 120s
+      then:
+        - light.turn_off:
+            id: backlight
+            transition_length: 1s
+        - lvgl.pause:
+            show_snow: false
+
+  # ==========================================
+  # PAGINAS
+  # ==========================================
+  pages:
+
+    # ========================================
+    # PAGINA PRINCIPAL
+    # ========================================
+    - id: main_page
+      bg_color: 0x000000
+      widgets:
+
+        # --- Header ---
+        - obj:
+            align: TOP_MID
+            y: 10
+            width: 460
+            height: 70
+            bg_opa: TRANSP
+            border_width: 0
+            layout:
+              type: flex
+              flex_flow: ROW
+              flex_align_main: SPACE_BETWEEN
+              flex_align_cross: CENTER
+            widgets:
+              # Titulo
+              - label:
+                  text: "Piso Aquecido"
+                  text_font: font_large
+                  text_color: 0xe0e0e0
+
+              # Botao Power (on/off)
+              - button:
+                  id: btn_power
+                  width: 50
+                  height: 50
+                  checkable: true
+                  styles: style_btn_circle
+                  state:
+                    checked: true
+                  bg_color: 0x0f3460
+                  checked:
+                    bg_color: 0xFF0000
+                  widgets:
+                    - label:
+                        align: CENTER
+                        text_font: icons_32
+                        text: "\U000F050F"
+                        text_color: 0xe0e0e0
+                  on_click:
+                    - switch.toggle: thermostat_enabled
+
+
+        - obj:         # --- Card Central - Temperatura ---
+            id: card_temp
+            align: CENTER
+            y: -20
+            width: 380
+            height: 260
+            styles: style_card
+            layout:
+              type: flex
+              flex_flow: COLUMN
+              flex_align_main: CENTER
+              flex_align_cross: CENTER
+            widgets:
+
+              # Temperatura Desejada (grande)
+              - obj:
+                  width: SIZE_CONTENT
+                  height: SIZE_CONTENT
+                  bg_opa: TRANSP
+                  border_width: 0
+                  layout:
+                    type: flex
+                    flex_flow: ROW
+                    flex_align_cross: START
+                  widgets:
+                    - label:
+                        id: lbl_target_temp
+                        text_font: font_temp_huge
+                        text_color: 0xffffff
+                        text: "20.5"
+                    - label:
+                        text_font: font_celsius
+                        text_color: 0x808080
+                        text: "°C"
+                        y: 20
+
+              # Label "Atual"
+              - label:
+                  text: "Temperatura Desejada"
+                  text_font: font_small
+                  text_color: 0x808080
+
+        # --- Icone de Aquecimento (chama) ---
+        - label:
+            id: icon_heating
+            align: CENTER
+            y: -130
+            x: 160
+            text_font: icons_48
+            text: "\U000F0238"
+            text_color: 0xff6b35
+            hidden: true
+
+ 
+        - obj:        # --- Temperatura Atual---
+            align: BOTTOM_MID
+            y: -20
+            width: 460
+            height: 140
+            bg_opa: TRANSP
+            border_width: 0
+            layout:
+              type: flex
+              flex_flow: ROW
+              flex_align_main: SPACE_BETWEEN
+              flex_align_cross: CENTER
+            widgets:
+
+              # Botao MENOS
+              - button:
+                  id: btn_minus
+                  width: 90
+                  height: 90
+                  styles: style_btn_circle
+                  pressed:
+                    bg_color: 0x808080
+                  widgets:
+                    - label:
+                        align: CENTER
+                        text_font: icons_80
+                        text: "\U000F0374"
+                        text_color: 0x4fc3f7
+                  on_click:
+                    - script.execute: decrease_temp
+
+              # Temperatura Atual
+              - obj:
+                  width: 200
+                  height: 100
+                  bg_opa: TRANSP
+                  border_width: 0
+                  layout:
+                    type: flex
+                    flex_flow: COLUMN
+                    flex_align_main: CENTER
+                    flex_align_cross: CENTER
+                  widgets:
+
+                    - obj:
+                        width: SIZE_CONTENT
+                        height: SIZE_CONTENT
+                        bg_opa: TRANSP
+                        border_width: 0
+                        layout:
+                          type: flex
+                          flex_flow: ROW
+                          flex_align_cross: START
+                        widgets:
+                          - label:
+                              id: lbl_current_temp
+                              text_font: font_temp_large
+                              text_color: 0x4fc3f7
+                              text: "22.0"
+                          - label:
+                              text_font: font_medium
+                              text_color: 0x606060
+                              text: "°C"
+                              y: 8
+
+              # Botao MAIS
+              - button:
+                  id: btn_plus
+                  width: 90
+                  height: 90
+                  styles: style_btn_circle
+                  pressed:
+                    bg_color: 0x808080
+                  widgets:
+                    - label:
+                        align: CENTER
+                        text_font: icons_80
+                        text: "\U000F0415"
+                        text_color: 0xff6b35
+                  on_click:
+                    - script.execute: increase_temp
+
+        # --- Botao Configuracoes ---
+        - button:
+            id: btn_config
+            align: BOTTOM_RIGHT
+            x: -10
+            y: -140
+            width: 50
+            height: 50
+            styles: style_btn_circle
+            widgets:
+              - label:
+                  align: CENTER
+                  text_font: icons_32
+                  text: "\U000F08BB"
+                  text_color: 0xe0e0e0
+            on_click:
+              - lvgl.page.show:
+                  id: config_page
+                  animation: MOVE_LEFT
+                  time: 300ms
+
+    # ========================================
+    # PAGINA DE CONFIGURACOES
+    # ========================================
+    - id: config_page
+      bg_color: 0x1a1a2e
+      widgets:
+
+        # --- Header ---
+        - obj:
+            align: TOP_MID
+            y: 10
+            width: 460
+            height: 60
+            bg_opa: TRANSP
+            border_width: 0
+            layout:
+              type: flex
+              flex_flow: ROW
+              flex_align_main: SPACE_BETWEEN
+              flex_align_cross: CENTER
+            widgets:
+              # Botao Voltar
+              - button:
+                  id: btn_back
+                  width: 50
+                  height: 50
+                  styles: style_btn_circle
+                  widgets:
+                    - label:
+                        align: CENTER
+                        text_font: icons_32
+                        text: "\U000F004D"
+                        text_color: 0xe0e0e0
+                  on_click:
+                    - lvgl.page.show:
+                        id: main_page
+                        animation: MOVE_RIGHT
+                        time: 300ms
+
+              # Titulo
+              - label:
+                  text: "Configuracoes"
+                  text_font: font_large
+                  text_color: 0xe0e0e0
+
+              # Spacer
+              - obj:
+                  width: 50
+                  height: 50
+                  bg_opa: TRANSP
+                  border_width: 0
+
+        # --- Container de Configuracoes ---
+        - obj:
+            align: CENTER
+            y: 20
+            width: 440
+            height: 340
+            bg_opa: TRANSP
+            border_width: 0
+            layout:
+              type: flex
+              flex_flow: COLUMN
+              flex_align_main: START
+              flex_align_cross: CENTER
+              pad_row: 12
+            widgets:
+
+              # --- Histerese ---
+              - obj:
+                  width: 420
+                  height: 70
+                  styles: style_btn_config
+                  layout:
+                    type: flex
+                    flex_flow: ROW
+                    flex_align_main: SPACE_BETWEEN
+                    flex_align_cross: CENTER
+                  widgets:
+                    - label:
+                        text: "Histerese"
+                        text_font: font_medium
+                        text_color: 0xe0e0e0
+                    - obj:
+                        width: 160
+                        height: 50
+                        bg_opa: TRANSP
+                        border_width: 0
+                        layout:
+                          type: flex
+                          flex_flow: ROW
+                          flex_align_main: END
+                          flex_align_cross: CENTER
+                          pad_column: 8
+                        widgets:
+                          - button:
+                              id: btn_hist_minus
+                              width: 40
+                              height: 40
+                              radius: 8
+                              bg_color: 0x0f3460
+                              widgets:
+                                - label:
+                                    align: CENTER
+                                    text_font: icons_32
+                                    text: "\U000F0374"
+                                    text_color: 0x4fc3f7
+                              on_click:
+                                - if:
+                                    condition:
+                                      lambda: 'return id(histerese) > 0.1;'
+                                    then:
+                                      - globals.set:
+                                          id: histerese
+                                          value: !lambda 'return id(histerese) - 0.1;'
+                                      - lvgl.label.update:
+                                          id: lbl_histerese
+                                          text:
+                                            format: "%.1f"
+                                            args: ['id(histerese)']
+                          - label:
+                              id: lbl_histerese
+                              text_font: font_medium
+                              text_color: 0x4fc3f7
+                              text: "0.5"
+                              width: 50
+                              text_align: CENTER
+                          - button:
+                              id: btn_hist_plus
+                              width: 40
+                              height: 40
+                              radius: 8
+                              bg_color: 0x0f3460
+                              widgets:
+                                - label:
+                                    align: CENTER
+                                    text_font: icons_32
+                                    text: "\U000F0415"
+                                    text_color: 0xff6b35
+                              on_click:
+                                - if:
+                                    condition:
+                                      lambda: 'return id(histerese) < 2.0;'
+                                    then:
+                                      - globals.set:
+                                          id: histerese
+                                          value: !lambda 'return id(histerese) + 0.1;'
+                                      - lvgl.label.update:
+                                          id: lbl_histerese
+                                          text:
+                                            format: "%.1f"
+                                            args: ['id(histerese)']
+
+              # --- Temperatura Minima ---
+              - obj:
+                  width: 420
+                  height: 70
+                  styles: style_btn_config
+                  layout:
+                    type: flex
+                    flex_flow: ROW
+                    flex_align_main: SPACE_BETWEEN
+                    flex_align_cross: CENTER
+                  widgets:
+                    - label:
+                        text: "Temp. Minima"
+                        text_font: font_medium
+                        text_color: 0xe0e0e0
+                    - obj:
+                        width: 160
+                        height: 50
+                        bg_opa: TRANSP
+                        border_width: 0
+                        layout:
+                          type: flex
+                          flex_flow: ROW
+                          flex_align_main: END
+                          flex_align_cross: CENTER
+                          pad_column: 8
+                        widgets:
+                          - button:
+                              id: btn_tmin_minus
+                              width: 40
+                              height: 40
+                              radius: 8
+                              bg_color: 0x0f3460
+                              widgets:
+                                - label:
+                                    align: CENTER
+                                    text_font: icons_32
+                                    text: "\U000F0374"
+                                    text_color: 0x4fc3f7
+                              on_click:
+                                - if:
+                                    condition:
+                                      lambda: 'return id(temp_min) > 10.0;'
+                                    then:
+                                      - globals.set:
+                                          id: temp_min
+                                          value: !lambda 'return id(temp_min) - 0.5;'
+                                      - lvgl.label.update:
+                                          id: lbl_temp_min
+                                          text:
+                                            format: "%.1f"
+                                            args: ['id(temp_min)']
+                          - label:
+                              id: lbl_temp_min
+                              text_font: font_medium
+                              text_color: 0x4fc3f7
+                              text: "18.0"
+                              width: 50
+                              text_align: CENTER
+                          - button:
+                              id: btn_tmin_plus
+                              width: 40
+                              height: 40
+                              radius: 8
+                              bg_color: 0x0f3460
+                              widgets:
+                                - label:
+                                    align: CENTER
+                                    text_font: icons_32
+                                    text: "\U000F0415"
+                                    text_color: 0xff6b35
+                              on_click:
+                                - if:
+                                    condition:
+                                      lambda: 'return id(temp_min) < (id(temp_max) - 1.0);'
+                                    then:
+                                      - globals.set:
+                                          id: temp_min
+                                          value: !lambda 'return id(temp_min) + 0.5;'
+                                      - lvgl.label.update:
+                                          id: lbl_temp_min
+                                          text:
+                                            format: "%.1f"
+                                            args: ['id(temp_min)']
+
+              # --- Temperatura Maxima ---
+              - obj:
+                  width: 420
+                  height: 70
+                  styles: style_btn_config
+                  layout:
+                    type: flex
+                    flex_flow: ROW
+                    flex_align_main: SPACE_BETWEEN
+                    flex_align_cross: CENTER
+                  widgets:
+                    - label:
+                        text: "Temp. Maxima"
+                        text_font: font_medium
+                        text_color: 0xe0e0e0
+                    - obj:
+                        width: 160
+                        height: 50
+                        bg_opa: TRANSP
+                        border_width: 0
+                        layout:
+                          type: flex
+                          flex_flow: ROW
+                          flex_align_main: END
+                          flex_align_cross: CENTER
+                          pad_column: 8
+                        widgets:
+                          - button:
+                              id: btn_tmax_minus
+                              width: 40
+                              height: 40
+                              radius: 8
+                              bg_color: 0x0f3460
+                              widgets:
+                                - label:
+                                    align: CENTER
+                                    text_font: icons_32
+                                    text: "\U000F0374"
+                                    text_color: 0x4fc3f7
+                              on_click:
+                                - if:
+                                    condition:
+                                      lambda: 'return id(temp_max) > (id(temp_min) + 1.0);'
+                                    then:
+                                      - globals.set:
+                                          id: temp_max
+                                          value: !lambda 'return id(temp_max) - 0.5;'
+                                      - lvgl.label.update:
+                                          id: lbl_temp_max
+                                          text:
+                                            format: "%.1f"
+                                            args: ['id(temp_max)']
+                          - label:
+                              id: lbl_temp_max
+                              text_font: font_medium
+                              text_color: 0xff6b35
+                              text: "25.0"
+                              width: 50
+                              text_align: CENTER
+                          - button:
+                              id: btn_tmax_plus
+                              width: 40
+                              height: 40
+                              radius: 8
+                              bg_color: 0x0f3460
+                              widgets:
+                                - label:
+                                    align: CENTER
+                                    text_font: icons_32
+                                    text: "\U000F0415"
+                                    text_color: 0xff6b35
+                              on_click:
+                                - if:
+                                    condition:
+                                      lambda: 'return id(temp_max) < 35.0;'
+                                    then:
+                                      - globals.set:
+                                          id: temp_max
+                                          value: !lambda 'return id(temp_max) + 0.5;'
+                                      - lvgl.label.update:
+                                          id: lbl_temp_max
+                                          text:
+                                            format: "%.1f"
+                                            args: ['id(temp_max)']
+
+              # --- Info Sistema ---
+              - obj:
+                  width: 420
+                  height: 90
+                  styles: style_btn_config
+                  layout:
+                    type: flex
+                    flex_flow: COLUMN
+                    flex_align_main: CENTER
+                    flex_align_cross: START
+                    pad_row: 4
+                  widgets:
+                    - label:
+                        text: "Informacoes do Sistema"
+                        text_font: font_small
+                        text_color: 0x808080
+                    - label:
+                        id: lbl_ip
+                        text_font: font_small
+                        text_color: 0xe0e0e0
+                        text: "IP: Conectando..."
+                    - label:
+                        id: lbl_wifi
+                        text_font: font_small
+                        text_color: 0xe0e0e0
+                        text: "WiFi: --"
+
+      # Trigger ao carregar pagina config
+      on_load:
+        - lvgl.label.update:
+            id: lbl_histerese
+            text:
+              format: "%.1f"
+              args: ['id(histerese)']
+        - lvgl.label.update:
+            id: lbl_temp_min
+            text:
+              format: "%.1f"
+              args: ['id(temp_min)']
+        - lvgl.label.update:
+            id: lbl_temp_max
+            text:
+              format: "%.1f"
+              args: ['id(temp_max)']
+
+# ============================================
+# Text Sensor para IP
+# ============================================
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "${friendly_name} IP"
+      id: wifi_ip
+      on_value:
+        then:
+          - lvgl.label.update:
+              id: lbl_ip
+              text:
+                format: "IP: %s"
+                args: ['x.c_str()']
+    ssid:
+      name: "${friendly_name} SSID"
+      on_value:
+        then:
+          - lvgl.label.update:
+              id: lbl_wifi
+              text:
+                format: "WiFi: %s"
+                args: ['x.c_str()']
