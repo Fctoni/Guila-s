@@ -1,0 +1,414 @@
+## ============================================================ ##
+## UEDX48480040E-WB-A - Display 4" 480x480 Touch Capacitivo     ##
+## CÓDIGO BASE - Configurações de Hardware                       ##
+## ============================================================ ##
+## Driver LCD: GC9503V (RGB Paralelo)                            ##
+## Touch: FT6336U (I2C Capacitivo)                               ##
+## MCU: ESP32-S3 (16MB Flash / 8MB PSRAM Octal)                  ##
+## ============================================================ ##
+## Configurações otimizadas:                                     ##
+##   - pclk_frequency: 14MHz (estabilidade sem flicker)          ##
+##   - pixel_mode: 18bit (cores corretas)                        ##
+##   - cpu_frequency: 240MHz                                     ##
+##   - PSRAM: octal 80MHz                                        ##
+##   - LVGL buffer: 100%                                         ##
+## ============================================================ ##
+
+# ============================================
+# SUBSTITUTIONS - PERSONALIZAR PARA SEU PROJETO
+# ============================================
+substitutions:
+  devicename: meu-display-480x480
+  friendly_name: "Display 480x480"
+
+# ============================================
+# ESPHome Core
+# ============================================
+esphome:
+  name: ${devicename}
+  friendly_name: ${friendly_name}
+  platformio_options:
+    build_flags: "-DBOARD_HAS_PSRAM"
+    board_build.arduino.memory_type: qio_opi
+    board_build.flash_mode: dio
+
+# ============================================
+# ESP32-S3 Configuration
+# ============================================
+esp32:
+  board: esp32-s3-devkitc-1
+  cpu_frequency: 240MHz
+  variant: esp32s3
+  flash_size: 16MB
+  framework:
+    type: esp-idf
+
+# ============================================
+# PSRAM Configuration (Obrigatório para LVGL)
+# ============================================
+psram:
+  mode: octal
+  speed: 80MHz
+
+# ============================================
+# Logging e Conectividade
+# ============================================
+logger:
+  level: WARN  # Ajuste para DEBUG durante desenvolvimento
+
+api:
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: "${devicename}-AP"
+    password: "12345678"
+
+captive_portal:
+
+# ============================================
+# SPI - Inicialização do Display GC9503V
+# ============================================
+# O GC9503V usa SPI apenas para enviar comandos de inicialização
+# Após init, os dados vão pelo barramento RGB paralelo
+spi:
+  id: display_spi
+  clk_pin: GPIO48
+  mosi_pin: GPIO47
+
+# ============================================
+# I2C - Touchscreen FT6336U
+# ============================================
+i2c:
+  sda: GPIO40
+  scl: GPIO41
+  scan: true
+  id: i2c_touch
+
+# ============================================
+# Backlight PWM Control
+# ============================================
+output:
+  - platform: ledc
+    pin: GPIO38
+    frequency: 10000Hz
+    id: backlight_pwm
+
+light:
+  - platform: monochromatic
+    output: backlight_pwm
+    name: "${friendly_name} Backlight"
+    id: backlight
+    restore_mode: ALWAYS_ON
+    default_transition_length: 500ms
+
+# ============================================
+# Display GC9503V - RGB Paralelo 480x480
+# ============================================
+# Pinout RGB565 (16 pinos de dados):
+#   RED:   GPIO4, GPIO3, GPIO2, GPIO1, GPIO0
+#   GREEN: GPIO10, GPIO9, GPIO8, GPIO7, GPIO6, GPIO5
+#   BLUE:  GPIO15, GPIO14, GPIO13, GPIO12, GPIO11
+# ============================================
+display:
+  - platform: mipi_rgb
+    pixel_mode: 18bit  # Correção de cores
+    model: CUSTOM
+    id: main_display
+    color_order: RGB
+    dimensions:
+      width: 480
+      height: 480
+    
+    # Pinos de sincronização
+    de_pin:
+      number: GPIO18
+      inverted: false
+    hsync_pin:
+      number: GPIO16
+      inverted: false
+    vsync_pin:
+      number: GPIO17
+      inverted: false
+    pclk_pin: GPIO21
+    
+    # Clock e timing otimizados
+    pclk_inverted: false
+    pclk_frequency: 14MHz  # Estabilidade sem flicker
+    
+    # Timings de sincronização
+    hsync_pulse_width: 8
+    hsync_back_porch: 40
+    hsync_front_porch: 40
+    vsync_pulse_width: 2
+    vsync_back_porch: 4
+    vsync_front_porch: 16
+    
+    # Pinos de dados RGB
+    data_pins:
+      red:
+        - GPIO4   # R1
+        - GPIO3   # R2
+        - GPIO2   # R3
+        - GPIO1   # R4
+        - GPIO0   # R5
+      green:
+        - GPIO10  # G0
+        - GPIO9   # G1
+        - GPIO8   # G2
+        - GPIO7   # G3
+        - GPIO6   # G4
+        - GPIO5   # G5
+      blue:
+        - GPIO15  # B1
+        - GPIO14  # B2
+        - GPIO13  # B3
+        - GPIO12  # B4
+        - GPIO11  # B5
+    
+    # SPI para comandos de inicialização
+    spi_id: display_spi
+    cs_pin: GPIO39
+    reset_pin: GPIO44
+    
+    # Sequência de inicialização do GC9503V
+    init_sequence:
+      - [0xf0, 0x55, 0xaa, 0x52, 0x08, 0x00]
+      - [0xf6, 0x5a, 0x87]
+      - [0xc1, 0x3f]
+      - [0xc2, 0x0e]
+      - [0xc6, 0xf8]
+      - [0xc9, 0x10]
+      - [0xcd, 0x25]
+      - [0xf8, 0x8a]
+      - [0xac, 0x45]
+      - [0xa0, 0xdd]
+      - [0xa7, 0x47]
+      - [0xfa, 0x00, 0x00, 0x00, 0x04]
+      - [0x86, 0x99, 0xa3, 0xa3, 0x51]
+      - [0xa3, 0xee]
+      - [0xfd, 0x3c, 0x3c, 0x00]
+      - [0x71, 0x48]
+      - [0x72, 0x48]
+      - [0x73, 0x00, 0x44]
+      - [0x97, 0xee]
+      - [0x83, 0x93]
+      - [0x9a, 0x72]
+      - [0x9b, 0x5a]
+      - [0x82, 0x2c, 0x2c]
+      - [0x6d, 0x00, 0x1f, 0x19, 0x1a, 0x10, 0x0e, 0x0c, 0x0a, 0x02, 0x07, 0x1e, 0x1e, 0x1e, 0x1e, 0x1e, 0x1e, 0x1e,
+                    0x1e, 0x1e, 0x1e, 0x1e, 0x1e, 0x08, 0x01, 0x09, 0x0b, 0x0d, 0x0f, 0x1a, 0x19, 0x1f, 0x00]
+      - [0x64, 0x38, 0x05, 0x01, 0xdb, 0x03, 0x03, 0x38, 0x04, 0x01, 0xdc, 0x03, 0x03, 0x7a, 0x7a, 0x7a, 0x7a]
+      - [0x65, 0x38, 0x03, 0x01, 0xdd, 0x03, 0x03, 0x38, 0x02, 0x01, 0xde, 0x03, 0x03, 0x7a, 0x7a, 0x7a, 0x7a]
+      - [0x66, 0x38, 0x01, 0x01, 0xdf, 0x03, 0x03, 0x38, 0x00, 0x01, 0xe0, 0x03, 0x03, 0x7a, 0x7a, 0x7a, 0x7a]
+      - [0x67, 0x30, 0x01, 0x01, 0xe1, 0x03, 0x03, 0x30, 0x02, 0x01, 0xe2, 0x03, 0x03, 0x7a, 0x7a, 0x7a, 0x7a]
+      - [0x68, 0x00, 0x08, 0x15, 0x08, 0x15, 0x7a, 0x7a, 0x08, 0x15, 0x08, 0x15, 0x7a, 0x7a]
+      - [0x60, 0x38, 0x08, 0x7a, 0x7a, 0x38, 0x09, 0x7a, 0x7a]
+      - [0x63, 0x31, 0xe4, 0x7a, 0x7a, 0x31, 0xe5, 0x7a, 0x7a]
+      - [0x69, 0x04, 0x22, 0x14, 0x22, 0x14, 0x22, 0x08]
+      - [0x6b, 0x07]
+      - [0x7a, 0x08, 0x13]
+      - [0x7b, 0x08, 0x13]
+      # Gamma correction curves
+      - [0xd1, 0x00, 0x00, 0x00, 0x04, 0x00, 0x12, 0x00, 0x18, 0x00, 0x21, 0x00, 0x2a, 0x00, 0x35, 0x00, 0x47, 0x00,
+            0x56, 0x00, 0x90, 0x00, 0xe5, 0x01, 0x68, 0x01, 0xd5, 0x01, 0xd7, 0x02, 0x36, 0x02, 0xa6, 0x02, 0xee,
+            0x03, 0x48, 0x03, 0xa0, 0x03, 0xba, 0x03, 0xc5, 0x03, 0xd0, 0x03, 0xe0, 0x03, 0xea, 0x03, 0xfa, 0x03,
+            0xff]
+      - [0xd2, 0x00, 0x00, 0x00, 0x04, 0x00, 0x12, 0x00, 0x18, 0x00, 0x21, 0x00, 0x2a, 0x00, 0x35, 0x00, 0x47, 0x00,
+            0x56, 0x00, 0x90, 0x00, 0xe5, 0x01, 0x68, 0x01, 0xd5, 0x01, 0xd7, 0x02, 0x36, 0x02, 0xa6, 0x02, 0xee,
+            0x03, 0x48, 0x03, 0xa0, 0x03, 0xba, 0x03, 0xc5, 0x03, 0xd0, 0x03, 0xe0, 0x03, 0xea, 0x03, 0xfa, 0x03,
+            0xff]
+      - [0xd3, 0x00, 0x00, 0x00, 0x04, 0x00, 0x12, 0x00, 0x18, 0x00, 0x21, 0x00, 0x2a, 0x00, 0x35, 0x00, 0x47, 0x00,
+            0x56, 0x00, 0x90, 0x00, 0xe5, 0x01, 0x68, 0x01, 0xd5, 0x01, 0xd7, 0x02, 0x36, 0x02, 0xa6, 0x02, 0xee,
+            0x03, 0x48, 0x03, 0xa0, 0x03, 0xba, 0x03, 0xc5, 0x03, 0xd0, 0x03, 0xe0, 0x03, 0xea, 0x03, 0xfa, 0x03,
+            0xff]
+      - [0xd4, 0x00, 0x00, 0x00, 0x04, 0x00, 0x12, 0x00, 0x18, 0x00, 0x21, 0x00, 0x2a, 0x00, 0x35, 0x00, 0x47, 0x00,
+            0x56, 0x00, 0x90, 0x00, 0xe5, 0x01, 0x68, 0x01, 0xd5, 0x01, 0xd7, 0x02, 0x36, 0x02, 0xa6, 0x02, 0xee,
+            0x03, 0x48, 0x03, 0xa0, 0x03, 0xba, 0x03, 0xc5, 0x03, 0xd0, 0x03, 0xe0, 0x03, 0xea, 0x03, 0xfa, 0x03,
+            0xff]
+      - [0xd5, 0x00, 0x00, 0x00, 0x04, 0x00, 0x12, 0x00, 0x18, 0x00, 0x21, 0x00, 0x2a, 0x00, 0x35, 0x00, 0x47, 0x00,
+            0x56, 0x00, 0x90, 0x00, 0xe5, 0x01, 0x68, 0x01, 0xd5, 0x01, 0xd7, 0x02, 0x36, 0x02, 0xa6, 0x02, 0xee,
+            0x03, 0x48, 0x03, 0xa0, 0x03, 0xba, 0x03, 0xc5, 0x03, 0xd0, 0x03, 0xe0, 0x03, 0xea, 0x03, 0xfa, 0x03,
+            0xff]
+      - [0xd6, 0x00, 0x00, 0x00, 0x04, 0x00, 0x12, 0x00, 0x18, 0x00, 0x21, 0x00, 0x2a, 0x00, 0x35, 0x00, 0x47, 0x00,
+            0x56, 0x00, 0x90, 0x00, 0xe5, 0x01, 0x68, 0x01, 0xd5, 0x01, 0xd7, 0x02, 0x36, 0x02, 0xa6, 0x02, 0xee,
+            0x03, 0x48, 0x03, 0xa0, 0x03, 0xba, 0x03, 0xc5, 0x03, 0xd0, 0x03, 0xe0, 0x03, 0xea, 0x03, 0xfa, 0x03,
+            0xff]
+      # Display ON sequence
+      - [0x11]      # Sleep Out
+      - delay 120ms
+      - [0x29]      # Display ON
+      - delay 20ms
+      - [0x00]
+
+# ============================================
+# Touchscreen FT6336U
+# ============================================
+touchscreen:
+  - platform: ft63x6
+    id: main_touch
+    i2c_id: i2c_touch
+    display: main_display
+    update_interval: 50ms
+    on_release:
+      # Acordar display ao tocar (se estiver em idle)
+      - if:
+          condition: lvgl.is_paused
+          then:
+            - lvgl.resume:
+            - lvgl.widget.redraw:
+            - light.turn_on: backlight
+
+# ============================================
+# Fontes Básicas - Roboto (Google Fonts)
+# ============================================
+font:
+  # Tamanho pequeno (labels secundários)
+  - file: "gfonts://Roboto"
+    id: font_small
+    size: 18
+    bpp: 4
+
+  # Tamanho médio (textos gerais)
+  - file: "gfonts://Roboto"
+    id: font_medium
+    size: 24
+    bpp: 4
+
+  # Tamanho grande (títulos)
+  - file: "gfonts://Roboto@500"
+    id: font_large
+    size: 32
+    bpp: 4
+
+  # Tamanho extra grande (destaque)
+  - file: "gfonts://Roboto@500"
+    id: font_xlarge
+    size: 48
+    bpp: 4
+
+  # Ícones Material Design (opcional - requer arquivo .ttf)
+  # Descomente se tiver o arquivo fonts/materialdesignicons-webfont.ttf
+  # - file: "fonts/materialdesignicons-webfont.ttf"
+  #   id: icons_32
+  #   size: 32
+  #   bpp: 4
+  #   glyphs: [
+  #     "\U000F0238",  # fire
+  #     "\U000F050F",  # thermometer
+  #     "\U000F08BB",  # cog
+  #     "\U000F0374",  # minus
+  #     "\U000F0415",  # plus
+  #   ]
+
+# ============================================
+# LVGL - Configuração Base
+# ============================================
+lvgl:
+  displays:
+    - main_display
+  touchscreens:
+    - touchscreen_id: main_touch
+  
+  # Configurações de renderização otimizadas
+  full_refresh: true
+  color_depth: 16
+  byte_order: big_endian
+  buffer_size: 100%
+  log_level: WARN
+  
+  # Cores padrão
+  disp_bg_color: 0x000000
+  default_font: font_medium
+
+  # ==========================================
+  # Estilos Base (reutilizáveis)
+  # ==========================================
+  style_definitions:
+    # Card/Container com bordas arredondadas
+    - id: style_card
+      radius: 16
+      border_width: 1
+      border_color: 0x333333
+      bg_color: 0x1a1a2e
+      pad_all: 12
+
+    # Botão circular
+    - id: style_btn_circle
+      radius: 50
+      border_width: 2
+      border_color: 0x333333
+
+    # Botão retangular
+    - id: style_btn_rect
+      radius: 12
+      border_width: 1
+      border_color: 0x333333
+      pad_all: 16
+
+  # ==========================================
+  # Idle timeout - economia de energia
+  # ==========================================
+  on_idle:
+    - timeout: 60s
+      then:
+        - light.turn_on:
+            id: backlight
+            brightness: 30%
+    - timeout: 120s
+      then:
+        - light.turn_off:
+            id: backlight
+            transition_length: 1s
+        - lvgl.pause:
+            show_snow: false
+
+  # ==========================================
+  # PÁGINAS - Adicione suas páginas aqui
+  # ==========================================
+  pages:
+    # Página de exemplo - substitua pela sua interface
+    - id: main_page
+      bg_color: 0x000000
+      widgets:
+        - label:
+            text: "DISPLAY OK"
+            align: CENTER
+            y: -40
+            text_font: font_xlarge
+            text_color: 0x00FF88
+
+        - label:
+            text: "UEDX48480040E-WB-A"
+            align: CENTER
+            y: 20
+            text_font: font_medium
+            text_color: 0x888888
+
+        - label:
+            text: "480x480 RGB - ESPHome + LVGL"
+            align: CENTER
+            y: 60
+            text_font: font_small
+            text_color: 0x666666
+
+# ============================================
+# Sensores de Diagnóstico (opcional)
+# ============================================
+sensor:
+  - platform: wifi_signal
+    name: "${friendly_name} WiFi Signal"
+    id: wifi_signal_db
+    update_interval: 60s
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "${friendly_name} IP"
+      id: wifi_ip
+    ssid:
+      name: "${friendly_name} SSID"
