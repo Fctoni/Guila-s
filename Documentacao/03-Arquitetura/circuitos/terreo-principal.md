@@ -9,53 +9,53 @@
 
 ## 📊 Tabela Completa de Circuitos (Expandida)
 
-| Ambiente | Int | Circ Lum | Circ Belm | Acende Onde | Tipo Iluminação | Nome Falado |
-|----------|-----|----------|-----------|-------------|-----------------|-------------|
-| Garagem | 32 | 4 | 2A | Garagem | Fita LED 24V | Iluminação Garagem |
-| Despensa | 31 | 7 | 2B | Despensa | LED 24V + Spot | Iluminação Despensa |
-| Lavanderia | 27 | 8 | 2C | Lavanderia | LED 24V | Iluminação Lavanderia |
-| Lavanderia | 27 | 8 | 2C | Lavanderia | Embutido Picco | Iluminação Lavanderia |
-| Lavanderia | 27 | 9 | 2D | Lavanderia | Perfil Bancada | Bancada Lavanderia |
-| Lavanderia | 25 | 8 | 2C | Lavanderia | LED 24V | Iluminação Lavanderia |
-| Lavanderia | 25 | 8 | 2C | Lavanderia | Embutido Picco | Iluminação Lavanderia |
-| Lavanderia | 25 | 9 | 2D | Lavanderia | LED 24V | Bancada Lavanderia |
-| Circulação Serviço | 23 | 10 | 2H | Circulação Serviço | Embutido Picco | Iluminação Hall Serviço |
-| Banheiro Serviço | 24 | 11 | 2Z | Banheiro Serviço | Embutido Picco | Iluminação Banho Serviço |
-| Circulação Serviço | 21 | 9 | 2F | Sauna | LED 24V | Iluminação Sauna Superior |
-| Circulação Serviço | 21 | 10 | 2G | Sauna | LED 24V | Iluminação Sauna Inferior |
-| Escritório | 34 | 1 | 2L | Escritório | Embutido Picco | Iluminação Escritório |
-| Escritório | 34 | 2 | 2M | Escritório | Pendente | Pendente Escritório |
-| Escritório | 34 | 3 | 2K | Escritório | LED 24V | Fitas Escritório |
-| Lavabo | 33 | 5 | 2i | Lavabo | Tensoflex LED | Iluminação Lavabo |
-| Hall | 35 | 16 | 1U | Cortineiro Living | LED 24V | Cortineiro Living |
-| Hall | 35 | 17 | 1Q | Área Poltronas | Embutido Picco | Iluminação Living |
-| Hall | 35 | 18 | 1O | Atrás Sofá | Extra | - |
-| Hall | 35 | 19 | 1P | Área TV | Embutido Picco | Iluminação TV |
-| Hall | 35 | 21 | 1N | Hall Principal | Embutido Picco | Iluminação Hall Principal |
-| Hall | 35 | 22 | 1C | Balizadores Degraus | Balizador Embutido | Iluminação Degraus |
-| Lado do Sofá | 30 | 16 | 1U | Cortineiro Living | LED 24V | Cortineiro Living |
-| Lado do Sofá | 30 | 17 | 1Q | Área Poltronas | Embutido Picco | Iluminação Living |
-| Lado do Sofá | 30 | 18 | 1O | Atrás Sofá | Extra | - |
-| Lado do Sofá | 30 | 19 | 1P | Área TV | Embutido Picco | Iluminação TV |
-| Lado do Sofá | 30 | 20 | 1R | Abaixo Buffet | LED 24V | Iluminação Buffet |
-| Lado do Sofá | 30 | 21 | 1N | Hall Principal | Embutido Picco | Iluminação Hall Principal |
-| Cozinha | 29 | 12 | 1X | Perfil Bancada Pia | LED 24V | Bancada Cozinha |
-| Cozinha | 29 | 13 | 1V | Ilha Cozinha | Embutido Picco | Ilha Cozinha |
-| Cozinha | 29 | 14 | 1W | Geral Cozinha | Embutido Picco | Iluminação Cozinha |
-| Cozinha | 29 | 15 | 1T | Mesa Jantar | Embutido + Pendente | Iluminação Jantar |
-| Cozinha | 29 | 16 | 1U | Cortineiro Living | LED 24V | Cortineiro Living |
-| Churrasqueira | 26 | 13 | 1V | Ilha Cozinha | Embutido Picco | Ilha Cozinha |
-| Churrasqueira | 26 | 14 | 1W | Geral Cozinha | Embutido Picco | Iluminação Cozinha |
-| Churrasqueira | 26 | 15 | 1T | Mesa Jantar | Embutido + Pendente | Iluminação Jantar |
-| Churrasqueira | 26 | 16 | 1U | Cortineiro Living | LED 24V | Cortineiro Living |
-| Churrasqueira | 26 | 17 | 1Q | Área Poltronas | Embutido Picco | Iluminação Living |
-| Churrasqueira | 26 | 50 | 1 | Churrasqueira | Incandescente | Iluminação Churrasqueira |
-| Bar | 22 | 13 | 1V | Ilha Cozinha | Embutido Picco | Ilha Cozinha |
-| Bar | 22 | 14 | 1W | Geral Cozinha | Embutido Picco | Iluminação Cozinha |
-| Bar | 22 | 15 | 1T | Mesa Jantar | Embutido + Pendente | Iluminação Jantar |
-| Bar | 22 | 16 | 1U | Cortineiro Living | LED 24V | Cortineiro Living |
-| Bar | 22 | 17 | 1Q | Área Poltronas | Embutido Picco | Iluminação Living |
-| Bar | 22 | 20 | 1R | Abaixo Buffet | LED 24V | Iluminação Buffet |
+| Ambiente | Int | Circ Lum | Circ Belm | Acende Onde | Tipo Iluminação | Potência | Nome Falado |
+|----------|-----|----------|-----------|-------------|-----------------|----------|-------------|
+| Garagem | 32 | 4 | 2A | Garagem | Fita LED 24V | 228 W | Iluminação Garagem |
+| Despensa | 31 | 7 | 2B | Despensa | LED 24V + Spot | 210 W | Iluminação Despensa |
+| Lavanderia | 27 | 8 | 2C | Lavanderia | LED 24V | 22 W | Iluminação Lavanderia |
+| Lavanderia | 27 | 8 | 2C | Lavanderia | Embutido Picco | - | Iluminação Lavanderia |
+| Lavanderia | 27 | 9 | 2D | Lavanderia | Perfil Bancada | 42 W | Bancada Lavanderia |
+| Lavanderia | 25 | 8 | 2C | Lavanderia | LED 24V | 22 W | Iluminação Lavanderia |
+| Lavanderia | 25 | 8 | 2C | Lavanderia | Embutido Picco | - | Iluminação Lavanderia |
+| Lavanderia | 25 | 9 | 2D | Lavanderia | LED 24V | 42 W | Bancada Lavanderia |
+| Circulação Serviço | 23 | 10 | 2H | Circulação Serviço | Embutido Picco | - | Iluminação Hall Serviço |
+| Banheiro Serviço | 24 | 11 | 2Z | Banheiro Serviço | Embutido Picco | - | Iluminação Banho Serviço |
+| Circulação Serviço | 21 | 9 | 2F | Sauna | LED 24V | 42 W | Iluminação Sauna Superior |
+| Circulação Serviço | 21 | 10 | 2G | Sauna | LED 24V | 235 W | Iluminação Sauna Inferior |
+| Escritório | 34 | 1 | 2L | Escritório | Embutido Picco | - | Iluminação Escritório |
+| Escritório | 34 | 2 | 2M | Escritório | Pendente | - | Pendente Escritório |
+| Escritório | 34 | 3 | 2K | Escritório | LED 24V | 124 W | Fitas Escritório |
+| Lavabo | 33 | 5 | 2i | Lavabo | Tensoflex LED | 280 W | Iluminação Lavabo |
+| Hall | 35 | 16 | 1U | Cortineiro Living | LED 24V | 304 W | Cortineiro Living |
+| Hall | 35 | 17 | 1Q | Área Poltronas | Embutido Picco | - | Iluminação Living |
+| Hall | 35 | 18 | 1O | Atrás Sofá | Extra | - | - |
+| Hall | 35 | 19 | 1P | Área TV | Embutido Picco | - | Iluminação TV |
+| Hall | 35 | 21 | 1N | Hall Principal | Embutido Picco | - | Iluminação Hall Principal |
+| Hall | 35 | 22 | 1C | Balizadores Degraus | Balizador Embutido | - | Iluminação Degraus |
+| Lado do Sofá | 30 | 16 | 1U | Cortineiro Living | LED 24V | 304 W | Cortineiro Living |
+| Lado do Sofá | 30 | 17 | 1Q | Área Poltronas | Embutido Picco | - | Iluminação Living |
+| Lado do Sofá | 30 | 18 | 1O | Atrás Sofá | Extra | - | - |
+| Lado do Sofá | 30 | 19 | 1P | Área TV | Embutido Picco | - | Iluminação TV |
+| Lado do Sofá | 30 | 20 | 1R | Abaixo Buffet | LED 24V | 24 W | Iluminação Buffet |
+| Lado do Sofá | 30 | 21 | 1N | Hall Principal | Embutido Picco | - | Iluminação Hall Principal |
+| Cozinha | 29 | 12 | 1X | Perfil Bancada Pia | LED 24V | 41 W | Bancada Cozinha |
+| Cozinha | 29 | 13 | 1V | Ilha Cozinha | Embutido Picco | - | Ilha Cozinha |
+| Cozinha | 29 | 14 | 1W | Geral Cozinha | Embutido Picco | - | Iluminação Cozinha |
+| Cozinha | 29 | 15 | 1T | Mesa Jantar | Embutido + Pendente | - | Iluminação Jantar |
+| Cozinha | 29 | 16 | 1U | Cortineiro Living | LED 24V | 304 W | Cortineiro Living |
+| Churrasqueira | 26 | 13 | 1V | Ilha Cozinha | Embutido Picco | - | Ilha Cozinha |
+| Churrasqueira | 26 | 14 | 1W | Geral Cozinha | Embutido Picco | - | Iluminação Cozinha |
+| Churrasqueira | 26 | 15 | 1T | Mesa Jantar | Embutido + Pendente | - | Iluminação Jantar |
+| Churrasqueira | 26 | 16 | 1U | Cortineiro Living | LED 24V | 304 W | Cortineiro Living |
+| Churrasqueira | 26 | 17 | 1Q | Área Poltronas | Embutido Picco | - | Iluminação Living |
+| Churrasqueira | 26 | 50 | 1 | Churrasqueira | Incandescente | - | Iluminação Churrasqueira |
+| Bar | 22 | 13 | 1V | Ilha Cozinha | Embutido Picco | - | Ilha Cozinha |
+| Bar | 22 | 14 | 1W | Geral Cozinha | Embutido Picco | - | Iluminação Cozinha |
+| Bar | 22 | 15 | 1T | Mesa Jantar | Embutido + Pendente | - | Iluminação Jantar |
+| Bar | 22 | 16 | 1U | Cortineiro Living | LED 24V | 304 W | Cortineiro Living |
+| Bar | 22 | 17 | 1Q | Área Poltronas | Embutido Picco | - | Iluminação Living |
+| Bar | 22 | 20 | 1R | Abaixo Buffet | LED 24V | 24 W | Iluminação Buffet |
 
 ---
 
@@ -65,56 +65,56 @@
 
 #### GARAGEM
 **Interruptor 32**
-- Circuito 4 (2A): Fita LED → Iluminação Garagem
+- Circuito 4 (2A): Fita LED → Iluminação Garagem — **228 W** (9,5 A)
 
 #### DESPENSA
 **Interruptor 31**
-- Circuito 7 (2B): LED + Spot → Iluminação Despensa
+- Circuito 7 (2B): LED + Spot → Iluminação Despensa — **210 W** (8,8 A)
 
 #### LAVANDERIA
 **Interruptor 27**
-- Circuito 8 (2C): LED → Iluminação Lavanderia
-- Circuito 9 (2D): Perfil Bancada → Bancada Lavanderia
+- Circuito 8 (2C): LED → Iluminação Lavanderia — **22 W** (0,9 A)
+- Circuito 9 (2D): Perfil Bancada → Bancada Lavanderia — **42 W** (1,8 A)
 
 **Interruptor 25**
-- Circuito 8 (2C): LED → Iluminação Lavanderia
-- Circuito 9 (2D): LED → Bancada Lavanderia
+- Circuito 8 (2C): LED → Iluminação Lavanderia — **22 W** (0,9 A)
+- Circuito 9 (2D): LED → Bancada Lavanderia — **42 W** (1,8 A)
 
 #### CIRCULAÇÃO DE SERVIÇO
 **Interruptor 21**
-- Circuito 9 (2F): LED → Iluminação Sauna Superior
-- Circuito 10 (2G): LED → Iluminação Sauna Inferior
+- Circuito 9 (2F): LED → Iluminação Sauna Superior — **42 W** (1,8 A)
+- Circuito 10 (2G): LED → Iluminação Sauna Inferior — **235 W** (9,8 A)
 
 #### ESCRITÓRIO
 **Interruptor 34**
-- Circuito 3 (2K): LED → Fitas Escritório
+- Circuito 3 (2K): LED → Fitas Escritório — **124 W** (5,2 A)
 
 #### LAVABO
 **Interruptor 33**
-- Circuito 5 (2i): Tensoflex LED → Iluminação Lavabo
+- Circuito 5 (2i): Tensoflex LED → Iluminação Lavabo — **280 W** (11,7 A)
 
 #### HALL
 **Interruptor 35**
-- Circuito 16 (1U): LED → Cortineiro Living
+- Circuito 16 (1U): LED → Cortineiro Living — **304 W** (12,7 A) 
 
 #### LADO DO SOFÁ (Living)
 **Interruptor 30**
-- Circuito 16 (1U): LED → Cortineiro Living
-- Circuito 20 (1R): LED → Iluminação Buffet
+- Circuito 16 (1U): LED → Cortineiro Living — **304 W** (12,7 A) 
+- Circuito 20 (1R): LED → Iluminação Buffet — **24 W** (1,0 A)
 
 #### COZINHA
 **Interruptor 29**
-- Circuito 12 (1X): LED → Bancada Cozinha
-- Circuito 16 (1U): LED → Cortineiro Living
+- Circuito 12 (1X): LED → Bancada Cozinha — **41 W** (1,7 A)
+- Circuito 16 (1U): LED → Cortineiro Living — **304 W** (12,7 A) 
 
 #### CHURRASQUEIRA
 **Interruptor 26**
-- Circuito 16 (1U): LED → Cortineiro Living
+- Circuito 16 (1U): LED → Cortineiro Living — **304 W** (12,7 A) 
 
 #### BAR
 **Interruptor 22**
-- Circuito 16 (1U): LED → Cortineiro Living
-- Circuito 20 (1R): LED → Iluminação Buffet
+- Circuito 16 (1U): LED → Cortineiro Living — **304 W** (12,7 A) 
+- Circuito 20 (1R): LED → Iluminação Buffet — **24 W** (1,0 A)
 
 ---
 
@@ -237,17 +237,21 @@
 **Subtotal 220V**: 13 relés
 
 #### Circuitos LED 24V (Shelly RGBW2 - Dimerização)
-14. **1R** (Buffet LED)
-15. **1U** (Cortineiro Living LED) - **MAIS USADO! 5 interruptores**
-16. **1X** (Bancada Cozinha LED)
-17. **2A** (Garagem LED)
-18. **2B** (Despensa LED)
-19. **2C** (Lavanderia LED)
-20. **2D** (Bancada Lavanderia LED)
-21. **2F** (Sauna Superior LED)
-22. **2G** (Sauna Inferior LED)
-23. **2K** (Fitas Escritório LED)
-24. **2i** (Lavabo Tensoflex LED)
+
+| # | Circ Belm | Local | Potência | Corrente | Fio |
+|---|:---------:|-------|:--------:|:--------:|:---:|
+| 14 | **1R** | Buffet LED | 24 W | 1,0 A | 2,5mm² |
+| 15 | **1U** | Cortineiro Living LED ⭐ | 304 W | 12,7 A | 6,0mm² |
+| 16 | **1X** | Bancada Cozinha LED | 41 W | 1,7 A | 2,5mm² |
+| 17 | **2A** | Garagem LED | 228 W | 9,5 A | 2,5mm² |
+| 18 | **2B** | Despensa LED | 210 W | 8,8 A | 2,5mm² |
+| 19 | **2C** | Lavanderia LED | 22 W | 0,9 A | 2,5mm² |
+| 20 | **2D** | Bancada Lavanderia LED | 42 W | 1,8 A | 2,5mm² |
+| 21 | **2F** | Sauna Superior LED | 42 W | 1,8 A | 2,5mm² |
+| 22 | **2G** | Sauna Inferior LED | 235 W | 9,8 A | 4,0mm² |
+| 23 | **2K** | Fitas Escritório LED | 124 W | 5,2 A | 2,5mm² |
+| 24 | **2i** | Lavabo Tensoflex LED | 280 W | 11,7 A | 2,5mm² |
+| | | **TOTAL** | **1.552 W** | **~65 A** | |
 
 **Subtotal LED 24V**: 11 circuitos (dimerização via Shelly RGBW2)
 
@@ -282,10 +286,23 @@
 
 ---
 
-### Fontes de Alimentação
-- **Fonte 24V**: Múltiplas fontes para LEDs (distribuição de carga)
+### Fontes de Alimentação 24V (LEDs)
+
+**Potência Total LED 24V**: ~1.552 W | ~65 A
+
+| Fonte | Capacidade | Circuitos Sugeridos |
+|-------|:----------:|---------------------|
+| Fonte 1 | 24V 20A (480W) | 1U (304W) - Cortineiro |
+| Fonte 2 | 24V 15A (360W) | 2i (280W) - Lavabo |
+| Fonte 3 | 24V 15A (360W) | 2A (228W) + 2B (210W) = 438W ⚠️ |
+| Fonte 4 | 24V 15A (360W) | 2G (235W) + 2K (124W) = 359W |
+| Fonte 5 | 24V 10A (240W) | Demais circuitos (~171W) |
+
+⚠️ **Nota**: Fonte 3 pode precisar ser 20A para suportar Garagem + Despensa
+
+### Outras Fontes
 - **Fonte 5V**: Para ESP32 e MCP23017
-- **Fonte 10A centralizada**: Para o painel completo
+- **Fonte 12V (opcional)**: Para relés se necessário
 
 ---
 
@@ -342,5 +359,5 @@ Alguns interruptores têm MUITAS teclas (complexidade de lógica):
 
 ---
 
-**Última atualização**: 02/12/2025
+**Última atualização**: 17/01/2026
 

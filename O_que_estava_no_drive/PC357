@@ -1,0 +1,231 @@
+UMW                   
+    PC357 
+R
+SOP4, DC Input Photo Transistor Coupler
+Description
+The UMW PC357 series combine an AlGaAs 
+infrared emitting diode as the emitter which is 
+optically coupled to a silicon planar phototran
+sistor detector in a plastic SOP4 package.
+With the robust coplanar double mold structure, 
+UMW PC357 series provide the most stable 
+isola-tion feature.
+Features 
+ 
+ 
+
+
+
+
+
+
+High isolation 3750 VRMS 
+CTR flexibility available see order information 
+DC input with transistor output 
+Operating temperature range - 55 °C to 110 °C 
+REACH compliance 
+Halogen free 
+MSL class 1 
+UL Recognized: UL1577, File No. E
+Applications   
+ 
+
+
+ 
+
+
+ 
+
+
+ 
+
+
+Switch mode power supplies 
+Programmable controllers 
+Household appliances 
+Office equipment 
+492440
+Structural schematic diagram
+1
+2
+4
+3
+1. Anode
+2. Cathode
+3. Emitter
+4. Collector
+www.umw-ic.com  
+友台半导体有限公司
+1  
+ABSOLUTE MAXIMUM RATINGS
+PARAMETER SYMBOL VALUE UNIT NOTE 
+INPUT
+Forward Current IF 60 mA
+Peak Forward Current IFP 1 A 1
+Reverse Voltage VR 6 V
+Input Power Dissipation PI 100 mW
+OUTPUT
+Collector - Emitter Voltage VCEO 35 V
+Emitter - Collector Voltage VECO 7 V 
+Collector Current IC 50 mA
+Output Power Dissipation PO 150 mW 
+COMMON
+Total Power Dissipation Ptot 200 mW
+Isolation Voltage Viso 3750 Vrms 2
+Operating Temperature Topr -55~110 °C 
+Storage Temperature Tstg -55~125 °C 
+Soldering Temperature Tsol 260 °C
+Note 1. 100μs pulse, 100Hz frequency 
+Note 2. AC For 1 Minute, R.H. = 40 ~ 60%
+ 
+ 
+www.umw-ic.com  2  友台半导体有限公司
+SOP4, DC Input Photo Transistor Coupler
+UMW                       PC357          
+R
+ELECTRICAL OPTICAL CHARACTERISTICS at Ta=25°C
+PARAMETER SYMBOL MIN TYP. MAX. UNIT TEST CONDITION NOTE 
+INPUT
+Forward Voltage VF - 1.24 1.4 V IF=10mA
+Reverse Current IR - - 10 μA VR=6V
+Input Capacitance Cin - 10 - pF V=0, f=1kHz
+OUTPUT
+Collector Dark Current ICEO - - 100 nA VCE=20V, IF=0 
+Collector-Emitter
+Breakdown Voltage BVCEO 35 - - V IC=0.1mA, IF=0
+Emitter-Collector
+Breakdown Voltage BVECO 7 - - V IE=0.1mA, IF=0
+TRANSFER CHARACTERISTICS
+Current 
+Transfer 
+Ratio 
+ PC357
+CTR 
+50 - 600 
+% IF=5mA, VCE=5V 
+  
+ 80 - 160   
+ 130 - 260   
+ 200 - 400   
+Collector-Emitter 
+Saturation Voltage VCE(sat) - 0.06 0.2 V IF=20mA, IC=1mA   
+Isolation Resistance RISO 10^12 10^14 - Ω DC500V, 40 ~ 60% R.H.   
+Floating Capacitance CIO - 0.4 1 pF V=0, f=1MHz   
+Cut-off Frequency fc - 80 - kHz VCE=2V, IC=2mA 
+RL=100Ω,-3dB 4 
+Response Time (Rise) tr - 3 18 μs VCE=2V, IC=2mA 
+RL=100Ω 
+3 
+Response Time (Fall) tf - 4 18 μs 3 
+Note 3. Fig.12&13 
+Note 4. Fig.14 
+  
+ 
+ 
+www.umw-ic.com  3  友台半导体有限公司
+PC357A
+SOP4, DC Input Photo Transistor Coupler
+UMW                       PC357          
+R
+PC357B
+PC357C
+UMW             R
+PC357N3
+SOP4, DC Input Photo Transistor Coupler
+CHARACTERISTIC CURVES
+Fig.1 Forward Current
+vs. Ambient Temperature
+Fig.3 Forward Current 
+vs. Forward Voltage 
+Fig.2 Collector Power Dissipation 
+vs. Ambient Temperature 
+Fig.4 Collector Dark Current 
+vs. Ambient Temperature 
+Fig.5 Collector Current 
+vs. Collector-emitter Voltage 
+Fig.6 Collector Current 
+vs. Collector-emitter Voltage 
+www.umw-ic.com  
+友台半导体有限公司
+4  
+UMW             
+R
+       PC357N3
+SOP4, DC Input Photo Transistor Coupler
+CHARACTERISTIC CURVES
+Fig.7 Normalized Current Transfer Ratio 
+vs. Forward Current
+Fig.9 Collector-emitter Saturation Voltage 
+vs. Ambient Temperature 
+Fig.8 Normalized Current Transfer Ratio 
+vs. Ambient Temperature 
+Fig.10 Switching Time 
+vs. Load Resistance 
+Fig.11 Frequency Response 
+www.umw-ic.com  
+友台半导体有限公司
+5  
+UMW             
+R
+       PC357N3
+SOP4, DC Input Photo Transistor Coupler
+TEST CIRCUITS
+Fig.12 Test Circuits of Response Time 
+Fig.13 Curves of Response Time
+Fig.14 Test Circuits of Frequency Response 
+www.umw-ic.com  
+友台半导体有限公司
+6  
+UMW             R
+       PC357N3
+SOP4, DC Input Photo Transistor Coupler
+REFLOW INFORMATION
+REFLOW PROFILE
+Profile Feature 
+Sn-Pb Assembly Profile Pb-Free Assembly Profile 
+Temperature Min. (Tsmin) 
+100 
+Temperature Max. (Tsmax) 
+150 
+150°C 
+Time (ts) from (Tsmin to Tsmax) 
+200°C 
+60-120 seconds 
+Ramp-up Rate (tL to tP) 
+60-120 seconds 
+3°C/second max. 
+Liquidous Temperature (TL) 
+3°C/second max. 
+183°C 
+Time (tL) Maintained Above (TL) 
+217°C 
+60 – 150 seconds 
+Peak Body Package Temperature 
+60 – 150 seconds 
+235°C +0°C / -5°C 
+Time (tP) within 5°C of 260°C 
+260°C +0°C / -5°C 
+20 seconds 
+Ramp-down Rate (TP to TL) 
+30 seconds 
+6°C/second max 
+Time 25°C to Peak Temperature 
+6°C/second max 
+6 minutes max. 
+8 minutes max. 
+www.umw-ic.com  
+友台半导体有限公司
+7  
+UMW             
+R
+       PC357N3
+SOP4, DC Input Photo Transistor Coupler
+PACKAGE DIMENSIONS (Dimensions in mm unless otherwise stated)
+Marking
+"X"
+：Grading standard
+"YWW"： Year week number
+Ordering imformation
+www.umw-ic.com  
+友台半导体有限公司
+8  
