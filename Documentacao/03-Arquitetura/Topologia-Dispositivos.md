@@ -36,8 +36,10 @@ Este arquivo deve conter a topologia completa de todos dispositivos do sistema.
    │   ├── Fumaça (8-12 sensores)
    │   └── RGBW2 (LEDs 24V)
    │
-   ├── Câmeras Unifi (7 câmeras)
-   │   └── Unifi Protect (UDM-Pro SE)
+   ├── Câmeras Unifi G5 Turret Ultra (UVC-G5-Turret-Ultra)
+   │   ├── 7 câmeras instaladas
+   │   ├── 8 esperas para expansão futura
+   │   └── Sistema: Unifi Protect (UDM-Pro SE)
    │
    └── Outros
        ├── Fechadura Yale (monitoramento apenas)

@@ -50,9 +50,14 @@ Este arquivo deve conter documentação técnica completa para manutenção.
 - Re-emparelhar com HA
 
 ## 8. CÂMERAS UNIFI
+- **Modelo**: Unifi G5 Turret Ultra (UVC-G5-Turret-Ultra)
+- **Quantidade instalada**: 7 câmeras
+- **Esperas**: 8 pontos de infraestrutura para expansão futura
+- **Sistema**: Unifi Protect (UDM-Pro SE)
 - Acesso Unifi Protect
 - Configuração gravação
 - Troubleshooting
+- **Posições**: Verificar com arquiteto
 
 ## 9. INTEGRAÇÕES
 - LG ThinQ (ACs)

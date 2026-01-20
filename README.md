@@ -48,7 +48,7 @@ Sistema de automação residencial 100% local para residência premium em Le Par
 
 ### Outros
 - 6x LG AC (ThinQ + IR backup)
-- 7x Câmeras Unifi (Unifi Protect)
+- 7x Câmeras Unifi G5 Turret Ultra (Unifi Protect) + 8 esperas
 - 1x Fechadura Yale (monitoramento apenas)
 - Receiver Anthem + TV LG (multimídia)
 - Piscina (4 pontos LED, painel externo)

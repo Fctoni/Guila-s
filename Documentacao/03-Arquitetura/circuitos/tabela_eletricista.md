@@ -76,17 +76,19 @@
 
 ## ⚡ Resumo Potências LED 24V (Térreo Principal)
 
-| Circ Belm | Local | Potência | Corrente | Fio |
-|:---------:|-------|:--------:|:--------:|:---:|
-| 1R | Buffet | 24 W | 1,0 A | 2,5mm² |
-| 1U | Cortineiro Living | 304 W | 12,7 A | 6,0mm² |
-| 1X | Bancada Cozinha | 41 W | 1,7 A | 2,5mm² |
-| 2A | Garagem | 228 W | 9,5 A | 2,5mm² |
-| 2B | Despensa | 210 W | 8,8 A | 2,5mm² |
-| 2C | Lavanderia | 22 W | 0,9 A | 2,5mm² |
-| 2D | Bancada Lavanderia | 42 W | 1,8 A | 2,5mm² |
-| 2F | Sauna Superior | 42 W | 1,8 A | 2,5mm² |
-| 2G | Sauna Inferior | 235 W | 9,8 A | 4,0mm² |
-| 2K | Fitas Escritório | 124 W | 5,2 A | 2,5mm² |
-| 2i | Lavabo Tensoflex | 280 W | 11,7 A | 2,5mm² |
-| **TOTAL** | | **1.552 W** | **~65 A** | |
+| Circ Belm | Local | Potência | Corrente | Fio | Check |
+|:---------:|-------|:--------:|:--------:|:---:|:-----:|
+| 1R | Buffet | 24 W | 1,0 A | 2,5mm² |  |
+| 1U | Cortineiro Living Esquerdo | 152 W | 6,3 A | 1,50mm² | ✅ |
+| 1U | Cortineiro Living Direito | 152 W | 6,3 A | 1,50mm² |  |
+| 1X | Bancada Cozinha | 41 W | 1,7 A | 2,5mm² |  |
+| 2A | Garagem | 228 W | 9,5 A | 2,5mm² |  |
+| 2B | Despensa | 210 W | 8,8 A | 2,5mm² | ✅ |
+| 2C | Lavanderia | 22 W | 0,9 A | 2,5mm² | ✅ |
+| 2D | Bancada Lavanderia | 42 W | 1,8 A | 2,5mm² |  |
+| 2F | Sauna Superior | 42 W | 1,8 A | 2,5mm² | ✅ |
+| 2G | Sauna Inferior | 235 W | 9,8 A | 4,0mm² |  |
+| 2K | Fitas Escritório | 124 W | 5,2 A | 2,5mm² |  |
+| 2i | Lavabo Tensoflex | 280 W | 11,7 A | 2,5mm² |  |
+|    | Adega            | ?     |        |        | ✅ |
+| **TOTAL** | | **1.552 W** | **~65 A** | |  |

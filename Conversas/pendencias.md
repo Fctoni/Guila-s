@@ -43,6 +43,11 @@ Quando você tiver as respostas das pendências abaixo:
 
 ## 🏗️ ARQUITETO - Verificar com o responsável do projeto arquitetônico
 
+### Câmeras de Segurança (posicionamento)
+- [ ] Posição exata de cada uma das **7 câmeras instaladas** (Unifi G5 Turret Ultra)
+- [ ] Posição exata de cada uma das **8 esperas** de infraestrutura para câmeras futuras
+- [ ] Mapa/planta com marcação das câmeras e esperas
+
 ### Piscina (verificações finais)
 - [ ] Verificar marca do controlador de iluminação instalado
 - [ ] Confirmar se são exatamente 4 pontos de luz

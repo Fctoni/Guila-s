@@ -183,9 +183,13 @@ Sistema de automação residencial completo, 100% local, com:
 ### Segurança
 
 #### Câmeras
-- **Sistema**: 7 câmeras Unifi no Unifi Protect (UDM-Pro SE)
+- **Modelo**: Unifi G5 Turret Ultra (UVC-G5-Turret-Ultra)
+- **Quantidade instalada**: 7 câmeras
+- **Esperas de infraestrutura**: 8 pontos (para expansão futura)
+- **Sistema**: Unifi Protect (UDM-Pro SE)
 - **Integração HA**: UniFi Protect Integration
 - **Funcionalidades**: Detecção movimento, snapshots, gravação, preview painéis
+- **Pendente**: Verificar com arquiteto posição exata de cada câmera e espera
 
 #### Fechadura
 - **Modelo**: Yale (porta principal, única da casa)
