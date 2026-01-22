@@ -1,0 +1,20 @@
+S1 - ❌ NÃO ENCONTRADO (também busquei 1S)
+OFFICE - ❌ NÃO ENCONTRADO
+O2 - ❌ NÃO ENCONTRADO (também busquei 2O)
+D7 - ❌ NÃO ENCONTRADO (também busquei 7D)
+O3 - ❌ NÃO ENCONTRADO (também busquei 3O)
+LEDS 24V BAR - ❌ NÃO ENCONTRADO
+G2 - ✅ ENCONTRADO COMO 2G (Sauna Inferior - Circuito 2G, Int 21, Circ Lum 10)
+C2 - ✅ ENCONTRADO COMO 2C (Lavanderia - Circuito 2C, Int 27/25, Circ Lum 8)
+ESPETOS - ❌ NÃO ENCONTRADO
+PERFIL - ✅ ENCONTRADO (Perfil Bancada - Lavanderia 2D e Cozinha 1X)
+2 AIVA - ❌ NÃO ENCONTRADO
+H2 - ✅ ENCONTRADO COMO 2H (Hall Serviço - Circuito 2H, Int 23, Circ Lum 10)
+BB2 - ❌ NÃO ENCONTRADO (também busquei 2BB)
+II2 - ❌ NÃO ENCONTRADO (também busquei 2II)
+M2 - ✅ ENCONTRADO COMO 2M (Pendente Escritório - Circuito 2M, Int 34, Circ Lum 2)
+J2 - ❌ NÃO ENCONTRADO (também busquei 2J)
+L2 - ✅ ENCONTRADO COMO 2L (Escritório - Circuito 2L, Int 34, Circ Lum 1)
+
+3 S/ IDENTIFICAÇÃO
+
