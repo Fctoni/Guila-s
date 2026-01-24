@@ -17,6 +17,11 @@ Este arquivo deve conter a topologia completa de todos dispositivos do sistema.
    │   └── esp-painel-superior-norte
    │       └── [... módulos...]
    │
+   ├── ESP32 Cortinas (WiFi - VLAN 20)
+   │   └── esp-cortinas-terreo
+   │       ├── XL9535 (0x27) - 8 relés
+   │       └── 4 cortinas: Estar, Jantar, Office, Reserva
+   │
    ├── ESP32 Painéis Touch (WiFi - VLAN 20)
    │   ├── painel-touch-hall-entrada
    │   ├── painel-touch-sala-estar

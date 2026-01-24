@@ -1,30 +1,40 @@
-# Base Configuration for all ESP32 devices
+# Firmware ESP32 - Controlador de Cortinas Terreo
+# Casa Le Parc - Automacao Residencial
+# Atualizado: 2026-01-24
 
-# Common packages
+
+# Base Configuration for all ESP32 devices
+# Atualizado para ESPHome 2026.1.x
+
+# Core ESPHome
 esphome:
   name: ${device_name}
-  platform: ESP32
+  friendly_name: ${friendly_name}
+
+# ESP32 Platform (separado do esphome em 2026.1.x)
+esp32:
   board: ${board_type}
+  framework:
+    type: esp-idf  # Padrao em 2026.1+, binarios menores, compilacao mais rapida
 
 # WiFi/Ethernet (override in device config)
 wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  
+  ssid: "Cesar"
+  password: eli358935
+
   # Enable fallback hotspot
   ap:
     ssid: "${device_name} Fallback"
     password: "fallback12345"
 
-# API for Home Assistant
+# API for Home Assistant (password removido em 2026.1.0)
 api:
-  password: !secret api_password
-  encryption:
-    key: !secret api_encryption_key
 
-# OTA Updates
+
+# OTA Updates (platform obrigatorio em 2026.1.x)
 ota:
-  password: !secret ota_password
+  - platform: esphome
+
 
 # Logger
 logger:
@@ -40,9 +50,209 @@ time:
 web_server:
   port: 80
 
-# Status LED (if available)
-status_led:
-  pin:
-    number: GPIO2
-    inverted: true
 
+
+
+
+
+substitutions:
+  device_name: esp-cortinas-terreo
+  friendly_name: "Cortinas Terreo"
+  board_type: esp32dev
+  # Tempos de abertura/fechamento em segundos
+  # Para alterar: edite os valores abaixo e recompile
+  tempo_cortinas: "30s"
+
+
+# I2C para comunicacao com expansor XL9535
+i2c:
+  sda: GPIO21
+  scl: GPIO22
+  scan: true
+  id: bus_i2c
+
+# Expansor XL9535 (16 GPIOs, usando 8 para reles)
+# Endereco 0x27 conforme hardware instalado
+xl9535:
+  - id: xl9535_reles
+    address: 0x27
+
+# =============================================================================
+# SWITCHES INTERNOS - Reles (nao expostos ao Home Assistant)
+# =============================================================================
+# Logica: Reles ativo HIGH ()
+
+
+switch:
+  # --- CORTINA ESTAR ---
+  - platform: gpio
+    id: rele_energia_estar
+    internal: true
+    restore_mode: ALWAYS_OFF
+    pin:
+      xl9535: xl9535_reles
+      number: 0
+      mode:
+        output: true
+
+
+  - platform: gpio
+    id: rele_direcao_estar
+    internal: true
+    restore_mode: ALWAYS_OFF
+    pin:
+      xl9535: xl9535_reles
+      number: 1
+      mode:
+        output: true
+
+
+  # --- CORTINA JANTAR ---
+  - platform: gpio
+    id: rele_energia_jantar
+    internal: true
+    restore_mode: ALWAYS_OFF
+    pin:
+      xl9535: xl9535_reles
+      number: 2
+      mode:
+        output: true
+
+
+  - platform: gpio
+    id: rele_direcao_jantar
+    internal: true
+    restore_mode: ALWAYS_OFF
+    pin:
+      xl9535: xl9535_reles
+      number: 3
+      mode:
+        output: true
+
+  # --- CORTINA OFFICE ---
+  - platform: gpio
+    id: rele_energia_office
+    internal: true
+    restore_mode: ALWAYS_OFF
+    pin:
+      xl9535: xl9535_reles
+      number: 4
+      mode:
+        output: true
+
+  - platform: gpio
+    id: rele_direcao_office
+    internal: true
+    restore_mode: ALWAYS_OFF
+    pin:
+      xl9535: xl9535_reles
+      number: 5
+      mode:
+        output: true
+
+  # --- CORTINA RESERVA ---
+  - platform: gpio
+    id: rele_energia_reserva
+    internal: true
+    restore_mode: ALWAYS_OFF
+    pin:
+      xl9535: xl9535_reles
+      number: 6
+      mode:
+        output: true
+
+  - platform: gpio
+    id: rele_direcao_reserva
+    internal: true
+    restore_mode: ALWAYS_OFF
+    pin:
+      xl9535: xl9535_reles
+      number: 7
+      mode:
+        output: true
+
+# =============================================================================
+# COVERS - Cortinas expostas ao Home Assistant
+# =============================================================================
+# Logica de controle:
+#   ABRIR:  Liga direcao (ON) -> Liga energia -> Aguarda tempo -> Desliga energia
+#   FECHAR: Desliga direcao (OFF) -> Liga energia -> Aguarda tempo -> Desliga energia
+#   PARAR:  Desliga energia imediatamente
+
+cover:
+  - platform: time_based
+    name: "Cortina Estar"
+    id: cortina_estar
+    device_class: curtain
+    open_action:
+      - switch.turn_on: rele_direcao_estar
+      - switch.turn_on: rele_energia_estar
+    close_action:
+      - switch.turn_off: rele_direcao_estar
+      - switch.turn_on: rele_energia_estar
+    stop_action:
+      - switch.turn_off: rele_energia_estar
+    open_duration: ${tempo_cortinas}
+    close_duration: ${tempo_cortinas}
+
+  - platform: time_based
+    name: "Cortina Jantar"
+    id: cortina_jantar
+    device_class: curtain
+    open_action:
+      - switch.turn_on: rele_direcao_jantar
+      - switch.turn_on: rele_energia_jantar
+    close_action:
+      - switch.turn_off: rele_direcao_jantar
+      - switch.turn_on: rele_energia_jantar
+    stop_action:
+      - switch.turn_off: rele_energia_jantar
+    open_duration: ${tempo_cortinas}
+    close_duration: ${tempo_cortinas}
+
+  - platform: time_based
+    name: "Cortina Office"
+    id: cortina_office
+    device_class: curtain
+    open_action:
+      - switch.turn_on: rele_direcao_office
+      - switch.turn_on: rele_energia_office
+    close_action:
+      - switch.turn_off: rele_direcao_office
+      - switch.turn_on: rele_energia_office
+    stop_action:
+      - switch.turn_off: rele_energia_office
+    open_duration: ${tempo_cortinas}
+    close_duration: ${tempo_cortinas}
+
+  - platform: time_based
+    name: "Cortina Reserva"
+    id: cortina_reserva
+    device_class: curtain
+    open_action:
+      - switch.turn_on: rele_direcao_reserva
+      - switch.turn_on: rele_energia_reserva
+    close_action:
+      - switch.turn_off: rele_direcao_reserva
+      - switch.turn_on: rele_energia_reserva
+    stop_action:
+      - switch.turn_off: rele_energia_reserva
+    open_duration: ${tempo_cortinas}
+    close_duration: ${tempo_cortinas}
+
+# =============================================================================
+# SENSORES DE DIAGNOSTICO
+# =============================================================================
+
+sensor:
+  - platform: uptime
+    name: "Uptime"
+    id: sensor_uptime
+
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+binary_sensor:
+  - platform: status
+    name: "Status"

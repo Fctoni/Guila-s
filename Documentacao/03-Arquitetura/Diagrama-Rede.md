@@ -27,11 +27,14 @@ Este arquivo deve conter o diagrama completo da infraestrutura de rede.
 
 4. **IPs Estáticos Importantes**
    ```
-   192.168.10.1  - UDM-Pro SE
-   192.168.10.10 - Home Assistant (VM)
+   192.168.10.1   - UDM-Pro SE
+   192.168.10.10  - Home Assistant (VM)
    192.168.10.101 - ESP32 Painel Térreo
    192.168.10.102 - ESP32 Painel Superior
    [... etc]
+
+   # Tailscale
+   100.68.65.65   - proxmoxguilas
    ```
 
 5. **DNS Local** (Unifi DNS)
@@ -46,7 +49,25 @@ Este arquivo deve conter o diagrama completo da infraestrutura de rede.
    - VLAN 10 (crítico) pode acessar todas VLANs
    - VLAN 30 (guest) isolada (apenas internet)
 
-7. **Backup/Monitoramento**
+7. **Proxmox (proxmoxguilas)**
+   - pve-post-install executado (2026-01-24)
+   - Repositorios no-subscription configurados
+   - Tailscale instalado e autenticado (felipetonietto@gmail.com)
+   - IP Tailscale: 100.68.65.65
+   - Subnet routing: 192.168.1.0/24 (aprovado no painel Tailscale)
+   - IP forwarding habilitado
+
+   **Acesso remoto via Tailscale:**
+   ```
+   Proxmox Web UI: https://100.68.65.65:8006
+   ESPHome:        http://192.168.1.53:6052
+   SSH:            ssh root@100.68.65.65
+   ```
+
+   **Nota:** Se a rede local tiver subnet 192.168.1.x, havera conflito.
+   Alternativa: instalar Tailscale direto nos containers.
+
+8. **Backup/Monitoramento**
    - Tailscale VPN para acesso remoto
    - Uptime Kuma monitorando dispositivos
 

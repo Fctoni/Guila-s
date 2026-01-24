@@ -35,6 +35,39 @@ Este arquivo deve conter documentação técnica completa para manutenção.
 - Mapa de I/O (pino X = luz Y)
 - Firmware: Repositório Git
 
+## 4.1 ESP32s - CORTINAS
+
+### esp-cortinas-terreo
+- **Localização**: Térreo
+- **Hardware**: ESP32 DevKit + XL9535 (I2C 0x27)
+- **WiFi**: SSID "Cesar"
+- **Firmware**: `Firmware/ESP32-Cortinas/terreo/esp-cortinas-terreo.yaml`
+- **Documentação**: `Firmware/ESP32-Cortinas/terreo/mapeamento-pinos.md`
+
+#### Cortinas Controladas
+| Cortina | Relé Energia | Relé Direção | Tempo |
+|---------|:------------:|:------------:|:-----:|
+| Estar | P0 | P1 | 30s |
+| Jantar | P2 | P3 | 30s |
+| Office | P4 | P5 | 30s |
+| Reserva | P6 | P7 | 30s |
+
+#### Lógica de Controle
+- **Abrir**: Direção ON → Energia ON → Aguarda → Energia OFF
+- **Fechar**: Direção OFF → Energia ON → Aguarda → Energia OFF
+- **Parar**: Energia OFF imediatamente
+
+#### Entidades Home Assistant
+- `cover.cortina_estar`
+- `cover.cortina_jantar`
+- `cover.cortina_office`
+- `cover.cortina_reserva`
+
+#### Troubleshooting
+- Verificar I2C: `i2c scan` no log ESPHome
+- Relés ativo HIGH (sem inversão)
+- Web server: porta 80 para debug
+
 ## 5. ESP32s - PAINÉIS TOUCH
 - Localização física
 - Firmware LVGL
