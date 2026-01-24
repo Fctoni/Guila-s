@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(wc:*)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(move \"C:\\\\Users\\\\felip\\\\Downloads\\\\Guila-s-1\\\\CCG - ENFIAÇÃO AUTOMAÇÃO FALADA _ ATUALIZADO 23-01-2026.xlsx\" \"C:\\\\Users\\\\felip\\\\Downloads\\\\Guila-s-1\\\\O_que_estava_no_drive\"\")",
+      "WebSearch",
+      "WebFetch(domain:esphome.io)",
+      "Bash(Remove-Item -Recurse -Force \"proxmoxHelperScripts-Github\\\\ProxmoxVE-main\\\\install\")",
+      "Bash(du -sh:*)"
+    ]
+  }
+}
