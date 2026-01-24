@@ -14,7 +14,7 @@
   - Confirmada integração LG ThinQ (via servidor LG, backup IR)
   - Decisão: Desenvolver termostato próprio para piso aquecido (Vesta incompatível)
   - Atualizada localização: Le Parc
-- **20/11/2025**: Criação inicial (baseado em discussão completa `Conversas/20251120.md`)
+- **20/11/2025**: Criação inicial (baseado em discussão completa `docs/decisoes/20251120.md`)
 
 ---
 
@@ -418,7 +418,7 @@ painel-touch-sala.local → 192.168.20.101
 
 ## 📋 PENDÊNCIAS
 
-**Arquivo detalhado**: `Conversas/pendencias.md`
+**Arquivo detalhado**: `docs/decisoes/pendencias.md`
 
 ### Resumo
 - **Com Arquiteto**: Plantas da casa, posicionamento sensores mmWave, modelo exato fechadura Yale, localização quadros elétricos, planilhas iluminação 220V e LEDs 24V, verificações finais piscina (marca controlador, confirmar 4 pontos luz)
@@ -494,9 +494,9 @@ painel-touch-sala.local → 192.168.20.101
 
 ## 📚 REFERÊNCIAS
 
-- **Arquivo discussão completa**: `Conversas/20251120.md` (3500+ linhas)
-- **Pendências atualizáveis**: `Conversas/pendencias.md`
-- **Guia para IAs futuras**: `Conversas/Guia para IA.md`
+- **Arquivo discussão completa**: `docs/decisoes/20251120.md` (3500+ linhas)
+- **Pendências atualizáveis**: `docs/decisoes/pendencias.md`
+- **Guia para IAs futuras**: `docs/decisoes/Guia para IA.md`
 
 ### Links Importantes
 - SS4H Smart Home Hub: https://smartsolutions4home.com/ss4h-shh-smart-home-hub/

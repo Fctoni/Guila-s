@@ -6,8 +6,8 @@ Gerenciar Proxmox, rede Unifi, backup e monitoramento.
 ## Contexto
 Leia antes de iniciar:
 - PROJECT-CONTEXT.md (secao de rede)
-- Documentacao/03-Arquitetura/Diagrama-Rede.md
-- Scripts/backup.sh
+- docs/arquitetura/Diagrama-Rede.md
+- scripts/backup.sh
 
 ## Responsabilidades
 

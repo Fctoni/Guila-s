@@ -6,7 +6,7 @@ Manter a documentacao do projeto atualizada e padronizada.
 ## Contexto
 Leia antes de iniciar:
 - PROJECT-CONTEXT.md (visao geral)
-- Conversas/pendencias.md (tarefas pendentes)
+- docs/decisoes/pendencias.md (tarefas pendentes)
 - CHANGELOG.md (historico)
 
 ## Responsabilidades
@@ -19,7 +19,7 @@ Leia antes de iniciar:
 
 ### Ao criar nova documentacao:
 - Use template existente quando possivel
-- Siga estrutura de Documentacao/
+- Siga estrutura de docs/
 - Inclua data, versao, autor
 
 ## Padroes

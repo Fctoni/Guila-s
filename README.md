@@ -58,35 +58,40 @@ Sistema de automação residencial 100% local para residência premium em Le Par
 
 ```
 Guilas/
-├── Conversas/              # Logs de conversas e decisões
-├── Documentacao/
-│   ├── 01-Comercial/       # Contrato, proposta, SLA
-│   ├── 02-Requisitos/      # PRD, user stories, casos de uso
-│   ├── 03-Arquitetura/     # Diagramas (rede, elétrico, topologia)
-│   ├── 04-Manuais/         # Manuais (usuário, técnico, troubleshooting)
-│   └── 05-Manuais-Equipamentos/  # PDFs de equipamentos
-├── Firmware/
-│   ├── common/             # Configs compartilhadas (ESPHome)
-│   ├── ESP32-Paineis/      # Painéis de comando (Ethernet)
-│   ├── ESP32-Sensores/     # Sensores (mmWave, temperatura)
-│   └── ESP32-Paineis-Touch/  # Painéis touch (LVGL)
-├── Home-Assistant/
-│   ├── configuration.yaml  # Config principal HA
-│   ├── automations.yaml    # Automações
-│   ├── scripts.yaml        # Scripts
-│   ├── scenes.yaml         # Cenas
-│   ├── dashboards/         # Dashboards customizados
-│   └── custom_components/  # Integrações customizadas
-├── Hardware/
-│   ├── Esquematicos/       # Esquemas elétricos
-│   ├── PCB/                # PCBs customizadas (se houver)
-│   ├── BOM/                # Listas de materiais
-│   └── Datasheets/         # Datasheets técnicos
-├── Scripts/
-│   ├── backup.sh           # Script backup automático
-│   ├── deploy.sh           # Deploy firmwares/configs
-│   ├── setup/              # Scripts configuração inicial
+├── .claude/
+│   └── agents/             # Agentes IA especializados
+├── docs/
+│   ├── comercial/          # Contrato, proposta, SLA
+│   ├── requisitos/         # PRD, user stories, casos de uso
+│   ├── arquitetura/        # Diagramas (rede, elétrico, topologia)
+│   ├── manuais/            # Manuais (usuário, técnico, troubleshooting)
+│   ├── equipamentos/       # PDFs de equipamentos
+│   ├── decisoes/           # Logs de conversas e decisões
+│   └── padroes/            # Padrões de código
+├── src/
+│   ├── firmware/           # ESPHome configs
+│   │   ├── common/         # Configs compartilhadas
+│   │   ├── paineis-eletricos/  # Painéis de comando (Ethernet)
+│   │   ├── paineis-touch/  # Painéis touch (LVGL)
+│   │   ├── sensores/       # Sensores (mmWave, temperatura)
+│   │   ├── cortinas/       # Cortinas motorizadas
+│   │   └── termostatos/    # Termostatos piso aquecido
+│   └── homeassistant/      # Configs Home Assistant
+│       ├── config/         # configuration.yaml, automations, etc
+│       └── dashboards/     # Dashboards customizados
+├── hardware/
+│   ├── esquematicos/       # Esquemas elétricos
+│   ├── pcb/                # PCBs customizadas
+│   ├── bom/                # Listas de materiais
+│   └── datasheets/         # Datasheets técnicos
+├── scripts/
+│   ├── backup/             # Scripts backup automático
+│   ├── deploy/             # Deploy firmwares/configs
 │   └── monitoring/         # Configs monitoramento
+├── tracking/
+│   ├── alteracoes/         # Controle de alterações
+│   ├── fases/              # Fases do projeto
+│   └── bugs/               # Bugs em teste
 ├── PROJECT-CONTEXT.md      # 📌 Contexto geral do projeto (LEIA PRIMEIRO)
 └── README.md               # Este arquivo
 ```
@@ -95,14 +100,14 @@ Guilas/
 
 ### Para IAs Futuras:
 1. **Leia primeiro**: `PROJECT-CONTEXT.md` - Contexto completo e decisões finais
-2. **Pendências**: `Conversas/pendencias.md` - O que ainda falta definir
-3. **Guia de interação**: `Conversas/Guia para IA.md` - Como interagir neste projeto
-4. **Histórico**: `Conversas/20251120.md` e `20251201.md` - Conversas detalhadas
+2. **Pendências**: `docs/decisoes/pendencias.md` - O que ainda falta definir
+3. **Guia de interação**: `docs/decisoes/Guia para IA.md` - Como interagir neste projeto
+4. **Histórico**: `docs/decisoes/20251120.md` e `20251201.md` - Conversas detalhadas
 
 ### Para Humanos:
 - **Contexto rápido**: Leia `PROJECT-CONTEXT.md`
-- **Documentação técnica**: `Documentacao/04-Manuais/Manual-Tecnico.md`
-- **Manual do proprietário**: `Documentacao/04-Manuais/Manual-Usuario.md`
+- **Documentação técnica**: `docs/manuais/Manual-Tecnico.md`
+- **Manual do proprietário**: `docs/manuais/Manual-Usuario.md`
 
 ## 📊 Status do Projeto
 

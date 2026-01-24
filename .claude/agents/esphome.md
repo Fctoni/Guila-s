@@ -13,13 +13,13 @@ Desenvolver e manter firmware ESPHome seguindo padroes do projeto.
 
 **PASSO 1 - Sempre ler primeiro (breaking changes):**
 ```
-Firmware/ESPHOME_REFERENCE.md
+src/firmware/ESPHOME_REFERENCE.md
 ```
 Contem resumo de breaking changes criticos. Leitura rapida (~2,500 tokens).
 
 **PASSO 2 - Ler sob demanda (documentacao do componente):**
 ```
-Firmware/esphome_documentacao_completa/content/components/[componente].md
+docs/referencias/esphome/content/components/[componente].md
 ```
 
 Antes de usar/modificar qualquer componente, leia sua documentacao atualizada.
@@ -58,9 +58,9 @@ Tarefa: Adicionar sensor de temperatura DS18B20
 ## Contexto do Projeto
 
 Apos ler a documentacao, consulte:
-- `Firmware/common/base-config.yaml` - Template base
-- `Firmware/ESP32-Paineis-Eletricos/terreo-principal/` - Referencia de implementacao
-- `Documentacao/03-Arquitetura/circuitos/` - Mapeamentos eletricos
+- `src/firmware/common/base-config.yaml` - Template base
+- `src/firmware/paineis-eletricos/terreo-principal/` - Referencia de implementacao
+- `docs/arquitetura/circuitos/` - Mapeamentos eletricos
 
 ## Responsabilidades
 

@@ -1,0 +1,122 @@
+# Manual Técnico - Projeto Guilas
+
+## 📝 GUIA PARA IA FUTURA
+
+Este arquivo deve conter documentação técnica completa para manutenção.
+
+### Público-alvo:
+- Integrador (você)
+- Equipe de manutenção futura
+- IA futura fazendo troubleshooting
+
+### Estrutura Sugerida:
+
+## 1. ARQUITETURA GERAL
+- Diagrama de rede
+- Topologia de dispositivos
+- Fluxo de dados
+
+## 2. SERVIDOR E INFRAESTRUTURA
+- Proxmox: Acesso, configuração, VMs
+- Home Assistant: Acesso, configurações, add-ons
+- Backup: Localização, restauração, frequência
+- No-break: Autonomia, alertas, shutdown
+
+## 3. REDE
+- UDM-Pro SE: Acesso, VLANs, firewall
+- APs Unifi U7: Localização, SSIDs, roaming
+- DNS local: Registros, nomenclatura
+- IPs estáticos: Lista completa
+
+## 4. ESP32s - PAINÉIS DE COMANDO
+- Localização física (qual quadro)
+- Acesso via ESPHome (OTA)
+- Módulos I2C conectados
+- Mapa de I/O (pino X = luz Y)
+- Firmware: Repositório Git
+
+## 4.1 ESP32s - CORTINAS
+
+### esp-cortinas-terreo
+- **Localização**: Térreo
+- **Hardware**: ESP32 DevKit + XL9535 (I2C 0x27)
+- **WiFi**: SSID "Cesar"
+- **Firmware**: `src/firmware/cortinas/terreo/esp-cortinas-terreo.yaml`
+- **Documentação**: `src/firmware/cortinas/terreo/mapeamento-pinos.md`
+
+#### Cortinas Controladas
+| Cortina | Relé Energia | Relé Direção | Tempo |
+|---------|:------------:|:------------:|:-----:|
+| Estar | P0 | P1 | 30s |
+| Jantar | P2 | P3 | 30s |
+| Office | P4 | P5 | 30s |
+| Reserva | P6 | P7 | 30s |
+
+#### Lógica de Controle
+- **Abrir**: Direção ON → Energia ON → Aguarda → Energia OFF
+- **Fechar**: Direção OFF → Energia ON → Aguarda → Energia OFF
+- **Parar**: Energia OFF imediatamente
+
+#### Entidades Home Assistant
+- `cover.cortina_estar`
+- `cover.cortina_jantar`
+- `cover.cortina_office`
+- `cover.cortina_reserva`
+
+#### Troubleshooting
+- Verificar I2C: `i2c scan` no log ESPHome
+- Relés ativo HIGH (sem inversão)
+- Web server: porta 80 para debug
+
+## 5. ESP32s - PAINÉIS TOUCH
+- Localização física
+- Firmware LVGL
+- Troubleshooting (reiniciar, re-flash)
+
+## 6. ESP32s - SENSORES
+- mmWave: Calibração, zonas de detecção
+- Temperatura: Offset, calibração
+
+## 7. SENSORES SHELLY
+- Lista completa (local + função)
+- Trocar bateria (procedimento)
+- Re-emparelhar com HA
+
+## 8. CÂMERAS UNIFI
+- **Modelo**: Unifi G5 Turret Ultra (UVC-G5-Turret-Ultra)
+- **Quantidade instalada**: 7 câmeras
+- **Esperas**: 8 pontos de infraestrutura para expansão futura
+- **Sistema**: Unifi Protect (UDM-Pro SE)
+- Acesso Unifi Protect
+- Configuração gravação
+- Troubleshooting
+- **Posições**: Verificar com arquiteto
+
+## 9. INTEGRAÇÕES
+- LG ThinQ (ACs)
+- WebOS (TV)
+- Yale (fechadura)
+- Receiver Anthem
+
+## 10. PROCEDIMENTOS DE MANUTENÇÃO
+- Backup manual
+- Atualização HA
+- Atualização firmware ESP32s
+- Teste de sensores
+- Verificação de baterias
+
+## 11. TROUBLESHOOTING AVANÇADO
+- HA não inicia
+- ESP32 não conecta
+- Módulo I2C não responde
+- Logs importantes (onde encontrar)
+
+## 12. CONTATOS E SENHAS
+- Acesso remoto (Tailscale)
+- Credenciais (arquivo separado, criptografado)
+- Fornecedores (contatos)
+
+---
+
+**Status**: 🔴 Criar durante implementação (Fase 3-4)
+

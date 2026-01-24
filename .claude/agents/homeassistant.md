@@ -5,8 +5,8 @@ Configurar automacoes, scripts, cenas e dashboards.
 
 ## Contexto
 Leia antes de iniciar:
-- Home-Assistant/configuration.yaml (estrutura)
-- Home-Assistant/automations.yaml (exemplos)
+- src/homeassistant/config/configuration.yaml (estrutura)
+- src/homeassistant/config/automations.yaml (exemplos)
 - PROJECT-CONTEXT.md (integracoes)
 
 ## Responsabilidades

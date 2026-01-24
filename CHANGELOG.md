@@ -8,12 +8,12 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
 ### Adicionado
 - 2026-01-24: Firmware ESP32 para cortinas motorizadas do terreo
-  - Arquivo: `Firmware/ESP32-Cortinas/terreo/esp-cortinas-terreo.yaml`
+  - Arquivo: `src/firmware/cortinas/terreo/esp-cortinas-terreo.yaml`
   - Controle de 4 cortinas via XL9535 (8 reles)
   - Cortinas: Estar, Jantar, Office, Reserva
   - Documentacao de pinos em `mapeamento-pinos.md`
   - Usa base-config.yaml via packages
-- 2026-01-24: Arquivo secrets.yaml.example criado em Firmware/
+- 2026-01-24: Arquivo secrets.yaml.example criado em src/firmware/
 - 2026-01-24: Proxmox configurado com pve-post-install
   - Repositorios enterprise desabilitados
   - Repositorios no-subscription habilitados
@@ -31,7 +31,7 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
   - review.md - Agente de revisao
 - 2026-01-23: CLAUDE.md com instrucoes gerais para Claude Code
 - 2026-01-23: CHANGELOG.md para registro de mudancas
-- 2026-01-23: Firmware/ESPHOME_REFERENCE.md - Referencia completa de breaking changes
+- 2026-01-23: src/firmware/ESPHOME_REFERENCE.md - Referencia completa de breaking changes
   - Cobre 14 releases (2024.11.0 ate 2026.1.1)
   - Checklist de migracao
   - Configuracao recomendada para 2026.1.x
