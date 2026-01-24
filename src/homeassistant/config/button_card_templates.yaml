@@ -196,3 +196,689 @@ cover_grupo:
           </div>
         `;
       ]]]
+
+
+# =============================================================================
+# TEMPLATES: DASHBOARD PRINCIPAL
+# =============================================================================
+# Criado: 2026-01-24
+# Paleta de cores baseada na referencia visual do projeto
+
+# -----------------------------------------------------------------------------
+# ESTILOS BASE - Variaveis de cores
+# -----------------------------------------------------------------------------
+# Badge luzes:       rgba(255,170,40,1)    - #ffaa28
+# Badge equipamentos: rgba(0,122,255,1)    - #007aff
+# Badge alerta:      rgba(255,59,48,0.95)  - #ff3b30
+# Lock fechado:      rgba(48,209,88,0.7)   - #30d158
+# Lock aberto:       rgba(255,59,48,0.95)  - #ff3b30
+# Fundo card:        rgba(28,60,72,0.92)
+# Borda cards:       rgba(255,255,255,0.40)
+# Texto principal:   rgba(255,255,255,0.85)
+# Texto secundario:  rgba(240,240,240,0.65)
+
+# -----------------------------------------------------------------------------
+# TEMPLATE: CHIP PESSOA
+# -----------------------------------------------------------------------------
+# Uso:
+#   - type: custom:button-card
+#     template: chip_pessoa
+#     entity: input_boolean.gui_em_casa
+#     variables:
+#       nome: "Gui"
+#       local: "Passarela"
+#       foto: "/local/fotos/gui.jpg"
+
+chip_pessoa:
+  variables:
+    nome: "Pessoa"
+    local: "Em casa"
+    foto: ""
+  show_name: false
+  show_icon: false
+  show_state: false
+  tap_action:
+    action: toggle
+  styles:
+    card:
+      - padding: 6px 12px 6px 6px
+      - border-radius: 20px
+      - background: rgba(40, 70, 80, 0.6)
+      - border: 2px solid transparent
+      - display: flex
+      - align-items: center
+      - gap: 8px
+      - min-width: 90px
+    grid:
+      - grid-template-areas: '"foto info"'
+      - grid-template-columns: 32px 1fr
+  custom_fields:
+    foto: |
+      [[[
+        const foto = variables.foto || 'https://i.pravatar.cc/100?img=12';
+        return `<img src="${foto}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">`;
+      ]]]
+    info: |
+      [[[
+        return `
+          <div style="display: flex; flex-direction: column; line-height: 1.2;">
+            <span style="font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.95);">${variables.nome}</span>
+            <span style="font-size: 10px; color: rgba(255,255,255,0.6);">${variables.local}</span>
+          </div>
+        `;
+      ]]]
+  state:
+    - value: "on"
+      styles:
+        card:
+          - border-color: '#4a9eff'
+          - background: rgba(50, 90, 110, 0.8)
+
+
+# -----------------------------------------------------------------------------
+# TEMPLATE: PILL COMODO (status porta)
+# -----------------------------------------------------------------------------
+# Uso:
+#   - type: custom:button-card
+#     template: pill_comodo
+#     entity: input_boolean.lavanderia_porta
+#     name: "Lavand"
+
+pill_comodo:
+  show_name: true
+  show_icon: true
+  show_state: false
+  icon: mdi:lock
+  tap_action:
+    action: toggle
+  styles:
+    card:
+      - padding: 8px 14px
+      - border-radius: 18px
+      - background: rgba(40, 70, 80, 0.7)
+      - display: flex
+      - align-items: center
+      - gap: 6px
+    icon:
+      - width: 14px
+      - height: 14px
+    name:
+      - font-size: 13px
+      - font-weight: 500
+      - color: rgba(255,255,255,0.9)
+  state:
+    - value: "off"
+      icon: mdi:lock
+      styles:
+        icon:
+          - color: '#30d158'
+    - value: "on"
+      icon: mdi:lock-open-variant
+      styles:
+        icon:
+          - color: '#ff3b30'
+
+
+# -----------------------------------------------------------------------------
+# TEMPLATE: CARD AMBIENTE (base)
+# -----------------------------------------------------------------------------
+# Uso:
+#   - type: custom:button-card
+#     template: card_ambiente
+#     entity: input_number.sala_luzes
+#     name: "Sala"
+#     icon: mdi:sofa
+#     variables:
+#       lights_entity: input_number.sala_luzes
+#       equip_entity: input_number.sala_equipamentos
+
+card_ambiente:
+  variables:
+    lights_entity: null
+    equip_entity: null
+    door_entity: null
+    presence_entity: null
+    alert_entity: null
+  show_name: true
+  show_icon: true
+  show_label: true
+  show_state: false
+  label: "Click p/ Ir"
+  tap_action:
+    action: more-info
+  hold_action:
+    action: toggle
+  triggers_update: all
+  styles:
+    card:
+      - position: relative
+      - padding: 12px 10px 10px
+      - border-radius: 12px
+      - background: >-
+          radial-gradient(
+            circle at center,
+            rgba(50,97,117,0.30) 0%,
+            rgba(28,60,72,0.92) 80%
+          )
+      - border: 1px solid rgba(255,255,255,0.40)
+      - box-shadow: 0 8px 24px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.08)
+      - backdrop-filter: blur(6px)
+      - min-height: 95px
+    grid:
+      - grid-template-areas: '"i" "n" "l"'
+      - grid-template-rows: 1fr auto auto
+      - justify-items: center
+    icon:
+      - color: rgba(255,255,255,0.85)
+      - width: 36px
+      - margin-top: 8px
+    name:
+      - color: rgba(255,255,255,0.85)
+      - font-size: 14px
+      - font-weight: 500
+      - text-shadow: 0 1px 0 rgba(0,0,0,0.7)
+      - margin-top: 4px
+    label:
+      - color: rgba(240,240,240,0.65)
+      - font-size: 11px
+      - margin-top: 2px
+    custom_fields:
+      badge_lights:
+        - position: absolute
+        - top: 6px
+        - right: 6px
+        - z-index: 10
+      badge_equip:
+        - position: absolute
+        - top: 6px
+        - right: 32px
+        - z-index: 10
+      badge_door:
+        - position: absolute
+        - top: 6px
+        - right: 6px
+        - z-index: 10
+      badge_alert:
+        - position: absolute
+        - top: 6px
+        - left: 6px
+        - z-index: 10
+  custom_fields:
+    badge_lights: |
+      [[[
+        if (!variables.lights_entity) return '';
+        const val = parseInt(states[variables.lights_entity]?.state) || 0;
+        if (val === 0) return '';
+        return `<div style="
+          min-width: 22px;
+          height: 18px;
+          padding: 0 5px;
+          border-radius: 5px;
+          background: rgba(255,170,40,1);
+          color: rgba(0,0,0,0.9);
+          font-size: 10px;
+          font-weight: 900;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        ">${val}</div>`;
+      ]]]
+    badge_equip: |
+      [[[
+        if (!variables.equip_entity) return '';
+        const val = parseInt(states[variables.equip_entity]?.state) || 0;
+        if (val === 0) return '';
+        return `<div style="
+          min-width: 22px;
+          height: 18px;
+          padding: 0 5px;
+          border-radius: 5px;
+          background: rgba(0,122,255,1);
+          color: rgba(255,255,255,0.98);
+          font-size: 10px;
+          font-weight: 900;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        ">${val}</div>`;
+      ]]]
+    badge_alert: |
+      [[[
+        if (!variables.alert_entity) return '';
+        const val = parseInt(states[variables.alert_entity]?.state) || 0;
+        if (val === 0) return '';
+        return `<div style="
+          min-width: 22px;
+          height: 18px;
+          padding: 0 5px;
+          border-radius: 5px;
+          background: rgba(255,59,48,0.95);
+          color: rgba(255,255,255,0.98);
+          font-size: 10px;
+          font-weight: 900;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        ">${val}</div>`;
+      ]]]
+
+
+# -----------------------------------------------------------------------------
+# TEMPLATE: CARD PORTAO (com lock badge)
+# -----------------------------------------------------------------------------
+# Uso:
+#   - type: custom:button-card
+#     template: card_portao
+#     entity: input_boolean.garagem_aberta
+#     name: "Garagem"
+#     icon: mdi:garage
+
+card_portao:
+  show_name: true
+  show_icon: true
+  show_label: true
+  show_state: false
+  label: "↓ Abrir"
+  tap_action:
+    action: toggle
+  styles:
+    card:
+      - position: relative
+      - padding: 12px 10px 10px
+      - border-radius: 12px
+      - background: >-
+          radial-gradient(
+            circle at center,
+            rgba(50,97,117,0.30) 0%,
+            rgba(28,60,72,0.92) 80%
+          )
+      - border: 1px solid rgba(255,255,255,0.40)
+      - box-shadow: 0 8px 24px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.08)
+      - backdrop-filter: blur(6px)
+      - min-height: 95px
+    grid:
+      - grid-template-areas: '"i" "n" "l"'
+      - grid-template-rows: 1fr auto auto
+      - justify-items: center
+    icon:
+      - color: rgba(255,255,255,0.7)
+      - width: 36px
+      - margin-top: 8px
+    name:
+      - color: rgba(255,255,255,0.85)
+      - font-size: 14px
+      - font-weight: 500
+      - text-shadow: 0 1px 0 rgba(0,0,0,0.7)
+      - margin-top: 4px
+    label:
+      - color: rgba(240,240,240,0.65)
+      - font-size: 11px
+      - margin-top: 2px
+    custom_fields:
+      badge_lock:
+        - position: absolute
+        - top: 6px
+        - right: 6px
+        - z-index: 10
+  custom_fields:
+    badge_lock: |
+      [[[
+        const isOpen = entity.state === 'on';
+        const bg = isOpen ? 'rgba(255,59,48,0.95)' : 'rgba(48,209,88,0.7)';
+        const icon = isOpen ? 'mdi:lock-open-variant' : 'mdi:lock';
+        return `<div style="
+          width: 22px;
+          height: 18px;
+          border-radius: 5px;
+          background: ${bg};
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        "><ha-icon icon="${icon}" style="width: 12px; height: 12px; color: rgba(255,255,255,0.98);"></ha-icon></div>`;
+      ]]]
+  state:
+    - value: "on"
+      label: "↓ Fechar"
+    - value: "off"
+      label: "↓ Abrir"
+
+
+# -----------------------------------------------------------------------------
+# TEMPLATE: CARD DISPOSITIVO (com check)
+# -----------------------------------------------------------------------------
+# Uso:
+#   - type: custom:button-card
+#     template: card_dispositivo
+#     entity: input_boolean.pendente_sala_ligado
+#     name: "Pendente Sala"
+#     icon: mdi:ceiling-light
+
+card_dispositivo:
+  show_name: true
+  show_icon: true
+  show_label: true
+  show_state: false
+  tap_action:
+    action: toggle
+  styles:
+    card:
+      - position: relative
+      - padding: 12px 10px 10px
+      - border-radius: 12px
+      - background: >-
+          radial-gradient(
+            circle at center,
+            rgba(50,97,117,0.30) 0%,
+            rgba(28,60,72,0.92) 80%
+          )
+      - border: 1px solid rgba(255,255,255,0.40)
+      - box-shadow: 0 8px 24px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.08)
+      - backdrop-filter: blur(6px)
+      - min-height: 95px
+    grid:
+      - grid-template-areas: '"i" "n" "l"'
+      - grid-template-rows: 1fr auto auto
+      - justify-items: center
+    icon:
+      - width: 36px
+      - margin-top: 8px
+    name:
+      - font-size: 14px
+      - font-weight: 500
+      - text-shadow: 0 1px 0 rgba(0,0,0,0.7)
+      - margin-top: 4px
+    label:
+      - color: rgba(240,240,240,0.65)
+      - font-size: 11px
+      - margin-top: 2px
+    custom_fields:
+      badge_check:
+        - position: absolute
+        - top: 6px
+        - right: 6px
+        - z-index: 10
+  custom_fields:
+    badge_check: |
+      [[[
+        if (entity.state !== 'on') return '';
+        return `<div style="
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #30d158;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        "><ha-icon icon="mdi:check" style="width: 14px; height: 14px; color: white;"></ha-icon></div>`;
+      ]]]
+  state:
+    - value: "on"
+      label: "↓ Desligar"
+      styles:
+        icon:
+          - color: '#30d158'
+        name:
+          - color: '#30d158'
+    - value: "off"
+      label: "↓ Ligar"
+      styles:
+        icon:
+          - color: rgba(255,255,255,0.7)
+        name:
+          - color: rgba(255,255,255,0.85)
+
+
+# -----------------------------------------------------------------------------
+# TEMPLATE: CARD JARDIM (com porcentagem)
+# -----------------------------------------------------------------------------
+# Uso:
+#   - type: custom:button-card
+#     template: card_jardim
+#     entity: input_number.jardim_umidade
+#     name: "Jardim"
+#     variables:
+#       sensores_entity: input_number.jardim_sensores
+
+card_jardim:
+  variables:
+    sensores_entity: null
+  show_name: true
+  show_icon: true
+  show_label: true
+  show_state: false
+  icon: mdi:sprout
+  label: "Click p/ Ir"
+  tap_action:
+    action: more-info
+  triggers_update: all
+  styles:
+    card:
+      - position: relative
+      - padding: 12px 10px 10px
+      - border-radius: 12px
+      - background: >-
+          radial-gradient(
+            circle at center,
+            rgba(50,97,117,0.30) 0%,
+            rgba(28,60,72,0.92) 80%
+          )
+      - border: 1px solid rgba(255,255,255,0.40)
+      - box-shadow: 0 8px 24px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.08)
+      - backdrop-filter: blur(6px)
+      - min-height: 95px
+    grid:
+      - grid-template-areas: '"i" "n" "l"'
+      - grid-template-rows: 1fr auto auto
+      - justify-items: center
+    icon:
+      - color: rgba(255,255,255,0.85)
+      - width: 36px
+      - margin-top: 8px
+    name:
+      - color: rgba(255,255,255,0.85)
+      - font-size: 14px
+      - font-weight: 500
+      - text-shadow: 0 1px 0 rgba(0,0,0,0.7)
+      - margin-top: 4px
+    label:
+      - color: rgba(240,240,240,0.65)
+      - font-size: 11px
+      - margin-top: 2px
+    custom_fields:
+      badge_pct:
+        - position: absolute
+        - top: 6px
+        - right: 32px
+        - z-index: 10
+      badge_sensores:
+        - position: absolute
+        - top: 6px
+        - right: 6px
+        - z-index: 10
+  custom_fields:
+    badge_pct: |
+      [[[
+        const val = parseInt(entity.state) || 0;
+        return `<div style="
+          min-width: 28px;
+          height: 18px;
+          padding: 0 4px;
+          border-radius: 5px;
+          background: rgba(255,170,40,1);
+          color: rgba(0,0,0,0.9);
+          font-size: 9px;
+          font-weight: 900;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        ">${val}%</div>`;
+      ]]]
+    badge_sensores: |
+      [[[
+        if (!variables.sensores_entity) return '';
+        const val = parseInt(states[variables.sensores_entity]?.state) || 0;
+        if (val === 0) return '';
+        return `<div style="
+          min-width: 22px;
+          height: 18px;
+          padding: 0 5px;
+          border-radius: 5px;
+          background: rgba(255,170,40,1);
+          color: rgba(0,0,0,0.9);
+          font-size: 10px;
+          font-weight: 900;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        ">${val}</div>`;
+      ]]]
+
+
+# -----------------------------------------------------------------------------
+# TEMPLATE: CARD CORTINA COMPACTO (para dashboard principal)
+# -----------------------------------------------------------------------------
+# Uso:
+#   - type: custom:button-card
+#     template: card_cortina_compacto
+#     entity: cover.cortina_estar
+#     name: "Estar"
+
+card_cortina_compacto:
+  show_name: true
+  show_icon: true
+  show_state: false
+  icon: mdi:blinds-horizontal
+  tap_action:
+    action: none
+  hold_action:
+    action: more-info
+  styles:
+    card:
+      - position: relative
+      - padding: 10px 8px 8px
+      - border-radius: 12px
+      - background: >-
+          radial-gradient(
+            circle at center,
+            rgba(50,97,117,0.30) 0%,
+            rgba(28,60,72,0.92) 80%
+          )
+      - border: 1px solid rgba(255,255,255,0.40)
+      - box-shadow: 0 8px 24px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.08)
+      - backdrop-filter: blur(6px)
+      - min-height: 90px
+    grid:
+      - grid-template-areas: '"status" "i" "n" "controls"'
+      - grid-template-rows: auto 1fr auto auto
+      - justify-items: center
+    icon:
+      - width: 28px
+      - margin-top: 4px
+    name:
+      - color: rgba(255,255,255,0.85)
+      - font-size: 12px
+      - font-weight: 500
+      - margin-top: 2px
+    custom_fields:
+      status:
+        - width: 100%
+        - text-align: center
+        - margin-bottom: 2px
+      controls:
+        - width: 100%
+        - margin-top: 4px
+  custom_fields:
+    status: |
+      [[[
+        const state = entity.state;
+        const pos = entity.attributes.current_position ?? 0;
+        let text = '';
+        let color = 'rgba(255,255,255,0.6)';
+
+        if (state === 'opening') {
+          text = 'Abrindo...';
+          color = '#44739e';
+        } else if (state === 'closing') {
+          text = 'Fechando...';
+          color = '#9da0a2';
+        } else if (pos > 0) {
+          text = pos + '%';
+          color = '#44739e';
+        } else {
+          text = 'Fechada';
+          color = '#9da0a2';
+        }
+
+        return `<span style="font-size: 11px; font-weight: 600; color: ${color};">${text}</span>`;
+      ]]]
+    controls: |
+      [[[
+        const eid = entity.entity_id;
+        return `
+          <div style="display: flex; gap: 4px; justify-content: center;">
+            <div style="
+              width: 28px;
+              height: 24px;
+              border-radius: 4px;
+              background: rgba(255,255,255,0.1);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+            " @click="${(e) => { e.stopPropagation(); hass.callService('cover', 'open_cover', {entity_id: '${eid}'}); }}">
+              <ha-icon icon="mdi:arrow-up-bold" style="width: 16px; color: rgba(255,255,255,0.8);"></ha-icon>
+            </div>
+            <div style="
+              width: 28px;
+              height: 24px;
+              border-radius: 4px;
+              background: rgba(255,255,255,0.1);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+            " @click="${(e) => { e.stopPropagation(); hass.callService('cover', 'stop_cover', {entity_id: '${eid}'}); }}">
+              <ha-icon icon="mdi:stop" style="width: 16px; color: rgba(255,255,255,0.8);"></ha-icon>
+            </div>
+            <div style="
+              width: 28px;
+              height: 24px;
+              border-radius: 4px;
+              background: rgba(255,255,255,0.1);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+            " @click="${(e) => { e.stopPropagation(); hass.callService('cover', 'close_cover', {entity_id: '${eid}'}); }}">
+              <ha-icon icon="mdi:arrow-down-bold" style="width: 16px; color: rgba(255,255,255,0.8);"></ha-icon>
+            </div>
+          </div>
+        `;
+      ]]]
+  state:
+    - value: 'open'
+      styles:
+        icon:
+          - color: '#44739e'
+    - value: 'closed'
+      icon: mdi:blinds-horizontal-closed
+      styles:
+        icon:
+          - color: '#9da0a2'
+    - value: 'opening'
+      styles:
+        icon:
+          - color: '#44739e'
+          - animation: blink 1s ease infinite
+    - value: 'closing'
+      icon: mdi:blinds-horizontal-closed
+      styles:
+        icon:
+          - color: '#9da0a2'
+          - animation: blink 1s ease infinite

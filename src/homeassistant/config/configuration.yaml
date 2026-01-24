@@ -1,4 +1,4 @@
-# Home Assistant Configuration - Minimo Funcional
+# Home Assistant Configuration - Casa Le Parc
 # Atualizado: 2026-01-24
 
 # Configuracao basica
@@ -13,21 +13,32 @@ homeassistant:
 default_config:
 
 # Lovelace (dashboards)
+# Nota: paths relativos ao diretorio de config do HA
 lovelace:
   mode: storage
   dashboards:
+    lovelace-principal:
+      mode: yaml
+      title: Principal
+      icon: mdi:home
+      show_in_sidebar: true
+      filename: ../dashboards/principal.yaml
     lovelace-cortinas-mushroom:
       mode: yaml
       title: Cortinas (Mushroom)
       icon: mdi:blinds-horizontal
       show_in_sidebar: true
-      filename: dashboards/cortinas-opcao-a-mushroom.yaml
+      filename: ../dashboards/cortinas-opcao-a-mushroom.yaml
     lovelace-cortinas-hibrido:
       mode: yaml
       title: Cortinas (Hibrido)
       icon: mdi:blinds
       show_in_sidebar: true
-      filename: dashboards/cortinas-opcao-b-hibrido.yaml
+      filename: ../dashboards/cortinas-opcao-b-hibrido.yaml
 
 # Automacoes
 automation: !include automations.yaml
+
+# Helpers de Simulacao (para testes da dashboard)
+input_boolean: !include input_boolean.yaml
+input_number: !include input_number.yaml

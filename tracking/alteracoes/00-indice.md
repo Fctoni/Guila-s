@@ -9,6 +9,7 @@ Este arquivo lista todas as alterações do projeto e seu status atual.
 | Status | Descrição |
 |--------|-----------|
 | 🟢 Finalizado | Alteração implementada e testada |
+| 🟠 Em execução | Implementação em andamento ou aguardando testes |
 | 🟡 Em discussão | Proposta apresentada, aguardando decisões ou perguntas pendentes |
 | 🔵 Criado | Arquivo criado, aguardando desenvolvimento da discussão |
 
@@ -38,3 +39,4 @@ Este arquivo lista todas as alterações do projeto e seu status atual.
 | 00 | [0-regras_conversas.md](./0-regras_conversas.md) | Regras para conversas de alterações | 📋 Referência | ➖ não necessário | ➖ |
 | 01 | [spec-alteracao01.md](./spec-alteracao01.md) | Reorganizacao do Workspace | 🟢 Finalizado | ➖ não necessário | |
 | 02 | [spec-alteracao02.md](./spec-alteracao02.md) | Correcao de Referencias Quebradas | 🟢 Finalizado | ➖ não necessário | |
+| 03 | [spec-alteracao03.md](./spec-alteracao03.md) | Dashboard Principal Home Assistant | 🟢 Finalizado | ⏳ pendente | |

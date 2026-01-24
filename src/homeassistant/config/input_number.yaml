@@ -1,0 +1,113 @@
+# Input Number - Helpers de Simulacao
+# Projeto Guilas - Casa Le Parc
+# Criado: 2026-01-24
+
+# --- LUZES ---
+frente_luzes:
+  name: "Frente Luzes"
+  min: 0
+  max: 20
+  step: 1
+  mode: box
+  icon: mdi:lightbulb-group
+
+sala_luzes:
+  name: "Sala Luzes"
+  min: 0
+  max: 20
+  step: 1
+  mode: box
+  icon: mdi:lightbulb-group
+
+social_luzes:
+  name: "Social Luzes"
+  min: 0
+  max: 20
+  step: 1
+  mode: box
+  icon: mdi:lightbulb-group
+
+jp_luzes:
+  name: "JP Luzes"
+  min: 0
+  max: 10
+  step: 1
+  mode: box
+  icon: mdi:lightbulb-group
+
+# --- EQUIPAMENTOS ---
+sala_equipamentos:
+  name: "Sala Equipamentos"
+  min: 0
+  max: 20
+  step: 1
+  mode: box
+  icon: mdi:devices
+
+social_equipamentos:
+  name: "Social Equipamentos"
+  min: 0
+  max: 20
+  step: 1
+  mode: box
+  icon: mdi:devices
+
+master_equipamentos:
+  name: "Master Equipamentos"
+  min: 0
+  max: 10
+  step: 1
+  mode: box
+  icon: mdi:devices
+
+jp_equipamentos:
+  name: "JP Equipamentos"
+  min: 0
+  max: 10
+  step: 1
+  mode: box
+  icon: mdi:devices
+
+# --- ALERTAS ---
+jp_alertas:
+  name: "JP Alertas"
+  min: 0
+  max: 5
+  step: 1
+  mode: box
+  icon: mdi:alert
+
+# --- JARDIM ---
+jardim_umidade:
+  name: "Jardim Umidade"
+  min: 0
+  max: 100
+  step: 1
+  mode: box
+  unit_of_measurement: "%"
+  icon: mdi:water-percent
+
+jardim_sensores:
+  name: "Jardim Sensores"
+  min: 0
+  max: 20
+  step: 1
+  mode: box
+  icon: mdi:flower
+
+# --- OUTROS ---
+passarela_sensores:
+  name: "Passarela Sensores"
+  min: 0
+  max: 10
+  step: 1
+  mode: box
+  icon: mdi:walk
+
+alexa_notificacoes:
+  name: "Alexa Notificacoes"
+  min: 0
+  max: 10
+  step: 1
+  mode: box
+  icon: mdi:bell

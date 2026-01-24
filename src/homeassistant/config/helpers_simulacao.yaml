@@ -1,0 +1,204 @@
+# Helpers de Simulacao - Dashboard Principal
+# Projeto Guilas - Casa Le Parc
+# Criado: 2026-01-24
+#
+# Estes helpers simulam entidades reais para testes da dashboard.
+# Quando as entidades reais forem configuradas, substituir os helpers
+# pelos sensores/dispositivos reais.
+
+# =============================================================================
+# INPUT_BOOLEAN - Sensores On/Off
+# =============================================================================
+
+input_boolean:
+  # --- PORTAS/PORTOES ---
+  garagem_aberta:
+    name: "Garagem Aberta"
+    icon: mdi:garage
+
+  social_aberta:
+    name: "Social Aberta"
+    icon: mdi:gate
+
+  porta_aberta:
+    name: "Porta Aberta"
+    icon: mdi:door
+
+  servico_aberta:
+    name: "Servico Aberta"
+    icon: mdi:gate
+
+  lavanderia_porta:
+    name: "Lavanderia Porta"
+    icon: mdi:door
+
+  sala_f_porta:
+    name: "Sala F Porta"
+    icon: mdi:door
+
+  dispensa_porta:
+    name: "Dispensa Porta"
+    icon: mdi:door
+
+  cozinha_porta:
+    name: "Cozinha Porta"
+    icon: mdi:door
+
+  # --- PRESENCA ---
+  frente_presenca:
+    name: "Frente Presenca"
+    icon: mdi:motion-sensor
+
+  sala_presenca:
+    name: "Sala Presenca"
+    icon: mdi:motion-sensor
+
+  master_presenca:
+    name: "Master Presenca"
+    icon: mdi:motion-sensor
+
+  jp_presenca:
+    name: "JP Presenca"
+    icon: mdi:motion-sensor
+
+  # --- PESSOAS EM CASA ---
+  gui_em_casa:
+    name: "Gui Em Casa"
+    icon: mdi:account
+
+  jp_em_casa:
+    name: "JP Em Casa"
+    icon: mdi:account
+
+  ana_em_casa:
+    name: "Ana Em Casa"
+    icon: mdi:account
+
+  m_em_casa:
+    name: "M Em Casa"
+    icon: mdi:account
+
+  # --- DISPOSITIVOS ---
+  pendente_sala_ligado:
+    name: "Pendente Sala Ligado"
+    icon: mdi:ceiling-light
+
+  alexa_ativa:
+    name: "Alexa Ativa"
+    icon: mdi:amazon-alexa
+
+
+# =============================================================================
+# INPUT_NUMBER - Contadores
+# =============================================================================
+
+input_number:
+  # --- LUZES ---
+  frente_luzes:
+    name: "Frente Luzes"
+    min: 0
+    max: 20
+    step: 1
+    mode: box
+    icon: mdi:lightbulb-group
+
+  sala_luzes:
+    name: "Sala Luzes"
+    min: 0
+    max: 20
+    step: 1
+    mode: box
+    icon: mdi:lightbulb-group
+
+  social_luzes:
+    name: "Social Luzes"
+    min: 0
+    max: 20
+    step: 1
+    mode: box
+    icon: mdi:lightbulb-group
+
+  jp_luzes:
+    name: "JP Luzes"
+    min: 0
+    max: 10
+    step: 1
+    mode: box
+    icon: mdi:lightbulb-group
+
+  # --- EQUIPAMENTOS ---
+  sala_equipamentos:
+    name: "Sala Equipamentos"
+    min: 0
+    max: 20
+    step: 1
+    mode: box
+    icon: mdi:devices
+
+  social_equipamentos:
+    name: "Social Equipamentos"
+    min: 0
+    max: 20
+    step: 1
+    mode: box
+    icon: mdi:devices
+
+  master_equipamentos:
+    name: "Master Equipamentos"
+    min: 0
+    max: 10
+    step: 1
+    mode: box
+    icon: mdi:devices
+
+  jp_equipamentos:
+    name: "JP Equipamentos"
+    min: 0
+    max: 10
+    step: 1
+    mode: box
+    icon: mdi:devices
+
+  # --- ALERTAS ---
+  jp_alertas:
+    name: "JP Alertas"
+    min: 0
+    max: 5
+    step: 1
+    mode: box
+    icon: mdi:alert
+
+  # --- JARDIM ---
+  jardim_umidade:
+    name: "Jardim Umidade"
+    min: 0
+    max: 100
+    step: 1
+    mode: box
+    unit_of_measurement: "%"
+    icon: mdi:water-percent
+
+  jardim_sensores:
+    name: "Jardim Sensores"
+    min: 0
+    max: 20
+    step: 1
+    mode: box
+    icon: mdi:flower
+
+  # --- OUTROS ---
+  passarela_sensores:
+    name: "Passarela Sensores"
+    min: 0
+    max: 10
+    step: 1
+    mode: box
+    icon: mdi:walk
+
+  alexa_notificacoes:
+    name: "Alexa Notificacoes"
+    min: 0
+    max: 10
+    step: 1
+    mode: box
+    icon: mdi:bell

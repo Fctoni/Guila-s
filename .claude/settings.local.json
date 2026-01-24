@@ -4,7 +4,16 @@
       "Bash(*)",
       "WebSearch",
       "WebFetch(domain:esphome.io)",
-      "Bash(dir /b \"c:\\\\Users\\\\felip\\\\Downloads\\\\Guila-s-1\\\\*.md\")"
+      "Bash(dir /b \"c:\\\\Users\\\\felip\\\\Downloads\\\\Guila-s-1\\\\*.md\")",
+      "Bash(dir:*)",
+      "Bash(powershell.exe -Command \"Get-ChildItem H:\\\\\")",
+      "Bash(powershell.exe -Command \"Get-Content H:\\\\configuration.yaml\")",
+      "Bash(powershell.exe -Command \"Get-ChildItem H:\\\\dashboards\\\\\")",
+      "Bash(powershell.exe -Command \"Get-Content H:\\\\button_card_templates.yaml\")",
+      "Bash(powershell.exe -Command \"Test-Path H:\\\\input_boolean.yaml; Test-Path H:\\\\input_number.yaml\")",
+      "Bash(powershell.exe -Command \"Copy-Item ''c:\\\\Users\\\\felip\\\\Downloads\\\\Guila-s-1\\\\src\\\\homeassistant\\\\config\\\\input_boolean.yaml'' -Destination ''H:\\\\input_boolean.yaml'' -Force; Write-Host ''input_boolean.yaml copiado''\")",
+      "Bash(powershell.exe -Command \"Copy-Item ''c:\\\\Users\\\\felip\\\\Downloads\\\\Guila-s-1\\\\src\\\\homeassistant\\\\config\\\\input_number.yaml'' -Destination ''H:\\\\input_number.yaml'' -Force; Write-Host ''input_number.yaml copiado''\")",
+      "Bash(powershell.exe:*)"
     ]
   }
 }
