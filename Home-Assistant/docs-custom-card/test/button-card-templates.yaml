@@ -1,0 +1,333 @@
+test_action_template:
+  tap_action:
+    action: |
+      [[[
+        console.log("test")
+        console.log(variables);
+        return "none";
+      ]]]
+
+test_var:
+  variables:
+    test: "[[[ return 'pouet_template' ]]]"
+
+sensor:
+  styles:
+    card:
+      - font-size: 16px
+      - width: 75px
+  tap_action:
+    action: more-info
+  state:
+    - color: orange
+      value: 75
+      id: my_id
+sensor_humidity:
+  template: sensor
+  icon: 'mdi:weather-rainy'
+  state:
+    - color: 'rgb(255,0,0)'
+      operator: '>'
+      value: 50
+    - color: 'rgb(255,100,0)'
+      operator: '>'
+      value: 40
+    - color: 'rgb(255,200,0)'
+      operator: '>'
+      value: 35
+    - color: 'rgb(0,255,80)'
+      operator: '>'
+      value: 30
+    - color: 'rgb(0,255,255)'
+      operator: '>'
+      value: 25
+    - color: 'rgb(0,0,255)'
+      operator: '<'
+      value: 25
+
+sensor_test:
+  template: sensor_humidity
+  state:
+    - color: pink
+      id: my_id
+      operator: '>'
+      value: 75
+      styles:
+        name:
+          - color: '#ff0000'
+
+light_button_style:
+  aspect_ratio: 1/1
+  show_label: true
+  show_state: true
+  size: 30%
+  label: test-label
+  styles:
+    card:
+      - border-radius: 12px
+      - --paper-card-background-color: var(--homekit-white)
+    label:
+      - color: gray
+      - font-size: 11px
+      - font-family: Helvetica
+      - padding: 0px 10px
+      - justify-self: start
+    state:
+      - font-size: 11px
+      - font-family: Helvetica
+      - padding: 0px 10px
+      - justify-self: start
+      - text-transform: capitalize
+      - font-weight: bold
+      - padding-left: 10px
+    grid:
+      - grid-template-areas: '"i" "n" "s" "l"'
+      - grid-template-columns: 1fr
+      - grid-template-rows: 1fr min-content min-content min-content
+    img_cell:
+      - justify-content: start
+      - align-items: start
+    icon:
+      - height: auto
+    name:
+      - justify-self: start
+      - padding-left: 10px
+      - font-weight: bold
+      - font-family: Helvetica
+      - font-size: 13px
+
+button_picture:
+  size: 90%
+  show_state: false
+  show_label: false
+  show_name: false
+  entity_picture: https://3c1703fe8d.site.internapcdn.net/newman/csz/news/800/2019/ofalltheforc.jpg
+  show_entity_picture: true
+  color_type: card
+  aspect_ratio: 1/1
+  tap_action:
+    action: toggle
+    haptic: light
+  hold_action:
+    action: more-info
+    haptic: success
+  styles:
+    card:
+      - border-radius: 12px
+  #      - width: 85px
+  #      - height: 85px
+  state:
+    - value: 'on'
+      color: '#F0C209'
+      id: on-picture
+    - value: 'off'
+      color: '#555B65'
+      id: off-picture
+
+cb_overview_counters:
+  layout: icon_state
+  color: auto
+  aspect_ratio: 1/1
+  show_state: false
+  show_name: true
+  show_label: true
+  label: '[[[return "42";]]]'
+  styles:
+    grid:
+      - grid-template-rows: 42px auto 42px
+      - grid-template-columns: 42px auto
+    card:
+      - border-radius: 15px
+      - margin: 8px 0px 0px 0px
+      - padding: 0px 0px
+    icon:
+      - align-self: end
+      - height: 30px
+      - width: 30px
+    name:
+      - justify-self: start
+      - padding: 0px 10px
+      - font-size: 13px
+    label:
+      - font-size: 11px
+      - font-family: Helvetica
+      - text-transform: capitalize
+      - font-weight: bold
+      - align-self: end
+      - justify-self: start
+      - padding: 9px 10px
+    lock:
+      - align-items: flex-end
+  state:
+    - value: 'on'
+      styles:
+        card:
+          - --paper-card-background-color: rgba(40, 40, 40)
+          - box-shadow: 0px 0px 10px 3px var(--button-card-light-color)
+        name:
+          - color: white
+        state:
+          - color: white
+        label:
+          - color: white
+  tap_action:
+    action: toggle
+  hold_action:
+    action: more-info
+
+button_body:
+  color: auto
+  size: 30%
+  aspect_ratio: 1/1
+  show_state: true
+  show_label: true
+  tap_action:
+    action: toggle
+    haptic: light
+  hold_action:
+    action: more-info
+    haptic: success
+  styles:
+    icon:
+      - color: var(--local-color)
+    lock:
+      - color: red
+    card:
+      - color: var(--local-color)
+      - border-radius: 6px
+      - background-color: ivory
+      - padding-left: 5px
+      - box-shadow: 0px 0px 2px 1px
+    name:
+      - text-align: start
+      - font-weight: bold
+      - font-family: Helvetica
+      - font-size: 13px
+      - justify-self: start
+    label:
+      - font-size: 11px
+      - font-family: Helvetica
+      - text-align: start
+      - justify-self: start
+    state:
+      - font-size: 11px
+      - font-family: Helvetica
+      - justify-self: start
+      - text-align: start
+      - text-transform: capitalize
+      - font-weight: bold
+    grid:
+      - grid-template-areas: '"i" "n" "s" "l"'
+      - grid-template-columns: 1fr
+      - grid-template-rows: 1fr min-content min-content min-content
+    img_cell:
+      - justify-content: start
+      - align-items: start
+
+button_motion:
+  template: button_body
+  show_last_changed: true
+  tap_action:
+    action: more-info
+    haptic: light
+  hold_action:
+    action: more-info
+    haptic: success
+  styles:
+    card:
+      - box-shadow: 0px 0px 2px 1px
+  state:
+    - value: 'on'
+      styles:
+        card:
+          - color: red
+        name:
+          - color: black
+        icon:
+          - color: red
+    #      id: on-icon
+
+    - value: 'off'
+      styles:
+        card:
+          - color: '#555B65'
+          - opacity: 0.8
+        icon:
+          - color: '#555B65'
+#      id: off-icon
+
+test1:
+  #name: test1
+  template:
+    - test2
+    - test3
+  state:
+    - value: 42
+      icon: mdi:test
+    - value: 1
+      id: '1'
+      pouet: value1 - test1
+      test1: ok
+    - value: 2
+      id: '2'
+      pouet: value2 - test1
+      test1: ok
+test2:
+  #name: test2
+  template: test4
+  state:
+    - value: 1
+      id: '1'
+      pouet: value1 - test2
+      test2: ok
+    - value: 2
+      id: '2'
+      pouet: value2 - test2
+      test2: ok
+    - value: test2
+      icon: mdi:test
+test3:
+  name: test3
+  state:
+    - value: 1
+      id: '1'
+      pouet: value1 - test3
+      test3: ok
+    - value: 2
+      id: '2'
+      pouet: value2 - test3
+      test3: ok
+test4:
+  name: test4
+  label: test4
+  state:
+    # - value: 1
+    #   id: '1'
+    #   pouet: value1 - test4
+    #   test4: ok
+    # - value: 2
+    #   id: '2'
+    #   pouet: value2 - test4
+    #   test4: ok
+    - value: test4
+      icon: mdi:test
+
+extraS1:
+  template: extraS2
+  extra_styles: |
+    #name {
+      color: red;
+    }
+extraS2:
+  extra_styles: |
+    #name {
+      color: blue;
+      font-size: 10px;
+    }
+extraS3:
+  extra_styles: |
+    [[[
+      return `#name {
+        color: ${entity.state === 'on' ? 'green' : 'purple'};
+      }`;
+    ]]]

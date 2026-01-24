@@ -1,0 +1,439 @@
+title: Stuff 1
+cards:
+  - type: 'custom:button-card'
+    layout: icon_label
+    color: auto
+    show_state: false
+    show_name: true
+    show_label: true
+    name: Media
+    icon: mdi:music-note
+    label: Line 1<br />Line 2
+    styles:
+      grid:
+        - grid-template-rows: 50px auto auto
+        - grid-template-columns: 50px auto
+      card:
+        - border-radius: 15px
+        - height: 76px
+        - width: 342px
+        - margin: 5px 5px 0px 0px
+        - --paper-card-background-color: rgba(40, 40, 40)
+        - box-shadow: 0px 0px 10px 3px var(--paper-item-icon-active-color
+      icon:
+        - color: var(--paper-item-icon-active-color)
+        - height: 30px
+        - width: 30px
+      name:
+        - justify-self: start
+        - padding: 0px 10px
+        - font-size: 12px
+        - text-transform: capitalize
+        - color: white
+      label:
+        - text-transform: capitalize
+        - font-size: 12px
+        - justify-self: start
+        - color: white
+    tap_action:
+      action: toggle
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        entity: switch.skylight
+        icon: mdi:spotlight
+        show_name: false
+        show_label: true
+        label: 1
+        layout: custom
+        styles:
+          grid:
+            - display: flex
+            - position: relative
+          label:
+            - position: absolute
+            - left: 0
+            - right: 0
+            - top: 0
+            - bottom: 0
+            - text-align: right
+            - padding: 0px 5px
+          img_cell:
+            - align-items: center
+            - justify-content: center
+      - type: custom:button-card
+        entity: switch.skylight
+        icon: mdi:spotlight
+        show_name: false
+        show_label: true
+        label: 2
+        layout: custom
+        styles:
+          grid:
+            - display: flex
+            - position: relative
+          label:
+            - position: absolute
+            - left: 0
+            - right: 0
+            - top: 0
+            - bottom: 0
+            - text-align: right
+            - padding: 0px 5px
+          img_cell:
+            - align-items: center
+            - justify-content: center
+
+      - type: custom:button-card
+        entity: switch.skylight
+        icon: mdi:spotlight
+        show_name: false
+        show_label: true
+        label: 3
+        layout: custom
+        styles:
+          grid:
+            - display: flex
+            - position: relative
+          label:
+            - position: absolute
+            - left: 0
+            - right: 0
+            - top: 0
+            - bottom: 0
+            - text-align: right
+            - padding: 0px 5px
+          img_cell:
+            - align-items: center
+            - justify-content: center
+      - type: custom:button-card
+        entity: switch.skylight
+        icon: mdi:spotlight
+        show_name: false
+        show_label: true
+        label: 4
+        layout: custom
+        styles:
+          grid:
+            - display: flex
+            - position: relative
+          label:
+            - position: absolute
+            - left: 0
+            - right: 0
+            - top: 0
+            - bottom: 0
+            - text-align: right
+            - padding: 0px 5px
+          img_cell:
+            - align-items: center
+            - justify-content: center
+      - type: custom:button-card
+        entity: switch.skylight
+        icon: mdi:spotlight
+        show_name: false
+        show_label: true
+        label: 5
+        layout: custom
+        styles:
+          grid:
+            - display: flex
+            - position: relative
+          label:
+            - position: absolute
+            - left: 0
+            - right: 0
+            - top: 0
+            - bottom: 0
+            - text-align: right
+            - padding: 0px 5px
+          img_cell:
+            - align-items: center
+            - justify-content: center
+  - type: horizontal-stack
+    cards:
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        show_label: true
+        state:
+          - operator: template
+            value: >
+              var last_changed = new Date(entity.last_changed); var now = new Date(); return (now - last_changed) / 1000 / 60 / 60 <= 1
+
+
+            color: '#FF0000'
+            label: >
+              [[[ var last_changed = new Date(entity.last_changed); var now = new Date(); return `${now} <br/>- ${last_changed}` ]]]
+
+
+      - type: custom:button-card
+        entity: input_number.test
+        show_state: true
+        styles:
+          icon:
+            - transform: rotate(45deg) scaleX(-1)
+        hold_action:
+          action: call-service
+          repeat: 500
+          repeat_limit: 2
+          service: input_number.increment
+          service_data:
+            entity_id: input_number.test
+        double_tap_action:
+          action: call-service
+          repeat: 500
+          service: input_number.decrement
+          service_data:
+            entity_id: input_number.test
+
+  - type: horizontal-stack
+    cards:
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        color_type: card
+        show_name: false
+        show_label: true
+        layout: icon_label
+        size: 20px
+        styles:
+          card:
+            - height: 50px
+            - border-radius: 10px
+          grid:
+            - grid-template-columns: min-content min-content
+            - width: min-content
+            - margin: auto
+            - grid-gap: 0px 10px
+        label: >
+          [[[ return "Windows: " + 1; ]]]
+
+
+        state:
+          - value: 'on'
+            color: rgb(71,39,45) #Red
+            icon: mdi:window-open
+            styles:
+              label:
+                - color: rgb(220,69,121)
+              icon:
+                - color: rgb(220,69,121)
+          - value: 'off'
+            color: rgb(49,68,42) #Green
+            icon: mdi:window-closed
+            styles:
+              label:
+                - color: rgb(134,219,85)
+              icon:
+                - color: rgb(134,219,85)
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        color_type: card
+        show_name: false
+        show_label: true
+        layout: icon_label
+        size: 20px
+        styles:
+          label:
+            - justify-self: start
+            # - padding-right: 30%
+          card:
+            - height: 50px
+            - border-radius: 10px
+        label: >
+          [[[return 'Windows: ' + 1;]]]
+
+
+        state:
+          - value: 'on'
+            color: rgb(71,39,45) #Red
+            icon: mdi:window-open
+            styles:
+              label:
+                - color: rgb(220,69,121)
+              icon:
+                - color: rgb(220,69,121)
+          - value: 'off'
+            color: rgb(49,68,42) #Green
+            icon: mdi:window-closed
+            styles:
+              label:
+                - color: rgb(134,219,85)
+              icon:
+                - color: rgb(134,219,85)
+  - type: horizontal-stack
+    cards:
+      - type: 'custom:button-card'
+        entity: binary_sensor.bsensor1
+        layout: icon_name_state2nd
+        show_state: true
+        show_name: true
+        show_label: true
+        label: label
+      - type: 'custom:button-card'
+        entity: binary_sensor.bsensor1
+        layout: icon_state_name2nd
+        show_state: true
+        show_name: true
+        show_label: true
+        label: label
+        styles:
+          grid:
+            - grid-template-areas: '"n i" "s i" "l i"'
+            - grid-template-columns: 1fr 40%
+
+  - type: horizontal-stack
+    cards:
+      - type: 'custom:button-card'
+        entity: sensor.sensor1
+        show_state: true
+        show_name: true
+        show_label: true
+        label: label
+      - type: 'custom:button-card'
+        entity: sensor.sensor1
+        show_state: true
+        show_name: true
+        show_label: true
+        label: label
+        styles:
+          grid:
+            - grid-template-areas: '"l" "i" "n" "s"'
+            - grid-template-rows: min-content 1fr min-content min-content
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        entity: switch.skylight
+        name: Label and State Same line
+        icon: mdi:fire
+        color_type: card
+        show_state: true
+        show_label: true
+        label: label
+        styles:
+          grid:
+            - grid-template-areas: '"i i" "n n" "s l"'
+            - grid-template-columns: 1fr 1fr
+            - grid-template-rows: 1fr min-content min-content
+          state:
+            - justify-self: start
+            - padding-left: 10px
+          label:
+            - justify-self: end
+            - padding-right: 10px
+      - type: custom:button-card
+        entity: switch.skylight
+        name: Label and State Same line
+        icon: mdi:fire
+        show_state: true
+        show_label: true
+        label: label
+        styles:
+          grid:
+            - grid-template-areas: '"i i" "n n" "s l"'
+            - grid-template-columns: 1fr 1fr
+            - grid-template-rows: 1fr min-content min-content
+          state:
+            - justify-self: start
+            - padding-left: 10px
+          label:
+            - justify-self: end
+            - padding-right: 10px
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        entity: switch.skylight
+        name: <3 Apple
+        icon: mdi:fire
+        show_state: true
+        styles:
+          card:
+            - width: 100px
+            - height: 100px
+          grid:
+            - grid-template-areas: '"i" "n" "s"'
+            - grid-template-columns: 1fr
+            - grid-template-rows: 1fr min-content min-content
+          img_cell:
+            - align-self: start
+            - text-align: start
+          name:
+            - justify-self: start
+            - padding-left: 10px
+            - font-weight: bold
+            - text-transform: lowercase
+          state:
+            - justify-self: start
+            - padding-left: 10px
+        state:
+          - value: 'off'
+            styles:
+              card:
+                - filter: opacity(50%)
+              icon:
+                - filter: grayscale(100%)
+      - type: custom:button-card
+        entity: switch.skylight
+        name: <3 Apple
+        icon: mdi:fire
+        color_type: card
+        show_state: true
+        styles:
+          card:
+            - width: 100px
+            - height: 100px
+          grid:
+            - grid-template-areas: '"i" "n" "s"'
+            - grid-template-columns: 1fr
+            - grid-template-rows: 1fr min-content min-content
+          img_cell:
+            - align-self: start
+            - text-align: start
+          name:
+            - justify-self: start
+            - padding-left: 10px
+            - font-weight: bold
+            - text-transform: lowercase
+          state:
+            - justify-self: start
+            - padding-left: 10px
+        state:
+          - value: 'off'
+            styles:
+              card:
+                - filter: opacity(50%)
+              icon:
+                - filter: grayscale(100%)
+      - type: custom:button-card
+        entity: switch.skylight
+        name: <3 Apple
+        icon: mdi:fire
+        show_state: true
+        styles:
+          card:
+            - width: 100px
+            - height: 100px
+          grid:
+            - grid-template-areas: '"i" "n" "s"'
+            - grid-template-columns: 1fr
+            - grid-template-rows: 1fr min-content min-content
+          img_cell:
+            - align-self: start
+            - text-align: start
+          name:
+            - justify-self: start
+            - padding-left: 10px
+            - font-weight: bold
+            - text-transform: lowercase
+          state:
+            - justify-self: start
+            - padding-left: 10px
+        state:
+          - value: 'off'
+            styles:
+              card:
+                - filter: opacity(50%)
+              icon:
+                - filter: grayscale(100%)

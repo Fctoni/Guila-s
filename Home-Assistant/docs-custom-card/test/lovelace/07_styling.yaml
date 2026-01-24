@@ -1,0 +1,24 @@
+title: Styling
+type: sections
+sections:
+  - type: grid
+    cards:
+      - type: heading
+        heading: extra_styles
+      - type: 'custom:button-card'
+        section_mode: true
+        grid_options:
+          rows: 4
+          columns: 12
+        styles:
+          name:
+            - text-align: left
+        template:
+          - extraS1
+          - extraS3
+        entity: switch.skylight
+        name: |
+          [[[
+            return "Should be green when on, purple when off<br/><pre>"
+            +JSON.stringify(this._extraStyles, undefined, 2)+"</pre>";
+          ]]]

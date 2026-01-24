@@ -1,0 +1,144 @@
+title: Stuff 2
+cards:
+  - type: custom:button-card
+    template: sensor_test
+    entity: input_number.test
+    show_entity_picture: true
+    ripple_color: rgba(255, 0, 0, 100)
+    tap_action:
+      action: more-info
+      entity: switch.skylight
+    color_type: card
+    # styles:
+    #   card:
+    #     - background-color: black
+  - type: vertical-stack
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            name: 1/1
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            name: 2/1
+            icon: mdi:lightbulb
+            aspect_ratio: 2/1
+          - type: custom:button-card
+            name: 3/1
+            icon: mdi:lightbulb
+            aspect_ratio: 3/1
+          - type: custom:button-card
+            name: 4/1
+            icon: mdi:lightbulb
+            aspect_ratio: 4/1
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            name: 1/1.2
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1.2
+          - type: custom:button-card
+            name: 1/1.3
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1.3
+          - type: custom:button-card
+            name: 1/1.4
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1.4
+          - type: custom:button-card
+            name: 1/1.5
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1.5
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: light.test_light
+            template: light_button_style
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            entity: light.test_light
+            template: light_button_style
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            entity: light.test_light
+            template: light_button_style
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            entity: light.test_light
+            template: light_button_style
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: light.test_light
+            show_state: true
+            show_name: false
+            layout: icon_state
+            icon: mdi:lightbulb
+            aspect_ratio: 2/1
+          - type: custom:button-card
+            entity: light.test_light
+            template: light_button_style
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            entity: light.test_light
+            template: light_button_style
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            entity: light.test_light
+            template: light_button_style
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: light.test_light
+            template: button_picture
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            entity: light.test_light
+            template: button_picture
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            entity: light.test_light
+            template: button_picture
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            color_type: blank-card
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: light.test_light
+            template: cb_overview_counters
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            entity: light.test_light
+            template: cb_overview_counters
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            entity: light.test_light
+            template: cb_overview_counters
+            icon: mdi:lightbulb
+            aspect_ratio: 1/1
+          - type: custom:button-card
+            color_type: blank-card
+
+  - type: custom:lovelace-template-card
+    template: test_template
+    variables:
+      - entity: switch.skylight

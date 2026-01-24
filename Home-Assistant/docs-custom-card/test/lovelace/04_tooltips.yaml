@@ -1,0 +1,561 @@
+title: Tooltips
+type: sections
+sections:
+  - type: grid
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        name: Tooltip Content
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        section_mode: true
+        grid_options:
+          rows: 1
+          columns: 12
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Config string
+        tooltip: I am a tooltip
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: State string
+        state:
+          - value: 'on'
+            tooltip: Tap to turn OFF
+          - value: 'off'
+            tooltip: Tap to turn ON
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Config object
+        tooltip:
+          content: This is a tooltip
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: State object
+        state:
+          - value: 'on'
+            tooltip:
+              content: Tap to turn OFF
+          - value: 'off'
+            tooltip:
+              content: Tap to turn ON
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Multiline
+        tooltip:
+          content: |
+            This is a tooltip<br/> that spans multiple<br/> lines
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        color_type: label-card
+        name: Tooltip Options
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        section_mode: true
+        grid_options:
+          rows: 1
+          columns: 12
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Delay 1s
+        tooltip:
+          content: I am a tooltip
+          delay: 1s
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Hide delay 1s
+        tooltip:
+          content: I am a tooltip
+          delay: 150ms
+          hide_delay: 1s
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Arrow
+        tooltip:
+          content: I am a tooltip
+          arrow: true
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Distance 25px
+        tooltip:
+          content: I am a tooltip
+          distance: 25
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Distance -50px
+        tooltip:
+          content: I am a tooltip
+          distance: -50
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+        styles:
+          tooltip:
+            - 'pointer-events': none
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Skidding 50
+        tooltip:
+          content: I am a tooltip
+          skidding: 50
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        color_type: label-card
+        name: Tooltip Placememnt
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        section_mode: true
+        grid_options:
+          rows: 1
+          columns: 12
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: top-start
+        tooltip:
+          content: I am a tooltip
+          placement: top-start
+          arrow: true
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: top
+        tooltip:
+          content: I am a tooltip
+          placement: top
+          arrow: true
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: top-end
+        tooltip:
+          content: I am a tooltip
+          placement: top-end
+          arrow: true
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: right-start
+        tooltip:
+          content: I am a tooltip
+          placement: right-start
+          arrow: true
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        color_type: label-card
+        color: white
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: left-start
+        tooltip:
+          content: I am a tooltip
+          placement: left-start
+          arrow: true
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: right
+        tooltip:
+          content: I am a tooltip
+          placement: right
+          arrow: true
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        color_type: label-card
+        color: white
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: left
+        tooltip:
+          content: I am a tooltip
+          placement: left
+          arrow: true
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: right-end
+        tooltip:
+          content: I am a tooltip
+          placement: right-end
+          arrow: true
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        color_type: label-card
+        color: white
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: left-end
+        tooltip:
+          content: I am a tooltip
+          placement: left-end
+          arrow: true
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: bottom-start
+        tooltip:
+          content: I am a tooltip
+          placement: bottom-start
+          arrow: true
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: bottom
+        tooltip:
+          content: I am a tooltip
+          placement: bottom
+          arrow: true
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: bottom-end
+        tooltip:
+          content: I am a tooltip
+          placement: bottom-end
+          arrow: true
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        color_type: label-card
+        name: Tooltip Styling
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        section_mode: true
+        grid_options:
+          rows: 1
+          columns: 12
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Red on white
+        tooltip: I am a tooltip
+        styles:
+          tooltip:
+            - '--button-card-tooltip-background-color': white
+            - '--button-card-tooltip-content-color': red
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Consolas bold large
+        tooltip: I am a tooltip
+        styles:
+          tooltip:
+            - '--button-card-tooltip-font-family': Consolas
+            - '--button-card-tooltip-font-weight': bold
+            - '--button-card-tooltip-font-size': var(--ha-font-size-l)
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Upper underlined
+        tooltip: I am a tooltip
+        styles:
+          tooltip:
+            - '--button-card-tooltip-text-decoration': underline
+            - '--button-card-tooltip-text-transform': uppercase
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Text align right
+        tooltip:
+          content: |
+            This is a tooltip<br/> that spans multiple<br/> lines
+        styles:
+          tooltip:
+            - '--button-card-tooltip-text-align': right
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Padding 1em 2em
+        tooltip:
+          content: |
+            This is a tooltip<br/> that spans multiple<br/> lines
+        styles:
+          tooltip:
+            - '--button-card-tooltip-padding': 1em 2em
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Border red 2px dashed
+        tooltip:
+          content: |
+            This is a tooltip<br/> that spans multiple<br/> lines
+        styles:
+          tooltip:
+            - '--button-card-tooltip-border-color': red
+            - '--button-card-tooltip-border-width': 2px
+            - '--button-card-tooltip-border-style': dashed
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Border radius 50
+        tooltip:
+          content: |
+            This is a tooltip<br/> that spans multiple<br/> lines
+        styles:
+          tooltip:
+            - '--button-card-tooltip-border-radius': 50px
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Arrow size 16px
+        tooltip:
+          content: |
+            This is a tooltip<br/> that spans multiple<br/> lines
+          arrow: true
+        styles:
+          tooltip:
+            - '--button-card-tooltip-arrow-size': 16px
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Max width 50px
+        tooltip:
+          content: |
+            This is a tooltip<br/> that spans multiple<br/> lines
+          arrow: true
+        styles:
+          tooltip:
+            - '--max-width': 50px
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Max width none
+        tooltip:
+          content: |
+            This is a tooltip a very very very long text that should not wrap but extend to full width
+          arrow: true
+        styles:
+          tooltip:
+            - '--max-width': none
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: overflow-wrap
+        tooltip: |
+          This is a tooltip<br/> that spans multiple<br/> lines with the last line needing a break 123456789123456789
+        styles:
+          tooltip:
+            - '--button-card-tooltip-max-width': 100px
+            - '--button-card-tooltip-overflow-wrap': anywhere
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Opacity 0.5
+        tooltip:
+          placement: right-start
+          distance: -50
+          content: |
+            This is a tooltip<br/> that spans multiple<br/> lines
+        styles:
+          tooltip:
+            - 'pointer-events': none
+            - '--button-card-tooltip-background-color': red
+            - '--button-card-tooltip-opacity': 0.5
+            - '--button-card-tooltip-show-duration': 1ms
+            - '--button-card-tooltip-hide-duration': 1ms
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Box shadow
+        tooltip: |
+          This is a tooltip<br/> that spans multiple<br/> lines
+        styles:
+          tooltip:
+            - '--button-card-tooltip-box-shadow': 10px 5px 5px red
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Direct styling
+        tooltip:
+          content: This is a tooltip<br/> that spans multiple<br/> lines
+          arrow: true
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4
+        extra_styles: |
+          #tooltip::part(body) {
+            background-color: black;
+            color: yellow;
+            font-family: Courier New, monospace;
+            font-size: var(--ha-font-size-xl);
+            border: 3px double yellow;
+            border-radius: 20px;
+            padding: 20px 30px;
+            box-shadow: 0 0 10px 5px yellow;
+          }
+          #tooltip::part(base) {
+            pointer-events: none;
+          }
+          #tooltip::part(base__popup) {
+            transform:rotate(90deg) translateY(-100px);
+          }
+          #tooltip::part(base__arrow) {
+            background-color: black;
+          }
+      - type: 'custom:button-card'
+        color_type: label-card
+        name: Nested tooltips
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        section_mode: true
+        grid_options:
+          rows: 1
+          columns: 12
+      - type: 'custom:button-card'
+        entity: switch.skylight
+        name: Parent
+        styles:
+          grid:
+            - grid-template-areas: '"i" "n" "child"'
+            - grid-template-rows: auto auto auto
+        tooltip: I am the parent card tooltip
+        custom_fields:
+          child:
+            card:
+              type: 'custom:button-card'
+              entity: switch.skylight
+              name: Child + delay
+              tooltip:
+                content: I am the child card tooltip
+                delay: 500ms
+              show_icon: false
+              show_state: false
+              show_label: false
+        section_mode: true
+        grid_options:
+          rows: 2
+          columns: 4

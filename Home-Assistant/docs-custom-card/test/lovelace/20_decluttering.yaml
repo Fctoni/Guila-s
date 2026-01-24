@@ -1,0 +1,8 @@
+title: decluttering-card
+cards:
+  - type: vertical-stack
+    cards:
+      - type: custom:decluttering-card
+        template: test_default
+        variables:
+          - entity: switch.skylight

@@ -1,0 +1,280 @@
+title: Layout
+cards:
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Layout
+      - type: vertical-stack
+        cards:
+          - type: 'custom:button-card'
+            color_type: label-card
+            name: icon_name_state
+            color: var(--state-icon-color)
+            styles:
+              card:
+                - font-weight: bold
+                - padding: 5px 0px
+          - type: 'custom:button-card'
+            entity: sensor.sensor1
+            show_state: true
+            layout: icon_name_state
+            icon_tap_action:
+              action: more-info
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            color_type: label-card
+            name: name_state
+            color: var(--state-icon-color)
+            styles:
+              card:
+                - font-weight: bold
+                - padding: 5px 0px
+          - type: 'custom:button-card'
+            color_type: label-card
+            name: vertical (default)
+            color: var(--state-icon-color)
+            styles:
+              card:
+                - font-weight: bold
+                - padding: 5px 0px
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: sensor.sensor1
+            show_state: true
+            layout: name_state
+            icon_tap_action:
+              action: more-info
+          - type: 'custom:button-card'
+            entity: sensor.sensor1
+            show_state: true
+            icon_tap_action:
+              action: more-info
+
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            color_type: label-card
+            name: icon_name
+            color: var(--state-icon-color)
+            styles:
+              card:
+                - font-weight: bold
+                - padding: 5px 0px
+          - type: 'custom:button-card'
+            color_type: label-card
+            name: icon_state
+            color: var(--state-icon-color)
+            styles:
+              card:
+                - font-weight: bold
+                - padding: 5px 0px
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: sensor.sensor1
+            show_state: true
+            layout: icon_name
+            icon_tap_action:
+              action: more-info
+          - type: 'custom:button-card'
+            entity: sensor.sensor1
+            show_state: true
+            layout: icon_state
+            icon_tap_action:
+              action: more-info
+
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            color_type: label-card
+            name: icon_name with hidden state
+            color: var(--state-icon-color)
+            styles:
+              card:
+                - font-weight: bold
+                - padding: 5px 0px
+          - type: 'custom:button-card'
+            color_type: label-card
+            name: icon_state with hidden name
+            color: var(--state-icon-color)
+            styles:
+              card:
+                - font-weight: bold
+                - padding: 5px 0px
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: sensor.sensor1
+            show_state: false
+            layout: icon_name
+            icon_tap_action:
+              action: more-info
+          - type: 'custom:button-card'
+            entity: sensor.sensor1
+            show_state: true
+            show_name: false
+            layout: icon_state
+            icon_tap_action:
+              action: more-info
+
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            color_type: label-card
+            name: icon_name_state2nd
+            color: var(--state-icon-color)
+            styles:
+              card:
+                - font-weight: bold
+                - padding: 5px 0px
+          - type: 'custom:button-card'
+            color_type: label-card
+            name: icon_state_name2nd
+            color: var(--state-icon-color)
+            styles:
+              card:
+                - font-weight: bold
+                - padding: 5px 0px
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: sensor.sensor1
+            show_state: true
+            layout: icon_name_state2nd
+            icon_tap_action:
+              action: more-info
+          - type: 'custom:button-card'
+            entity: sensor.sensor1
+            show_state: true
+            layout: icon_state_name2nd
+            icon_tap_action:
+              action: more-info
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+            - height: 100px
+        name: Grid
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            show_icon: true
+            show_state: true
+            styles:
+              card:
+                - height: 200px
+            dbltap_action:
+              action: call-service
+              service: input_number.increment
+              service_data:
+                entity_id: input_number.test
+          - type: custom:vertical-stack-in-card
+            title: Entities card sample
+            cards:
+              - type: horizontal-stack
+                cards:
+                  - type: button-card
+                    entity: switch.skylight
+                    name: Default
+                  - type: 'custom:button-card'
+                    entity: switch.skylight
+                  - color: var(--primary-color)
+                    color_type: card
+                    entity: light.test_light
+                    hold_action:
+                      action: more-info
+                    icon: 'mdi:lightbulb'
+                    name: Shelf
+                    state:
+                      - color: red
+                        value: 'off'
+                    type: 'custom:button-card'
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: RGB
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: light.test_light
+            layout: rgb_light
+            name: Default
+            color_type: card
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Lock
+      - type: 'custom:button-card'
+        color_type: blank-card
+        styles:
+          card:
+            - height: 100px
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            lock:
+              enabled: true
+            styles:
+              lock:
+                - color: red
+                - align-items: flex-end
+                - justify-content: flex-start
+          - type: 'custom:button-card'
+            color_type: card
+            lock:
+              enabled: true
+              keep_unlock_icon: true
+              lock_icon: mdi:lightbulb
+              unlock_icon: mdi:fire
+            color: black
+            entity: switch.skylight
+            show_label: true
+            show_last_changed: true
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Sound
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            name: media-source://
+            tap_action:
+              sound: media-source://media_source/localmedia/click2.wav
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            name: /local
+            tap_action:
+              sound: /local/workspace/test/www/click.wav

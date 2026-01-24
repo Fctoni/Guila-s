@@ -1,0 +1,52 @@
+title: User Requests2
+cards:
+  - type: custom:button-card
+    icon: mdi:fire
+    entity: switch.skylight
+    name: test
+    styles:
+      card:
+        - height: 50px
+        - padding: 0px
+    state:
+      - value: 'on'
+        styles:
+          card:
+            - box-sizing: border-box
+            - border: '3px solid var(--button-card-light-color)'
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        entity: timer.laundry
+        show_state: true
+        tap_action:
+          action: call-service
+          service: timer.start
+          service_data:
+            entity_id: entity
+            duration: 60
+  - type: entities
+    entities:
+      - timer.laundry
+  - type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        template: button_motion
+        entity: switch.skylight
+        label: asdflkjsdalkjsfd lksjdfklsdjaf
+        name: asldkjasdklasjdlas
+      - type: custom:button-card
+        template: button_motion
+        entity: switch.skylight
+        label: asdflkjsdalkjsfd lksjdfklsdjaf
+        name: asldkjasdklasjdlas
+      - type: custom:button-card
+        template: button_motion
+        entity: switch.skylight
+        label: asdflkjsdalkjsfd lksjdfklsdjaf
+        name: asldkjasdklasjdlas
+      - type: custom:button-card
+        template: button_motion
+        entity: switch.skylight
+        label: asdflkjsdalkjsfd lksjdfklsdjaf
+        name: asldkjasdklasjdlas

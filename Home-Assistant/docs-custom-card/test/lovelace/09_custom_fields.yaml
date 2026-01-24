@@ -1,0 +1,258 @@
+title: Custom Fields
+cards:
+  - type: custom:button-card
+    variables:
+      test2: piou
+    template: test_var
+    show_label: true
+    entity: sensor.sensor1
+    name: '[[[ return variables.test ]]]'
+    label: '[[[ return variables.test2 ]]]'
+  - type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        color_type: blank-card
+      - type: custom:button-card
+        color_type: blank-card
+      - type: custom:button-card
+        icon: mdi:lightbulb
+        aspect_ratio: 1/1
+        name: Nb lights on
+        styles:
+          grid:
+            - position: relative
+          custom_fields:
+            notification:
+              - background-color: >
+                  [[[ if (states['input_number.test'].state == 0) return "green"; return "red" ]]]
+
+
+              - border-radius: 50%
+              - position: absolute
+              - left: 60%
+              - top: 10%
+              - height: 20px
+              - width: 20px
+              - font-size: 8px
+              - line-height: 20px
+        custom_fields:
+          notification: >
+            [[[ return Math.floor(states['input_number.test'].state / 10) ]]]
+
+
+      - type: custom:button-card
+        icon: >
+          [[[
+            if (entity.state === 'on')
+              return "mdi:fire"
+            return "mdi:lightbulb"
+          ]]]
+
+
+        entity: switch.skylight
+        tap_action:
+          action: call-service
+          service: >
+            [[[
+              if (states['input_number.test'].state <= 20)
+                return "input_number.increment"
+              return "input_number.decrement"
+            ]]]
+
+
+          service_data:
+            command: popup
+            title: 'Weather'
+            deviceID:
+              - this
+            card:
+              type: custom:swipe-card
+              parameters:
+                draggable: true
+                hide: false
+                pagination:
+                  type: bullets
+                scrollbar: null
+                snapOnRelease: true
+                spaceBetween: 8
+              cards:
+                - type: iframe
+                  aspect_ratio: 90%
+                  url: https://embed.windy.com/embed2.html?lat=41.273&lon=-96.002&zoom=5&level=surface&overlay=rain&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=true&detailLat=41.273&detailLon=-96.002&metricWind=mph&metricTemp=%C2%B0F&radarRange=-1
+                - type: weather-forecast
+                  entity: weather.hourly
+                - type: weather-forecast
+                  entity: weather.dark_sky
+        aspect_ratio: 1/1
+        show_name: false
+        custom_fields:
+          temperature_icon: >
+            [[[
+              return `<ha-icon
+                icon="mdi:thermometer"
+                style="height: 100%; padding-bottom: 2px;">
+              </ha-icon>`
+            ]]]
+
+
+          temperature: >
+            [[[ return states['input_number.test'].state ]]]
+
+
+          my_state: >
+            [[[ return `My State is: ${entity.state}` ]]]
+
+
+        styles:
+          grid:
+            - grid-template-areas: '"i temperature_icon temperature" "my_state my_state my_state"'
+            - grid-template-columns: 50% min-content min-content
+            - grid-template-rows: 1fr 1fr
+          custom_fields:
+            temperature:
+              - font-size: 12px
+              - text-align: start
+            temperature_icon:
+              - justify-self: end
+
+  - type: horizontal-stack
+    cards:
+      - type: entities
+        entities:
+          - type: custom:button-card
+            entity: switch.skylight
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        entity: 'sensor.raspi_temp'
+        hold_action:
+          action: more-info
+          entity: sensor.raspi_temp
+        icon: 'mdi:raspberry-pi'
+        aspect_ratio: 1/1
+        name: HassOS
+        styles:
+          card:
+            - background-color: '#000044'
+            - border-radius: 10%
+            - padding: 10%
+            - color: ivory
+            - font-size: 10px
+            - text-shadow: 0px 0px 5px black
+            - text-transform: capitalize
+          grid:
+            - grid-template-areas: '"i temp" "n n" "cpu cpu" "ram ram" "sd sd"'
+            - grid-template-columns: 1fr 1fr
+            - grid-template-rows: 1fr min-content min-content min-content min-content
+          name:
+            - font-weight: bold
+            - font-size: 13px
+            - color: white
+            - align-self: middle
+            - justify-self: start
+            - padding-bottom: 4px
+          img_cell:
+            - justify-content: start
+            - align-items: start
+            - margin: none
+          icon:
+            - color: >
+                [[[
+                  if (entity.state < 60) return 'lime';
+                  if (entity.state >= 60 && entity.state < 80) return 'orange';
+                  else return 'red';
+                ]]]
+
+
+            - width: 70%
+            - margin-top: -10%
+          custom_fields:
+            temp:
+              - align-self: start
+              - justify-self: end
+            cpu:
+              - padding-bottom: 2px
+              - align-self: middle
+              - justify-self: start
+              - --text-color-sensor: '[[[ if (states["sensor.raspi_cpu"].state > 80) return "red"; ]]]'
+            ram:
+              - padding-bottom: 2px
+              - align-self: middle
+              - justify-self: start
+              - --text-color-sensor: '[[[ if (states["sensor.raspi_ram"].state > 80) return "red"; ]]]'
+            sd:
+              - align-self: middle
+              - justify-self: start
+              - --text-color-sensor: '[[[ if (states["sensor.raspi_sd"].state > 80) return "red"; ]]]'
+        custom_fields:
+          temp: >
+            [[[
+              return `<ha-icon
+                icon="mdi:thermometer"
+                style="width: 12px; height: 12px; color: yellow;">
+                </ha-icon><span>${entity.state}°C</span>`
+            ]]]
+
+
+          cpu: >
+            [[[
+              return `<ha-icon
+                icon="mdi:server"
+                style="width: 12px; height: 12px; color: deepskyblue;">
+                </ha-icon><span>CPU: <span style="color: var(--text-color-sensor);">${states['sensor.raspi_cpu'].state}%</span></span>`
+            ]]]
+
+
+          ram: >
+            [[[
+              return `<ha-icon
+                icon="mdi:memory"
+                style="width: 12px; height: 12px; color: deepskyblue;">
+                </ha-icon><span>RAM: <span style="color: var(--text-color-sensor);">${states['sensor.raspi_ram'].state}%</span></span>`
+            ]]]
+
+
+          sd: >
+            [[[
+              return `<ha-icon
+                icon="mdi:harddisk"
+                style="width: 12px; height: 12px; color: deepskyblue;">
+                </ha-icon><span>SD: <span style="color: var(--text-color-sensor);">${states['sensor.raspi_sd'].state}%</span></span>`
+            ]]]
+
+
+        #template: button_good
+      - type: custom:button-card
+        aspect_ratio: 1/1
+        custom_fields:
+          graph:
+            card:
+              type: sensor
+              entity: '[[[ return entity.entity_id ]]]'
+              graph: line
+              style: |
+                ha-card {
+                  box-shadow: none;
+                }
+          picture:
+            card:
+              type: picture-glance
+              camera_image: camera.demo_camera
+              entities: []
+              camera_view: live
+        styles:
+          custom_fields:
+            graph:
+              - filter: opacity(50%)
+              - overflow: unset
+          card:
+            - overflow: unset
+          grid:
+            - grid-template-areas: '"i" "n" "graph" "picture"'
+            - grid-template-columns: 1fr
+            - grid-template-rows: 1fr min-content min-content max-content
+
+        entity: sensor.sensor1
+        hold_action:
+          action: more-info

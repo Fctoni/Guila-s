@@ -1,0 +1,169 @@
+title: JS Templates
+cards:
+  - type: custom:button-card
+    variables:
+      null_var:
+    name: '[[[ return variables.null_var === null ? "null variable OK" : "null variable NOK"; ]]]'
+  - type: custom:button-card
+    variables:
+      translate:
+        a: A
+        b: B
+        c: C
+    name: 'Variable is an object'
+    show_label: true
+    label: '[[[ return JSON.stringify(variables.translate); ]]]'
+  - type: custom:button-card
+    entity: switch.skylight
+    variables:
+      alwayRun:
+        force_eval: true
+        value: |
+          [[[
+            if (!window.myFunction) {
+              window.myFunction = (str) => { return `Hi from ${str}` }
+            }
+          ]]]
+    name: '[[[ return window.myFunction("name"); ]]]'
+  - type: custom:button-card
+    entity: switch.skylight
+    variables:
+      color_on: green
+      color_off: red
+      is_on: '[[[ return entity.state === "on"; ]]]'
+      color: |
+        [[[
+          if (variables.is_on) {
+            return variables.color_on
+          } else {
+            return variables.color_off
+          }
+        ]]]
+    styles:
+      icon:
+        - color: '[[[ return variables.color; ]]]'
+      name:
+        - color: '[[[ return variables.color; ]]]'
+  - type: custom:button-card
+    variables:
+      never_evaled: '[[[ throw new Error("This variable should never be evaluated") ]]]'
+      pioup:
+        value: '[[[ return "Test variables dependencies: OK" ]]]'
+      test: '[[[ return variables.pioup ]]]'
+    name: '[[[ return variables.test; ]]]'
+  - type: custom:button-card
+    entity: switch.skylight
+    update_timer: 1s
+    variables:
+      always_evaled:
+        value: '[[[ window.alwaysEvaled = `${new Date().getTime()}`; ]]]'
+        force_eval: true
+      never_evaled: '[[[ window.neverEvaled = `${new Date().getTime()}`; ]]]'
+    name: 'always should update every second,<br/>never should be unset'
+    show_label: true
+    label: '[[[ return `always: ${window.alwaysEvaled || "not set"}<br/>never: ${window.neverEvaled || "not set"}`; ]]]'
+  - type: custom:button-card
+    name: Nested card should display<br/>"Variables loop detected"
+    styles:
+      grid:
+        - grid-template-areas: '"n" "nested"'
+        - grid-template-columns: 1fr
+        - grid-template-rows: auto auto
+    custom_fields:
+      nested:
+        card:
+          type: 'custom:button-card'
+          variables:
+            loop1: '[[[[ return variables.loop2; ]]]]'
+            loop2: '[[[[ return variables.loop1; ]]]]'
+          name: |
+            [[[[
+              try {
+                return variables.loop1;
+              } catch (e) {
+                if (e.message.includes("Detected a loop while evaluating variable")) {
+                  return "Variables Loop detected";
+                }
+                return "Wrong error catched";
+              }
+            ]]]]
+  - type: custom:button-card
+    entity: switch.skylight
+    show_icon: false
+    name: '[[[ return `Main entity: ${entity.entity_id || "unknown entity"}`; ]]]'
+    label: Tap should toggle
+    tap_action:
+      action: toggle
+    styles:
+      grid:
+        - grid-template-areas: '"n" "nested"'
+        - grid-template-columns: 1fr
+        - grid-template-rows: auto auto
+    custom_fields:
+      nested:
+        card:
+          type: 'custom:button-card'
+          name: '[[[[ return (entity?.entity_id || "4[ ]: main button entity not known"); ]]]]'
+          label: '[[[ return `3[ ]: ${(entity?.entity_id || "main button state not known")}`; ]]]'
+          show_state: true
+          state_display: Above should show "not known" <br/> below should show ¨switch.skylight".<br/>Tap should not trigger parent button action
+          show_label: true
+          show_icon: false
+          tap_action:
+            action: more-info
+            entity: switch.skylight
+
+  - type: custom:button-card
+    entity: switch.skylight
+    name: Should show more-info on click
+    tap_action: >
+      [[[ return {
+        action: 'more-info',
+        entity: entity.entity_id,
+      }; ]]]
+
+
+  - type: custom:button-card
+    entity: switch.skylight
+    name: Nested should not be recreated
+    tap_action:
+      action: toggle
+    styles:
+      grid:
+        - grid-template-areas: '"i" "n" "nested"'
+        - grid-template-rows: auto auto auto
+    custom_fields:
+      nested:
+        card:
+          type: custom:button-card
+          name: '[[[ return `Main card state: ${entity.state}`; ]]]'
+          styles:
+            name:
+              - color: '[[[ return entity.state === "on" ? "green" : "red"; ]]]'
+          tap_action:
+            action: multi-actions
+            actions:
+              - delay: 10000
+
+  - type: custom:button-card
+    entity: switch.skylight
+    name: Access other entity states (no triggers_update)
+    show_label: true
+    label: |
+      [[[
+        const ac = "switch.ac";
+        return `AC: ${states[ac].state}`;
+      ]]]
+    custom_fields:
+      nested:
+        card:
+          type: custom:button-card
+          entity: switch.ac
+    styles:
+      custom_fields:
+        nested:
+          - position: absolute
+          - top: 5px
+          - right: 5px
+          - width: 20%
+          - height: 20%

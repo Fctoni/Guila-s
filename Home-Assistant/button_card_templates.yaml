@@ -1,0 +1,198 @@
+# Button Card Templates - Projeto Guilas
+# Atualizado: 2026-01-24
+# Dependencias HACS: custom:button-card, custom:my-slider-v2
+
+# =============================================================================
+# TEMPLATE: CORTINAS (cover)
+# =============================================================================
+# Uso:
+#   - type: custom:button-card
+#     template: cover_cortina
+#     entity: cover.cortina_estar
+#     name: Estar
+
+cover_cortina:
+  variables:
+    cor_aberta: 'var(--state-cover-open-color, #44739e)'
+    cor_fechada: 'var(--state-cover-closed-color, #9da0a2)'
+  show_state: false
+  show_name: true
+  show_icon: true
+  tap_action:
+    action: none
+  hold_action:
+    action: more-info
+  styles:
+    card:
+      - border-radius: 16px
+      - padding: 16px
+      - background: var(--card-background-color)
+    grid:
+      - grid-template-areas: '"i n" "slider slider" "controls controls"'
+      - grid-template-columns: 50px 1fr
+      - grid-template-rows: min-content 1fr min-content
+      - row-gap: 12px
+    img_cell:
+      - justify-content: center
+      - align-items: center
+    icon:
+      - width: 36px
+      - height: 36px
+    name:
+      - font-weight: bold
+      - font-size: 16px
+      - justify-self: start
+      - align-self: center
+      - padding-left: 8px
+    custom_fields:
+      slider:
+        - width: 100%
+        - padding: 0
+      controls:
+        - width: 100%
+  custom_fields:
+    slider:
+      card:
+        type: custom:my-slider-v2
+        entity: '[[[ return entity.entity_id ]]]'
+        colorMode: brightness
+        step: 5
+        intermediate: true
+        styles:
+          container:
+            - height: 40px
+            - border-radius: 8px
+            - background: var(--primary-background-color)
+          active:
+            - background: var(--primary-color)
+            - opacity: 0.8
+          thumb:
+            - width: 20px
+            - height: 20px
+            - background: var(--primary-color)
+            - border-radius: 50%
+    controls: |
+      [[[
+        const eid = entity.entity_id;
+        const state = entity.state;
+        const pos = entity.attributes.current_position ?? 0;
+
+        const activeColor = 'var(--primary-color)';
+        const inactiveColor = 'var(--disabled-text-color)';
+
+        const isOpening = state === 'opening';
+        const isClosing = state === 'closing';
+        const isFullOpen = pos >= 100;
+        const isFullClosed = pos <= 0;
+
+        return `
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
+            <span style="font-size: 13px; color: var(--secondary-text-color);">
+              ${state === 'opening' ? 'Abrindo...' :
+                state === 'closing' ? 'Fechando...' :
+                pos > 0 ? 'Aberta ' + pos + '%' : 'Fechada'}
+            </span>
+            <div style="display: flex; gap: 4px;">
+              <mwc-icon-button
+                style="--mdc-icon-size: 20px; color: ${isFullOpen ? inactiveColor : activeColor};"
+                @click="${(e) => { e.stopPropagation(); hass.callService('cover', 'open_cover', {entity_id: '${eid}'}); }}">
+                <ha-icon icon="mdi:arrow-up-bold"></ha-icon>
+              </mwc-icon-button>
+              <mwc-icon-button
+                style="--mdc-icon-size: 20px; color: ${(isOpening || isClosing) ? activeColor : inactiveColor};"
+                @click="${(e) => { e.stopPropagation(); hass.callService('cover', 'stop_cover', {entity_id: '${eid}'}); }}">
+                <ha-icon icon="mdi:stop"></ha-icon>
+              </mwc-icon-button>
+              <mwc-icon-button
+                style="--mdc-icon-size: 20px; color: ${isFullClosed ? inactiveColor : activeColor};"
+                @click="${(e) => { e.stopPropagation(); hass.callService('cover', 'close_cover', {entity_id: '${eid}'}); }}">
+                <ha-icon icon="mdi:arrow-down-bold"></ha-icon>
+              </mwc-icon-button>
+            </div>
+          </div>
+        `;
+      ]]]
+  state:
+    - value: 'open'
+      icon: mdi:blinds-horizontal
+      styles:
+        icon:
+          - color: '[[[ return variables.cor_aberta ]]]'
+    - value: 'closed'
+      icon: mdi:blinds-horizontal-closed
+      styles:
+        icon:
+          - color: '[[[ return variables.cor_fechada ]]]'
+    - value: 'opening'
+      icon: mdi:blinds-horizontal
+      styles:
+        icon:
+          - color: '[[[ return variables.cor_aberta ]]]'
+          - animation: blink 1s ease infinite
+    - value: 'closing'
+      icon: mdi:blinds-horizontal-closed
+      styles:
+        icon:
+          - color: '[[[ return variables.cor_fechada ]]]'
+          - animation: blink 1s ease infinite
+
+
+# =============================================================================
+# TEMPLATE: LABEL CARD (cabecalhos)
+# =============================================================================
+
+label_header:
+  color_type: label-card
+  styles:
+    card:
+      - background: none
+      - font-size: 20px
+      - font-weight: bold
+      - padding: 16px 0 8px 0
+      - border: none
+      - box-shadow: none
+
+
+# =============================================================================
+# TEMPLATE: GRUPO DE CORTINAS
+# =============================================================================
+
+cover_grupo:
+  variables:
+    entidades: []
+  show_name: true
+  show_icon: true
+  layout: icon_name
+  icon: mdi:blinds-horizontal
+  styles:
+    card:
+      - border-radius: 16px
+      - padding: 16px
+    grid:
+      - grid-template-areas: '"i n" "controls controls"'
+    icon:
+      - width: 32px
+  custom_fields:
+    controls: |
+      [[[
+        const entities = variables.entidades;
+        const entityList = entities.map(e => `'${e}'`).join(',');
+        return `
+          <div style="display: flex; gap: 12px; justify-content: center; padding-top: 12px;">
+            <mwc-button raised dense
+              @click="${(e) => {
+                e.stopPropagation();
+                [${entityList}].forEach(eid => hass.callService('cover', 'open_cover', {entity_id: eid}));
+              }}">
+              Abrir Todas
+            </mwc-button>
+            <mwc-button raised dense
+              @click="${(e) => {
+                e.stopPropagation();
+                [${entityList}].forEach(eid => hass.callService('cover', 'close_cover', {entity_id: eid}));
+              }}">
+              Fechar Todas
+            </mwc-button>
+          </div>
+        `;
+      ]]]

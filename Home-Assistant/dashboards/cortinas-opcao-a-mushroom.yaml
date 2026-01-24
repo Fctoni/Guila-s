@@ -1,0 +1,110 @@
+# Dashboard Cortinas - OPCAO A: 100% Mushroom
+# Projeto Guilas - Casa Le Parc
+# Atualizado: 2026-01-24
+#
+# Dependencias HACS:
+#   - lovelace-mushroom (https://github.com/piitaya/lovelace-mushroom)
+#
+# Vantagens:
+#   - Simples e limpo
+#   - Bem mantido
+#   - Slider nativo integrado
+#   - Menos codigo
+
+title: Cortinas (Mushroom)
+views:
+  - title: Cortinas
+    path: cortinas-mushroom
+    icon: mdi:blinds-horizontal
+    cards:
+      # Cabecalho
+      - type: custom:mushroom-title-card
+        title: Cortinas do Terreo
+        subtitle: Controle individual
+
+      # Grid de cortinas
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: custom:mushroom-cover-card
+            entity: cover.cortinas_terreo_cortina_estar
+            name: Estar
+            icon: mdi:blinds-horizontal
+            show_position_control: true
+            show_buttons_control: true
+            layout: vertical
+            fill_container: true
+
+          - type: custom:mushroom-cover-card
+            entity: cover.cortinas_terreo_cortina_jantar
+            name: Jantar
+            icon: mdi:blinds-horizontal
+            show_position_control: true
+            show_buttons_control: true
+            layout: vertical
+            fill_container: true
+
+          - type: custom:mushroom-cover-card
+            entity: cover.cortinas_terreo_cortina_office
+            name: Office
+            icon: mdi:blinds-horizontal
+            show_position_control: true
+            show_buttons_control: true
+            layout: vertical
+            fill_container: true
+
+          - type: custom:mushroom-cover-card
+            entity: cover.cortinas_terreo_cortina_reserva
+            name: Reserva
+            icon: mdi:blinds-horizontal
+            show_position_control: true
+            show_buttons_control: true
+            layout: vertical
+            fill_container: true
+
+      # Separador
+      - type: custom:mushroom-title-card
+        title: Controle em Grupo
+
+      # Chips para controle rapido de todas
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: action
+            icon: mdi:arrow-up-bold
+            tap_action:
+              action: call-service
+              service: cover.open_cover
+              target:
+                entity_id:
+                  - cover.cortinas_terreo_cortina_estar
+                  - cover.cortinas_terreo_cortina_jantar
+                  - cover.cortinas_terreo_cortina_office
+                  - cover.cortinas_terreo_cortina_reserva
+            content: Abrir Todas
+
+          - type: action
+            icon: mdi:stop
+            tap_action:
+              action: call-service
+              service: cover.stop_cover
+              target:
+                entity_id:
+                  - cover.cortinas_terreo_cortina_estar
+                  - cover.cortinas_terreo_cortina_jantar
+                  - cover.cortinas_terreo_cortina_office
+                  - cover.cortinas_terreo_cortina_reserva
+            content: Parar
+
+          - type: action
+            icon: mdi:arrow-down-bold
+            tap_action:
+              action: call-service
+              service: cover.close_cover
+              target:
+                entity_id:
+                  - cover.cortinas_terreo_cortina_estar
+                  - cover.cortinas_terreo_cortina_jantar
+                  - cover.cortinas_terreo_cortina_office
+                  - cover.cortinas_terreo_cortina_reserva
+            content: Fechar Todas

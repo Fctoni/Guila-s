@@ -1,0 +1,1166 @@
+title: Main
+cards:
+  - type: 'custom:button-card'
+    color_type: card
+    show_entity_picture: true
+    name: Entity Picture Cast
+    entity_picture: /local/workspace/test/www/cast.jpg
+    tooltip:
+      distance: -200
+      content: 'mega super long tooltip that should overflow everything here mega super long tooltip that should overflow everything here mega super long tooltip that should overflow everything here mega super long tooltip that should overflow everything here'
+    tap_action:
+      action: javascript
+      javascript: '[[[ return; ]]]'
+    styles:
+      tooltip:
+        - color: red
+        - '--button-card-tooltip-max-width': 300px
+  - type: 'custom:button-card'
+    color_type: card
+    icon: mdi:lock
+    name: Lock + Tooltip Test
+    tooltip: '[[[ return html`Line Extra Info<br>Next Line<ha-icon icon="mdi:help" style="color: red; width: 1em;"></ha-icon><br>` ]]]'
+    tap_action:
+      action: javascript
+      javascript: '[[[ return; ]]]'
+    lock:
+      enabled: true
+      duration: 7
+      unlock: hold
+  - type: 'custom:button-card'
+    custom_fields:
+      test:
+        card:
+          type: vertical-stack
+          cards:
+            - type: horizontal-stack
+              cards:
+                - type: 'custom:button-card'
+                  entity: sensor.sensor1
+                  show_state: true
+  - type: custom:button-card
+    name: Change Background
+    entity: switch.skylight
+    show_icon: false
+    aspect_ratio: 2/1
+    label: '[[[ return `test` ]]]'
+    extra_styles: |
+      @keyframes bgswap1 {
+        0% {
+          background-image: url("https://www.w3schools.com/w3css/img_lights.jpg");
+        }
+        25% {
+          background-image: url("https://www.w3schools.com/w3css/img_lights.jpg");
+        }
+        50% {
+          background-image: url("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg");
+        }
+        75% {
+          background-image: url("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg");
+        }
+        100% {
+          background-image: url("https://www.w3schools.com/w3css/img_lights.jpg");
+        }
+      }
+    styles:
+      card:
+        - animation: bgswap1 10s linear infinite
+        - background-size: cover
+      name:
+        - color: white
+  - type: entities
+    entities:
+      - input_number.test
+      - switch.skylight
+      - light.test_light
+  - type: custom:button-card
+    entity: input_number.test
+    name: test
+    styles:
+      card:
+        - display: '[[[ if (Number(entity.state) < 30) return "none"; else return null; ]]]'
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Defaults
+      - type: horizontal-stack
+        cards:
+          - type: entity-button
+            entity: switch.skylight
+            name: Default
+          - type: 'custom:button-card'
+            entity: switch.skylight
+          - type: 'custom:button-card'
+            color_type: card
+            entity: switch.skylight
+          - type: 'custom:button-card'
+            name: test
+            icon: mdi:flash
+            color: orange
+          - type: 'custom:button-card'
+            name: test
+            color_type: card
+            icon: mdi:flash
+            color: orange
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Card-Modder
+      - type: horizontal-stack
+        cards:
+          - type: custom:card-modder
+            styles:
+              card:
+                - border-radius: 10px
+            card:
+              type: entity-button
+              entity: switch.skylight
+              name: Default HASS
+              show_name: false
+              show_state: true
+          - type: custom:card-modder
+            styles:
+              card:
+                - border-radius: 10px
+            card:
+              type: 'custom:button-card'
+              entity: switch.skylight
+              show_state: true
+              show_name: false
+          - type: custom:card-modder
+            styles:
+              card:
+                - border-radius: 10px
+            card:
+              type: 'custom:button-card'
+              color_type: card
+              entity: switch.skylight
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Style-Modder
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            color_type: card
+            color: rgb(245,116,56)
+            styles:
+              card:
+                #    - background-color: rgba(245,116,56,1)
+                - border-radius: 30px
+                - border: solid 3px rgba(118,185,0,1)
+            entity: switch.skylight
+            icon: mdi:stop
+            name: BUTTON only CType card
+          - type: custom:button-card
+            styles:
+              card:
+                - background-color: rgba(245,116,56,1)
+                - border-radius: 30px
+                - border: solid 3px rgba(118,185,0,1)
+            entity: switch.skylight
+            icon: mdi:stop
+            name: BUTTON only CType card
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Template
+      - type: horizontal-stack
+        cards:
+          - type: custom:config-template-card
+            variables:
+              - states['input_number.test'].state
+            entities:
+              - input_number.test
+            card:
+              type: 'custom:button-card'
+              entity: input_number.test
+              name: '${vars[0]}'
+          - type: custom:config-template-card
+            variables:
+              - states['input_number.test'].state
+            entities:
+              - input_number.test
+            card:
+              type: 'custom:button-card'
+              color_type: card
+              color: '${"rgb(" + Number(vars[0]) * 2 + ",255,255)"}'
+              entity: input_number.test
+              name: '${vars[0]}'
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Layout
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: sensor.sensor1
+                name: icon_name_state_no_state
+                show_state: false
+                layout: icon_name_state
+                icon_tap_action:
+                  action: more-info
+
+          - type: 'custom:button-card'
+            entity: sensor.sensor1
+            name: icon_name_state
+            show_state: true
+            layout: icon_name_state
+            icon_tap_action:
+              action: more-info
+          - type: 'custom:button-card'
+            color_type: label-card
+            name: Testing default size
+            styles:
+              card:
+                - font-weight: bold
+                - text-transform: uppercase
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: sensor.sensor1
+                name: icon_name_state
+                color_type: card
+                show_state: false
+                show_name: false
+                layout: icon_name_state
+                icon_tap_action:
+                  action: more-info
+              - type: 'custom:button-card'
+                entity: sensor.sensor1
+                show_name: false
+                show_state: false
+                tap_action:
+                  action: more-info
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: sensor.sensor1
+                name: icon_name
+                layout: icon_name
+                show_state: true
+                icon_tap_action:
+                  action: more-info
+              - type: 'custom:button-card'
+                entity: sensor.sensor1
+                name: icon_state
+                layout: icon_state
+                show_state: true
+                show_name: true
+                color_type: card
+                icon_tap_action:
+                  action: more-info
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: sensor.sensor1
+                name: icon_name
+                layout: icon_name
+                icon_tap_action:
+                  action: more-info
+              - type: 'custom:button-card'
+                entity: sensor.sensor1
+                name: icon_state
+                layout: icon_state
+                show_state: true
+                show_name: false
+                icon_tap_action:
+                  action: more-info
+              - type: 'custom:button-card'
+                entity: sensor.sensor1
+                color_type: card
+                name: icon_state
+                layout: icon_state
+                show_state: true
+                show_name: false
+                show_units: false
+                icon_tap_action:
+                  action: more-info
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: sensor.sensor1
+                layout: icon_name_state2nd
+                show_state: true
+                show_name: true
+                icon_tap_action:
+                  action: more-info
+              - type: 'custom:button-card'
+                entity: sensor.sensor1
+                layout: icon_state_name2nd
+                show_state: true
+                show_name: true
+                icon_tap_action:
+                  action: more-info
+
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: sensor.sensor1
+                name: name_state
+                layout: name_state
+                show_state: true
+                icon_tap_action:
+                  action: more-info
+              - type: 'custom:button-card'
+                entity: sensor.sensor1
+                name: default state
+                show_state: true
+                units: UNITS TOO LONNNNNNG
+                color_type: card
+                show_name: false
+                icon_tap_action:
+                  action: more-info
+              - type: 'custom:button-card'
+                entity: sensor.sensor1
+                name: default name
+                show_state: false
+                show_name: true
+                icon_tap_action:
+                  action: more-info
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: No Name
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            show_name: false
+          - type: 'custom:button-card'
+            color_type: card
+            entity: switch.skylight
+            show_name: false
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: No Icon but name and state
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            show_icon: false
+            show_state: true
+          - type: 'custom:button-card'
+            color_type: card
+            entity: switch.skylight
+            show_icon: false
+            show_state: true
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Show State
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            show_name: false
+            show_state: true
+          - type: 'custom:button-card'
+            color_type: card
+            entity: switch.skylight
+            show_name: false
+            show_state: true
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Show Name and State
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            show_state: true
+          - type: 'custom:button-card'
+            color_type: card
+            entity: switch.skylight
+            show_state: true
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Redefine name and icon
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            name: Test Name
+            icon: mdi:home
+          - type: 'custom:button-card'
+            color_type: card
+            entity: switch.skylight
+            name: Test Name
+            icon: mdi:home
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Test lights
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: light.test_light
+            color: auto
+            styles:
+              name:
+                - color: var(--button-card-light-color)
+              card:
+                - -webkit-box-shadow: 0px 0px 9px 3px var(--button-card-light-color)
+                - box-shadow: 0px 0px 9px 3px var(--button-card-light-color)
+          - type: 'custom:button-card'
+            entity: light.test_light
+            color_type: card
+            color: auto
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Test Height
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: light.test_light
+                color: auto
+                name: s:default h:200px
+                styles:
+                  card:
+                    - height: 200px
+              - type: 'custom:button-card'
+                entity: light.test_light
+                color_type: card
+                color: auto
+                name: s:100% h:200px
+                size: 100%
+                styles:
+                  card:
+                    - height: 200px
+              - type: 'custom:button-card'
+                entity: light.test_light
+                color_type: card
+                color: auto
+                size: 10%
+                name: s:10% h:200px
+                styles:
+                  card:
+                    - height: 200px
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: light.test_light
+                color: auto
+                name: 60px
+                styles:
+                  card:
+                    - height: 60px
+                    - width: 60px
+              - type: 'custom:button-card'
+                entity: light.test_light
+                color_type: card
+                color: auto
+                name: 80px
+                styles:
+                  card:
+                    - height: 80px
+                    - width: 30px
+              - type: 'custom:button-card'
+                entity: light.test_light
+                color_type: card
+                color: auto
+                name: 300px
+                styles:
+                  card:
+                    - height: 300px
+          - type: horizontal-stack
+            cards:
+              - type: 'custom:button-card'
+                entity: sensor.sensor1
+                show_state: true
+                layout: icon_name
+                styles:
+                  card:
+                    - width: 100px
+              - type: 'custom:button-card'
+                entity: sensor.sensor1
+                show_state: true
+                layout: icon_state
+                styles:
+                  card:
+                    - height: 200px
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Color custom
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            color_type: icon
+            color: lightpink
+            name: 'color_type: icon'
+          - type: 'custom:button-card'
+            color_type: card
+            color: lightpink
+            entity: switch.skylight
+            name: 'color_type: card'
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Redefine style with state
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            state:
+              - value: 'off'
+                color: green
+              - value: 'on'
+                color: red
+          - type: 'custom:button-card'
+            color_type: card
+            entity: switch.skylight
+            state:
+              - value: 'off'
+                color: green
+              - value: 'on'
+                color: red
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Entity Picture
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            entity_picture: https://upload.wikimedia.org/wikipedia/en/e/ed/Nyan_cat_250px_frame.PNG
+            show_entity_picture: true
+            name: Entity Picture Default
+            state:
+              - value: 'off'
+                styles:
+                  entity_picture:
+                    - filter: grayscale(100%)
+                    - border-radius: 50%
+              - value: 'on'
+                rotate: true
+                styles:
+                  card:
+                  entity_picture:
+                    - border-radius: 50%
+          - type: 'custom:button-card'
+            color_type: card
+            entity: switch.skylight
+            show_entity_picture: true
+            name: Entity Picture State
+            state:
+              - value: 'off'
+                color: black
+                entity_picture: https://welovecatsandkittens.com/wp-content/uploads/2013/09/fallling-asleep-at-keyboard-cat.jpg
+                styles:
+                  entity_picture:
+                    - filter: grayscale(100%)
+              - value: 'on'
+                color: '#ce42f4'
+                entity_picture: https://media.tenor.com/images/d740131a4906504d47cab865f1bd95b3/tenor.gif
+      - type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: camera.demo_camera
+            show_live_stream: true
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Redefine name and icon with state
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            state:
+              - value: 'off'
+                name: This is off
+                icon: mdi:lightbulb
+              - value: 'on'
+                name: This is on
+                icon: mdi:lightbulb-on
+          - type: 'custom:button-card'
+            color_type: card
+            entity: switch.skylight
+            state:
+              - value: 'off'
+                name: This is off
+                icon: mdi:lightbulb
+              - value: 'on'
+                name: This is on
+                icon: mdi:lightbulb-on
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Test conditional card
+      - type: conditional
+        conditions:
+          - entity: switch.skylight
+            state: 'off'
+        card:
+          type: vertical-stack
+          cards:
+            - type: horizontal-stack
+              cards:
+                - type: 'custom:button-card'
+                  entity: switch.skylight
+                  show_state: true
+                  name: Kitchen
+            - type: horizontal-stack
+              cards:
+                - type: entities
+                  entities:
+                    - switch.skylight
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Effects
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            color_type: card
+            entity: switch.skylight
+            state:
+              - value: 'on'
+                color: red
+                icon: mdi:alert
+                name: Blink
+                styles:
+                  card:
+                    - animation: blink 2s ease infinite
+              - operator: default
+                color: green
+                name: No Blink
+                icon: mdi:shield-check
+          - type: 'custom:button-card'
+            color_type: icon
+            entity: switch.skylight
+            state:
+              - value: 'on'
+                color: red
+                icon: mdi:alert
+                name: Blink
+                styles:
+                  card:
+                    - color: red
+                    - animation: blink 2s ease infinite
+              - operator: default
+                color: green
+                name: No Blink
+                icon: mdi:shield-check
+
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            color_type: card
+            entity: switch.skylight
+            icon: mdi:fan
+            name: Fan Spin
+            state:
+              - value: 'on'
+                rotate: true
+              - operator: default
+                rotate: false
+          - type: 'custom:button-card'
+            color_type: icon
+            entity: switch.skylight
+            icon: mdi:fan
+            name: Fan Spin
+            state:
+              - value: 'on'
+                rotate: true
+              - operator: default
+                rotate: false
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: test operators and multiple styles
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            state:
+              - value: '^of.*$'
+                operator: regex
+                name: This is off (regex)
+                icon: mdi:lightbulb
+              - value: '^o.*$'
+                operator: regex
+                name: This is on (regex)
+                icon: mdi:lightbulb-on
+
+          - type: 'custom:button-card'
+            icon: mdi:battery
+            # name: Battery
+            color_type: card
+            entity: input_number.test
+            show_name: false
+            show_state: true
+            tap_action:
+              action: more-info
+            state:
+              - value: 10
+                operator: '<'
+                color: '#FF0000' #red
+                icon: 'mdi:battery-10'
+                styles:
+                  card:
+                    - animation: blink 2s linear infinite
+
+              - value: 20
+                operator: '<='
+                color: '#ff6600' #red orange
+                icon: 'mdi:battery-20'
+                styles:
+                  card:
+                    - font-weight: 1000
+
+              - value: 30
+                operator: '<='
+                color: '#ff9933' #dark orange
+                icon: 'mdi:battery-30'
+
+              - value: 40
+                operator: '<='
+                color: '#ffcc00' #light orange
+                icon: 'mdi:battery-40'
+
+              - value: 50
+                operator: '<='
+                color: '#FFFF00' #yellow
+                icon: 'mdi:battery-50'
+
+              - value: 60
+                operator: '<='
+                color: '#FFFF00' #yellow
+                icon: 'mdi:battery-60'
+
+              - value: 70
+                operator: '<='
+                color: '#FFFF00' #yellow
+                icon: 'mdi:battery-70'
+
+              - value: 80
+                operator: '<='
+                color: '#CCFF33' #yellow green
+                icon: 'mdi:battery-80'
+
+              - value: 90
+                operator: '<='
+                color: '#66FF33' #light green
+                icon: 'mdi:battery-90'
+
+              - value: 100
+                operator: '<='
+                color: '#279b37' #dark green
+                icon: 'mdi:battery'
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: 'Bug #89'
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.skylight
+          - type: 'custom:button-card'
+            entity: switch.skylight
+          - type: 'custom:button-card'
+            entity: switch.skylight
+          - type: 'custom:button-card'
+            entity: switch.skylight
+          - type: 'custom:button-card'
+            entity: switch.skylight
+          - type: 'custom:button-card'
+            entity: switch.skylight
+          - type: 'custom:button-card'
+            entity: switch.skylight
+          - type: 'custom:button-card'
+            entity: switch.skylight
+          - type: 'custom:button-card'
+            entity: switch.skylight
+          - type: 'custom:button-card'
+            entity: switch.skylight
+      - type: horizontal-stack
+        cards:
+          - type: entity-button
+            entity: switch.skylight
+          - type: entity-button
+            entity: switch.skylight
+          - type: entity-button
+            entity: switch.skylight
+          - type: entity-button
+            entity: switch.skylight
+          - type: entity-button
+            entity: switch.skylight
+          - type: entity-button
+            entity: switch.skylight
+          - type: entity-button
+            entity: switch.skylight
+          - type: entity-button
+            entity: switch.skylight
+          - type: entity-button
+            entity: switch.skylight
+          - type: entity-button
+            entity: switch.skylight
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Labels
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            color_type: icon
+            entity: light.test_light
+            label: >
+              [[[ var bri = states['light.test_light'].attributes.brightness; return 'Brightness: ' + (bri ? bri : '0') + '%'; ]]]
+
+
+            show_label: true
+            show_state: true
+            size: 10%
+            styles:
+              card:
+                - height: 100px
+              label:
+                - color: gray
+                - font-size: 9px
+                - justify-self: start
+                - padding: 0px 5px
+              name:
+                - text-transform: uppercase
+                - letter-spacing: 0.5em
+                - font-familly: cursive
+                - justify-self: start
+                - padding: 0px 5px
+              state:
+                - justify-self: start
+                - font-size: 10px
+                - padding: 0px 5px
+            state:
+              - value: 'on'
+                styles:
+                  state:
+                    - color: green
+              - value: 'off'
+                styles:
+                  state:
+                    - color: red
+                  card:
+                    - filter: brightness(40%)
+          - type: 'custom:button-card'
+            color_type: icon
+            entity: light.test_light
+            layout: icon_label
+            label: >
+              [[[ return 'Other State: ' + states['switch.skylight'].state; ]]]
+
+
+            show_label: true
+            show_name: false
+            size: 100%
+            styles:
+              card:
+                - height: 200px
+              label:
+                - font-weight: bold
+                - writing-mode: vertical-rl
+                - text-orientation: mixed
+            state:
+              - value: 'on'
+                styles:
+                  label:
+                    - color: red
+              - value: 'off'
+                styles:
+                  label:
+                    - color: green
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: State Template
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            color_type: icon
+            entity: switch.skylight
+            show_state: true
+            show_label: true
+            state:
+              - operator: template
+                value: >
+                  [[[
+                    return states['light.test_light'].attributes
+                    && (states['light.test_light'].attributes.brightness <= 100)
+                  ]]]
+
+
+                icon: mdi:alert
+              - operator: default
+                icon: mdi:lightbulb
+          - type: 'custom:button-card'
+            color_type: icon
+            entity: switch.skylight
+            show_label: true
+            state:
+              - operator: template
+                value: >
+                  [[[
+                    return states['light.test_light'].attributes
+                    && (!states['light.test_light'].attributes.brightness || states['light.test_light'].attributes.brightness <= 100)
+                  ]]]
+
+
+                icon: mdi:weather-night
+                label: Night Mode
+              - operator: default
+                icon: mdi:white-balance-sunny
+                label: Day Mode
+
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Lock
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            name: Only test
+            lock:
+              enabled: true
+              duration: 10
+              unlock: double_tap
+              exemptions:
+                - username: test
+          - type: 'custom:button-card'
+            color_type: card
+            lock:
+              enabled: true
+              exemptions: []
+            color: black
+            name: Always
+            entity: switch.skylight
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Update Timer
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: light.bed_light
+            name: Bed Lt 1s
+            show_label: true
+            update_timer: 1s
+            label: |
+              [[[
+                return Date.now()
+              ]]]
+          - type: 'custom:button-card'
+            entity: light.bed_light
+            name: Bed Lt (off=5s, on=100)
+            show_label: true
+            update_timer: |
+              [[[
+                return states[entity.entity_id].state === 'on' ? 100 : "5s";
+              ]]]
+            label: |
+              [[[
+                return Date.now()
+              ]]]
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            name: Skylight 1s
+            show_label: true
+            update_timer: 1s
+            label: |
+              [[[
+                return Date.now()
+              ]]]
+          - type: 'custom:button-card'
+            entity: switch.skylight
+            name: Skylight (Bed off=5s, on=100)
+            show_label: true
+            update_timer: |
+              [[[
+                return states["light.bed_light"].state === 'on' ? 100 : "5s";
+              ]]]
+            label: |
+              [[[
+                return Date.now()
+              ]]]
+  - type: vertical-stack
+    cards:
+      - type: 'custom:button-card'
+        color_type: label-card
+        styles:
+          card:
+            - font-weight: bold
+            - text-transform: uppercase
+        name: Spinner
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            entity: script.delay_script
+            name: Spinner script main
+            tap_action:
+              action: perform-action
+              perform_action: script.delay_script
+            show_label: state
+            spinner: '[[[ return entity.state === "on" ]]]'
+          - type: 'custom:button-card'
+            entity: script.delay_script
+            name: Spinner script state
+            tap_action:
+              action: perform-action
+              perform_action: script.delay_script
+            show_label: state
+            styles:
+              spinner:
+                - pointer-events: none !important
+                - --button-card-spinner-background-color: none
+            state:
+              - value: 'on'
+                spinner: true
+                styles:
+                  spinner:
+                    - --button-card-spinner-color: red

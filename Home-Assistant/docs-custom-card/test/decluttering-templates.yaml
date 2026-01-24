@@ -1,0 +1,15 @@
+test_template:
+  card:
+    type: custom:button-card
+    entity: '[[entity]]'
+
+test_default:
+  card:
+    type: picture-elements
+    image: '/local/workspace/test/www/cast.jpg'
+    elements:
+      - type: state-label
+        entity: '[[entity]]'
+        style:
+          top: 90%
+          left: 20%
