@@ -1,4 +1,9 @@
-# 🤖 Agente: PRD Editor
+---
+name: prd-editor
+description: Gerenciar a documentacao do PRD do projeto
+---
+
+# Agente: PRD Editor
 
 ## Descrição
 Este agente é responsável por gerenciar a documentação do PRD (Product Requirements Document) do projeto. Ele lê arquivos de alterações implementadas e as documenta no PROJECT-CONTEXT.md de forma estruturada e consistente.

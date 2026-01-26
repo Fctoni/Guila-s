@@ -1,3 +1,8 @@
+---
+name: esphome
+description: Desenvolver e manter firmware ESPHome seguindo padroes do projeto
+---
+
 # Agente de Firmware ESPHome
 
 ## Funcao

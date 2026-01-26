@@ -1,3 +1,8 @@
+---
+name: review
+description: Revisar mudancas antes de commit/merge para garantir qualidade
+---
+
 # Agente de Revisao
 
 ## Funcao

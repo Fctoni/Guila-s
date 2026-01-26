@@ -12,6 +12,7 @@
 | Ambiente | Int | Circ Lum | Circ Belm | Acende Onde | Tipo Iluminação | Potência | Nome Falado |
 |----------|-----|----------|-----------|-------------|-----------------|----------|-------------|
 | Garagem | 32 | 4 | 2A | Garagem | Fita LED 24V | 228 W | Iluminação Garagem |
+| Garagem | 32 | 7 | 2B | Despensa | LED 24V + Spot | 210 W | Iluminação Despensa |
 | Despensa | 31 | 7 | 2B | Despensa | LED 24V + Spot | 210 W | Iluminação Despensa |
 | Lavanderia | 27 | 8 | 2C | Lavanderia | LED 24V | 22 W | Iluminação Lavanderia |
 | Lavanderia | 27 | 8 | 2C | Lavanderia | Embutido Picco | - | Iluminação Lavanderia |
@@ -37,25 +38,25 @@
 | Lado do Sofá | 30 | 17 | 1Q | Área Poltronas | Embutido Picco | - | Iluminação Living |
 | Lado do Sofá | 30 | 18 | 1O | Atrás Sofá | Extra | - | - |
 | Lado do Sofá | 30 | 19 | 1P | Área TV | Embutido Picco | - | Iluminação TV |
-| Lado do Sofá | 30 | 20 | 1R | Abaixo Buffet | LED 24V | 24 W | Iluminação Buffet |
+| Lado do Sofá | 30 | 20 | 1R | Abaixo Buffet | EXTRA | - | - |
 | Lado do Sofá | 30 | 21 | 1N | Hall Principal | Embutido Picco | - | Iluminação Hall Principal |
 | Cozinha | 29 | 12 | 1X | Perfil Bancada Pia | LED 24V | 41 W | Bancada Cozinha |
 | Cozinha | 29 | 13 | 1V | Ilha Cozinha | Embutido Picco | - | Ilha Cozinha |
 | Cozinha | 29 | 14 | 1W | Geral Cozinha | Embutido Picco | - | Iluminação Cozinha |
-| Cozinha | 29 | 15 | 1T | Mesa Jantar | Embutido + Pendente | - | Iluminação Jantar |
+| Cozinha | 29 | 15 | 1T / 1S | Mesa Jantar | Embutido + Pendente | - | Iluminação Jantar |
 | Cozinha | 29 | 16 | 1U | Cortineiro Living | LED 24V | 304 W | Cortineiro Living |
-| Churrasqueira | 26 | 13 | 1V | Ilha Cozinha | Embutido Picco | - | Ilha Cozinha |
-| Churrasqueira | 26 | 14 | 1W | Geral Cozinha | Embutido Picco | - | Iluminação Cozinha |
-| Churrasqueira | 26 | 15 | 1T | Mesa Jantar | Embutido + Pendente | - | Iluminação Jantar |
-| Churrasqueira | 26 | 16 | 1U | Cortineiro Living | LED 24V | 304 W | Cortineiro Living |
-| Churrasqueira | 26 | 17 | 1Q | Área Poltronas | Embutido Picco | - | Iluminação Living |
-| Churrasqueira | 26 | 50 | 1 | Churrasqueira | Incandescente | - | Iluminação Churrasqueira |
+| Pia | 26 | 13 | 1V | Ilha Cozinha | Embutido Picco | - | Ilha Cozinha |
+| Pia | 26 | 14 | 1W | Geral Cozinha | Embutido Picco | - | Iluminação Cozinha |
+| Pia | 26 | 15 | 1T / 1S | Mesa Jantar | Embutido + Pendente | - | Iluminação Jantar |
+| Pia | 26 | 16 | 1U | Cortineiro Living | LED 24V | 304 W | Cortineiro Living |
+| Pia | 26 | 17 | 1Q | Área Poltronas | Embutido Picco | - | Iluminação Living |
+| Pia | 26 | 50 | 1 | Churrasqueira | Incandescente | - | Iluminação Churrasqueira |
 | Bar | 22 | 13 | 1V | Ilha Cozinha | Embutido Picco | - | Ilha Cozinha |
 | Bar | 22 | 14 | 1W | Geral Cozinha | Embutido Picco | - | Iluminação Cozinha |
-| Bar | 22 | 15 | 1T | Mesa Jantar | Embutido + Pendente | - | Iluminação Jantar |
+| Bar | 22 | 15 | 1T / 1S | Mesa Jantar | Embutido + Pendente | - | Iluminação Jantar |
 | Bar | 22 | 16 | 1U | Cortineiro Living | LED 24V | 304 W | Cortineiro Living |
 | Bar | 22 | 17 | 1Q | Área Poltronas | Embutido Picco | - | Iluminação Living |
-| Bar | 22 | 20 | 1R | Abaixo Buffet | LED 24V | 24 W | Iluminação Buffet |
+| Bar | 22 | 20 | DESCOBRIR COM JOEL | Fitas Bar | LED 24V | 80 W | Iluminação Bar |
 
 ---
 
@@ -66,6 +67,7 @@
 #### GARAGEM
 **Interruptor 32**
 - Circuito 4 (2A): Fita LED → Iluminação Garagem — **228 W** (9,5 A)
+- Circuito 7 (2B): LED + Spot → Iluminação Despensa — **210 W** (8,8 A) [compartilhado com Int 31]
 
 #### DESPENSA
 **Interruptor 31**
@@ -99,22 +101,22 @@
 
 #### LADO DO SOFÁ (Living)
 **Interruptor 30**
-- Circuito 16 (1U): LED → Cortineiro Living — **304 W** (12,7 A) 
-- Circuito 20 (1R): LED → Iluminação Buffet — **24 W** (1,0 A)
+- Circuito 16 (1U): LED → Cortineiro Living — **304 W** (12,7 A)
+- Circuito 20 (1R): EXTRA (reserva)
 
 #### COZINHA
 **Interruptor 29**
 - Circuito 12 (1X): LED → Bancada Cozinha — **41 W** (1,7 A)
 - Circuito 16 (1U): LED → Cortineiro Living — **304 W** (12,7 A) 
 
-#### CHURRASQUEIRA
+#### PIA
 **Interruptor 26**
 - Circuito 16 (1U): LED → Cortineiro Living — **304 W** (12,7 A) 
 
 #### BAR
 **Interruptor 22**
-- Circuito 16 (1U): LED → Cortineiro Living — **304 W** (12,7 A) 
-- Circuito 20 (1R): LED → Iluminação Buffet — **24 W** (1,0 A)
+- Circuito 16 (1U): LED → Cortineiro Living — **304 W** (12,7 A)
+- Circuito 20 (DESCOBRIR COM JOEL): LED → Iluminação Bar — **80 W** (3,3 A)
 
 ---
 
@@ -159,13 +161,13 @@
 **Interruptor 29**
 - Circuito 13 (1V): Embutido Picco → Ilha Cozinha
 - Circuito 14 (1W): Embutido Picco → Iluminação Cozinha
-- Circuito 15 (1T): Embutido + Pendente → Iluminação Jantar
+- Circuito 15 (1T / 1S): Embutido + Pendente → Iluminação Jantar
 
-#### CHURRASQUEIRA
+#### PIA
 **Interruptor 26**
 - Circuito 13 (1V): Embutido Picco → Ilha Cozinha
 - Circuito 14 (1W): Embutido Picco → Iluminação Cozinha
-- Circuito 15 (1T): Embutido + Pendente → Iluminação Jantar
+- Circuito 15 (1T / 1S): Embutido + Pendente → Iluminação Jantar
 - Circuito 17 (1Q): Embutido Picco → Iluminação Living
 - Circuito 50 (1): Incandescente → Iluminação Churrasqueira
 
@@ -173,7 +175,7 @@
 **Interruptor 22**
 - Circuito 13 (1V): Embutido Picco → Ilha Cozinha
 - Circuito 14 (1W): Embutido Picco → Iluminação Cozinha
-- Circuito 15 (1T): Embutido + Pendente → Iluminação Jantar
+- Circuito 15 (1T / 1S): Embutido + Pendente → Iluminação Jantar
 - Circuito 17 (1Q): Embutido Picco → Iluminação Living
 
 ---
@@ -186,7 +188,7 @@
 ---
 
 ### ENTRADAS (GPIOs de Entrada) = Teclas/Circuitos Lum Únicos
-**24 entradas** (circuitos luminotécnicos únicos):
+**25 entradas** (circuitos luminotécnicos únicos):
 - **Circ 1** (Int 34) → 2L
 - **Circ 2** (Int 34) → 2M
 - **Circ 3** (Int 34) → 2K
@@ -212,7 +214,7 @@
 - **Circ 22** (Int 35) → 1C
 - **Circ 50** (Int 26) → 1
 
-**Total real de GPIOs de entrada necessários**: **~24 entradas** (considerando números repetidos com saídas diferentes)
+**Total real de GPIOs de entrada necessários**: **~25 entradas** (considerando números repetidos com saídas diferentes)
 
 ---
 
@@ -240,7 +242,7 @@
 
 | # | Circ Belm | Local | Potência | Corrente | Fio |
 |---|:---------:|-------|:--------:|:--------:|:---:|
-| 14 | **1R** | Buffet LED | 24 W | 1,0 A | 2,5mm² |
+| 14 | **1R** | Buffet LED | - | - | EXTRA (reserva) |
 | 15 | **1U** | Cortineiro Living LED ⭐ | 304 W | 12,7 A | 6,0mm² |
 | 16 | **1X** | Bancada Cozinha LED | 41 W | 1,7 A | 2,5mm² |
 | 17 | **2A** | Garagem LED | 228 W | 9,5 A | 2,5mm² |
@@ -251,7 +253,8 @@
 | 22 | **2G** | Sauna Inferior LED | 235 W | 9,8 A | 4,0mm² |
 | 23 | **2K** | Fitas Escritório LED | 124 W | 5,2 A | 2,5mm² |
 | 24 | **2i** | Lavabo Tensoflex LED | 280 W | 11,7 A | 2,5mm² |
-| | | **TOTAL** | **1.552 W** | **~65 A** | |
+| 25 | **DESCOBRIR COM JOEL** | Bar LED | 80 W | 3,3 A | 2,5mm² |
+| | | **TOTAL** | **1.608 W** | **~67 A** | |
 
 **Subtotal LED 24V**: 11 circuitos (dimerização via Shelly RGBW2)
 
@@ -260,10 +263,10 @@
 ### MCP23017 (Expansores I2C) - Quantidade Necessária
 
 #### Entradas (Pulsadores)
-- **24 entradas** necessárias
+- **25 entradas** necessárias
 - **2 chips MCP23017** (16 GPIO cada = 32 total)
   - Chip 1 (0x20): 16 entradas
-  - Chip 2 (0x21): 8 entradas (sobram 8 GPIO)
+  - Chip 2 (0x21): 9 entradas (sobram 7 GPIO)
 
 #### Saídas (Relés)
 - **24 saídas** necessárias
@@ -288,17 +291,15 @@
 
 ### Fontes de Alimentação 24V (LEDs)
 
-**Potência Total LED 24V**: ~1.552 W | ~65 A
+**Potência Total LED 24V**: ~1.608 W | ~67 A
 
-| Fonte | Capacidade | Circuitos Sugeridos |
-|-------|:----------:|---------------------|
-| Fonte 1 | 24V 20A (480W) | 1U (304W) - Cortineiro |
-| Fonte 2 | 24V 15A (360W) | 2i (280W) - Lavabo |
-| Fonte 3 | 24V 15A (360W) | 2A (228W) + 2B (210W) = 438W ⚠️ |
-| Fonte 4 | 24V 15A (360W) | 2G (235W) + 2K (124W) = 359W |
-| Fonte 5 | 24V 10A (240W) | Demais circuitos (~171W) |
-
-⚠️ **Nota**: Fonte 3 pode precisar ser 20A para suportar Garagem + Despensa
+| Fonte | Capacidade | Circuitos Sugeridos | Potência |
+|-------|:----------:|---------------------|:--------:|
+| Fonte 1 | 24V 20A (480W) | 1U (304W) - Cortineiro | 304 W ✅ |
+| Fonte 2 | 24V 15A (360W) | 2i (280W) - Lavabo | 280 W ✅ |
+| Fonte 3 | 24V 20A (480W) | 2A (228W) + 2B (210W) - Garagem + Despensa | 438 W ✅ |
+| Fonte 4 | 24V 15A (360W) | 2G (235W) + 2K (124W) - Sauna + Escritório | 359 W ✅ |
+| Fonte 5 | 24V 10A (240W) | Bar (80W) + 1X (41W) + 2C (22W) + 2D (42W) + 2F (42W) | 227 W ✅ |
 
 ### Outras Fontes
 - **Fonte 5V**: Para ESP32 e MCP23017
@@ -339,7 +340,7 @@ Alguns interruptores têm MUITAS teclas (complexidade de lógica):
 - **Int 30 (Lado Sofá)**: 6 teclas/circuitos
 - **Int 34 (Escritório)**: 3 teclas/circuitos
 - **Int 29 (Cozinha)**: 5 teclas/circuitos
-- **Int 26 (Churrasqueira)**: 6 teclas/circuitos
+- **Int 26 (Pia)**: 6 teclas/circuitos
 - **Int 27 (Lavanderia)**: 3 teclas/circuitos
 - **Int 25 (Lavanderia)**: 3 teclas/circuitos
 - **Int 22 (Bar)**: 6 teclas/circuitos
@@ -352,6 +353,49 @@ Alguns interruptores têm MUITAS teclas (complexidade de lógica):
 
 ---
 
+## 📝 Circuitos Especiais
+
+### Circuito Duplo: Mesa de Jantar (1T / 1S)
+
+O circuito 15 possui dois identificadores Belmam alternativos:
+
+- **Identificadores**: 1T / 1S
+- **Motivo**: Um dos circuitos ficou preso acima do gesso durante a obra
+- **Implementação**: Apenas UM dos dois será conectado na instalação final
+- **Documentação**: Ambos os identificadores aparecem para referência
+- **Interruptores afetados**: 29 (Cozinha), 26 (Pia), 22 (Bar)
+
+**Implicação ESPHome**: Verificar qual circuito (1T ou 1S) foi efetivamente conectado antes de configurar o GPIO.
+
+---
+
+### Circuito Reserva: 1R (Lado do Sofá)
+
+O circuito 20 (1R) no interruptor 30 ficou como **EXTRA** (reserva):
+
+- **Status**: Não conectado
+- **Planejamento original**: Iluminação Buffet LED 24V (24W)
+- **Situação atual**: GPIO mantido para uso futuro
+- **Impacto**: Não consome potência da fonte 24V
+
+**Implementação ESPHome**: GPIO pode ser configurado como entrada extra ou reserva para expansão futura.
+
+---
+
+### Circuito Pendente: Bar (DESCOBRIR COM JOEL)
+
+O circuito 20 no interruptor 22 (Bar) aguarda definição final:
+
+- **Identificador Belmam**: "DESCOBRIR COM JOEL" (placeholder temporário)
+- **Especificação confirmada**: LED 24V, 80W (~3,3 A)
+- **Fio sugerido**: 2,5mm²
+- **Fonte**: Fonte 5 (compartilhada com outros circuitos menores)
+- **Sugestão**: Definir identificador definitivo após instalação (ex: "1Y")
+
+**Implementação ESPHome**: Configurar como saída PWM para dimerização via Shelly RGBW2.
+
+---
+
 ## 🔗 Referências
 - Excel original: `CCG - ENFIAÇÃO AUTOMAÇÃO FALADA.xlsx`
 - Config ESPHome: `src/firmware/paineis-eletricos/terreo-principal/`
@@ -359,5 +403,5 @@ Alguns interruptores têm MUITAS teclas (complexidade de lógica):
 
 ---
 
-**Última atualização**: 17/01/2026
+**Última atualização**: 25/01/2026
 

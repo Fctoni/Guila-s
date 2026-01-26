@@ -1,10 +1,15 @@
 # Projeto Guilas - Decisões e Contexto Técnico
 
-**Última atualização**: 01/12/2025
+**Última atualização**: 25/01/2026
 **Status**: Fase de Planejamento
 **Localização**: Caxias do Sul - RS (Le Parc)
 
 ### 📝 Histórico de Atualizações
+- **25/01/2026**:
+  - Documentação completa de circuitos elétricos térreo (46 circuitos, 1.608W LED 24V)
+  - Documentação completa de circuitos elétricos superior (59 circuitos, 13 LEDs 24V - medições pendentes)
+  - Nova estrutura de pastas: `docs/arquitetura/circuitos/andar-[terreo|superior]/`
+  - Referências cruzadas adicionadas nas seções Iluminação e Referências
 - **02/12/2025**:
   - Definido hardware para teste de termostato: UEDX48480040E-WB-A (display quadrado 4")
   - Decisão: Usar Arduino Framework + LVGL ao invés de ESPHome (compatibilidade)
@@ -252,6 +257,27 @@ Sistema de automação residencial completo, 100% local, com:
   - Hold: Ativa modo ausência (lógica caso a caso)
 - **Interruptores físicos backup**: Em luzes críticas (1 por ambiente mínimo)
 - **Debounce**: 50ms no ESP32
+
+### Documentação Técnica de Circuitos
+
+A documentação completa dos circuitos elétricos está organizada por andar:
+
+- **Térreo**: `docs/arquitetura/circuitos/andar-terreo/`
+  - [terreo-principal.md](docs/arquitetura/circuitos/andar-terreo/terreo-principal.md) - Documento de engenharia completo
+  - [tabela-eletricista-terreo.md](docs/arquitetura/circuitos/andar-terreo/tabela-eletricista-terreo.md) - Tabela para instalação em campo
+  - Total: 46 circuitos, 1.608W LED 24V (~67A)
+
+- **Pavimento Superior**: `docs/arquitetura/circuitos/andar-superior/`
+  - [superior-principal.md](docs/arquitetura/circuitos/andar-superior/superior-principal.md) - Documento de engenharia completo
+  - Total: 59 circuitos, 13 circuitos LED 24V
+  - ⚠️ **Pendências**: Medição de potências LED 24V necessária para dimensionamento final de fontes
+
+Estes documentos incluem:
+- Tabelas completas de circuitos (Interruptor → Circuito → Tipo → Potência)
+- Estrutura hierárquica LED 24V e 220V
+- Análise de hardware necessário (MCP23017, Shelly RGBW2)
+- Dimensionamento de fontes 24V
+- Circuitos especiais e observações de instalação
 
 ### Persianas
 - **Controle**: 2 relés por persiana (on/off + direção sobe/desce)
@@ -503,6 +529,22 @@ painel-touch-sala.local → 192.168.20.101
 - Módulo relé persianas: https://tinyurl.com/moduloreleboard
 - ESPHome LVGL: https://esphome.io/components/lvgl/
 - Home Assistant: https://www.home-assistant.io/
+
+### Documentação Técnica de Implementação
+
+**Circuitos Elétricos**:
+- [Térreo Principal](docs/arquitetura/circuitos/andar-terreo/terreo-principal.md) - Documentação completa de 46 circuitos
+- [Superior Principal](docs/arquitetura/circuitos/andar-superior/superior-principal.md) - Documentação completa de 59 circuitos
+- [Tabela Eletricista Térreo](docs/arquitetura/circuitos/andar-terreo/tabela-eletricista-terreo.md) - Referência para instalação em campo
+- [Cortinas Térreo](docs/arquitetura/circuitos/andar-terreo/cortinas-terreo.md) - Circuitos de persianas motorizadas
+- [Guia de Cores](docs/arquitetura/circuitos/andar-terreo/guia-cores-fiacao-terreo.md) - Padrão de cores de fiação
+
+**Estrutura de Pastas**:
+```
+docs/arquitetura/circuitos/
+├── andar-terreo/       # Térreo: 46 circuitos, 1.608W LED 24V
+└── andar-superior/     # Superior: 59 circuitos (medições pendentes)
+```
 
 ---
 

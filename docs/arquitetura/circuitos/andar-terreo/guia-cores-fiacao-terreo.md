@@ -1,4 +1,4 @@
-# Guia de Cores - Fiacao Interruptores
+# Guia de Cores - Fiacao Interruptores Térreo
 
 **Projeto**: Casa Le Parc - Automacao Residencial  
 **Padrao**: Cabo multivias para pulsadores  

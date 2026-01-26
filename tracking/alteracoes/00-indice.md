@@ -40,3 +40,5 @@ Este arquivo lista todas as alterações do projeto e seu status atual.
 | 01 | [spec-alteracao01.md](./spec-alteracao01.md) | Reorganizacao do Workspace | 🟢 Finalizado | ➖ não necessário | |
 | 02 | [spec-alteracao02.md](./spec-alteracao02.md) | Correcao de Referencias Quebradas | 🟢 Finalizado | ➖ não necessário | |
 | 03 | [spec-alteracao03.md](./spec-alteracao03.md) | Dashboard Principal Home Assistant | 🟢 Finalizado | ⏳ pendente | |
+| 04 | [spec-alteracao04.md](./spec-alteracao04.md) | Atualização Circuitos Térreo Principal | 🟢 Finalizado | ➖ não necessário | |
+| 05 | [alteracao05.md](./alteracao05.md) | Criação Documentação Circuitos Superior Principal | 🟢 Finalizado | ➖ não necessário | |

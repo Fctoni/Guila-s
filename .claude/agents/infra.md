@@ -1,3 +1,8 @@
+---
+name: infra
+description: Gerenciar Proxmox, rede Unifi, backup e monitoramento
+---
+
 # Agente de Infraestrutura
 
 ## Funcao

@@ -1,3 +1,8 @@
+---
+name: docs
+description: Manter a documentacao do projeto atualizada e padronizada
+---
+
 # Agente de Documentacao
 
 ## Funcao

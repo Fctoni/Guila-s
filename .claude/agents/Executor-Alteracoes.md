@@ -1,3 +1,8 @@
+---
+name: executor-alteracoes
+description: Implementar alteracoes no sistema seguindo especificacao tecnica
+---
+
 # Agente: Executor de Alteracoes
 
 ## Descricao

@@ -29,11 +29,44 @@
 
 ---
 
-## 3. UI Proposta (Rascunho)
+## 3. Mudanças propostas
 
-*(Desenhos de UI feitos durante a conversa - serão copiados para a spec após aprovação)*
+### 3.1 Fluxo da Alteracao
 
-### 3.1 [Nome do Modal/Tela]
+**Situacao Atual:**
+- [Descreva como funciona hoje - pode ser "Nao existe" se for funcionalidade nova]
+
+**Proposta:**
+- [Descreva o novo comportamento de forma clara e sequencial]
+
+**Fluxo do Usuario:**
+1. [Passo 1 - acao do usuario]
+2. [Passo 2 - resposta do sistema]
+3. [Passo 3 - proxima acao]
+
+> **Exemplo preenchido:**
+>
+> **Situacao Atual:**
+> - A selecao de clientes usa um dropdown estatico com todos os registros
+> - Performance ruim com muitos clientes (>500)
+> - Usuario precisa rolar lista inteira para encontrar
+>
+> **Proposta:**
+> - Substituir dropdown por campo de busca com autocomplete
+> - Busca acontece apos 3 caracteres digitados
+> - Resultados limitados a 10 itens mais relevantes
+>
+> **Fluxo do Usuario:**
+> 1. Usuario clica no campo de cliente
+> 2. Campo expande mostrando icone de busca e placeholder "Digite para buscar..."
+> 3. Usuario digita 3+ caracteres
+> 4. Sistema busca na base e exibe resultados filtrados
+> 5. Usuario clica no cliente desejado
+> 6. Campo fecha e exibe nome selecionado
+
+
+
+### 3.2 [Nome do Modal/Tela]
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
