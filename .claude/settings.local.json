@@ -3,8 +3,9 @@
     "allow": [
       "Bash",
       "WebSearch",
-      "WebFetch(domain:esphome.io)"
-      
+      "WebFetch(domain:esphome.io)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs"
     ]
   }
 }

@@ -14,50 +14,87 @@ Desenvolver e manter firmware ESPHome seguindo padroes do projeto.
 > A versao alvo do projeto e ESPHome 2026.1.x.
 > Voce DEVE consultar a documentacao local antes de desenvolver.
 
-### Estrategia de Consulta (Abordagem Hibrida)
-
-**PASSO 1 - Sempre ler primeiro (breaking changes):**
-```
-src/firmware/ESPHOME_REFERENCE.md
-```
-Contem resumo de breaking changes criticos. Leitura rapida (~2,500 tokens).
-
-**PASSO 2 - Ler sob demanda (documentacao do componente):**
-```
-docs/referencias/esphome/content/components/[componente].md
-```
-
-Antes de usar/modificar qualquer componente, leia sua documentacao atualizada.
-
-### Mapa de Documentacao
-
-| Componente | Arquivo de Documentacao |
-|------------|------------------------|
-| esphome (core) | `components/esphome.md` |
-| esp32 | `components/esp32.md` |
-| api | `components/api.md` |
-| ota | `components/ota/_index.md` |
-| wifi | `components/wifi.md` |
-| i2c | `components/i2c.md` |
-| mcp23017 | `components/mcp230xx.md` |
-| binary_sensor | `components/binary_sensor/_index.md` + `binary_sensor/gpio.md` |
-| light | `components/light/_index.md` + `light/binary.md` |
-| output | `components/output/_index.md` + `output/gpio.md` |
-| button | `components/button/_index.md` |
-| switch | `components/switch/_index.md` |
-| sensor | `components/sensor/_index.md` + `sensor/[tipo].md` |
-| script | `components/script.md` |
-| globals | `components/globals.md` |
-
-### Exemplo de Fluxo de Trabalho
+### Fluxo de Consulta (3 passos)
 
 ```
-Tarefa: Adicionar sensor de temperatura DS18B20
+TAREFA RECEBIDA
+      │
+      ▼
+┌─────────────────────────────────────────────────┐
+│ PASSO 1: Identificar categoria do componente    │
+│ Use o Mapa de Categorias abaixo                 │
+└─────────────────────────────────────────────────┘
+      │
+      ▼
+┌─────────────────────────────────────────────────┐
+│ PASSO 2: Ler changelog do componente            │
+│ docs/referencias/esphome/changelog/[categoria]  │
+│ → Ir direto a secao do componente especifico    │
+│ → Ver se teve breaking changes                  │
+└─────────────────────────────────────────────────┘
+      │
+      ▼
+┌─────────────────────────────────────────────────┐
+│ PASSO 3: Ler sintaxe completa (se necessario)   │
+│ docs/referencias/esphome/content/components/    │
+└─────────────────────────────────────────────────┘
+      │
+      ▼
+   DESENVOLVER
+```
 
-1. Ler ESPHOME_REFERENCE.md (verificar breaking changes)
-2. Ler components/sensor/dallas_temp.md (sintaxe atualizada)
-3. Desenvolver codigo baseado na documentacao lida
-4. Compilar e testar
+### Mapa de Categorias → Changelog
+
+| Componentes | Arquivo Changelog |
+|-------------|-------------------|
+| output, switch, cover, fan, lock, valve, servo, stepper, script | `changelog/atuadores.md` |
+| api, ota, web_server, dashboard, encryption | `changelog/api-seguranca-ota.md` |
+| wifi, mdns, esp_now, openthread, network, mqtt | `changelog/wifi-network.md` |
+| display, lvgl, touchscreen, spi (displays) | `changelog/displays-lvgl.md` |
+| light, led_strip, fastled, neopixel, dimmer, rgbw | `changelog/lights-leds.md` |
+| microphone, speaker, voice_assistant, media_player, i2s, dac | `changelog/audio-voice.md` |
+| climate, thermostat, hvac, pid, bang_bang | `changelog/climate-hvac.md` |
+| bluetooth, ble, bt_proxy, improv, bthome | `changelog/bluetooth-ble.md` |
+| remote_transmitter, remote_receiver, ir, rf, lora, cc1101, zwave | `changelog/wireless-ir-rf.md` |
+| esp32, esp8266, nrf52, rp2040, libretiny, framework | `changelog/plataformas-hardware.md` |
+| gpio, i2c, spi, uart, adc, pwm, ledc, psram, deep_sleep, rtc | `changelog/memoria-gpio.md` |
+| esphome, packages, substitutions, lambda, logger, external_components | `changelog/core-frameworks.md` |
+
+### Mapa de Sintaxe → Componentes
+
+| Componente | Arquivo de Sintaxe |
+|------------|-------------------|
+| esphome (core) | `content/components/esphome.md` |
+| esp32 | `content/components/esp32.md` |
+| api | `content/components/api.md` |
+| ota | `content/components/ota/_index.md` |
+| wifi | `content/components/wifi.md` |
+| i2c | `content/components/i2c.md` |
+| mcp23017 | `content/components/mcp230xx.md` |
+| binary_sensor | `content/components/binary_sensor/_index.md` |
+| light | `content/components/light/_index.md` |
+| output | `content/components/output/_index.md` |
+| switch | `content/components/switch/_index.md` |
+| sensor | `content/components/sensor/_index.md` |
+| script | `content/components/script.md` |
+| globals | `content/components/globals.md` |
+
+### Exemplo de Fluxo
+
+```
+Tarefa: Configurar MCP23017 para ler 16 botoes
+
+1. IDENTIFICAR: MCP23017 = I2C + GPIO
+   → Categoria: memoria-gpio.md
+
+2. LER CHANGELOG: docs/referencias/esphome/changelog/memoria-gpio.md
+   → Secao "I2C": fix em ESP32-C5/C6 (2025.12.0)
+   → Secao "GPIO": memoria -50% (2025.9.0)
+
+3. LER SINTAXE: docs/referencias/esphome/content/components/mcp230xx.md
+   → Configuracao atualizada
+
+4. DESENVOLVER: Codigo baseado em informacoes atualizadas
 ```
 
 ## Contexto do Projeto
