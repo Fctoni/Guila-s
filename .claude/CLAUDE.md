@@ -25,7 +25,10 @@ archive/        - Arquivos antigos
 - CHANGELOG.md - Historico de mudancas
 - docs/README.md - Indice de toda documentacao
 
-## ESPHome
+## ANTES de escrever YAML ESPHome
+
+OBRIGATORIO: Chame o agente `esphome` para consulta.
+NAO escreva codigo sem este passo, mesmo que exista exemplo.
 
 > Conhecimento do Claude sobre ESPHome: ate versao 2024.12.x | Versao alvo: 2026.1.x
 > O projeto NÃO USA 'encryption' no componente API. Usar somente api:

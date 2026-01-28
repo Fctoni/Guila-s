@@ -1,0 +1,538 @@
+# ESPHome Configuration - Painel Térreo Principal
+# Casa Le Parc - Automação Residencial
+# Hardware: ESP32 + 4x MCP23017 I2C
+
+# ============================================
+# ESPHOME BASE
+# ============================================
+esphome:
+  name: esp_terreo_test
+  friendly_name: "Aut. Terreo"
+  name_add_mac_suffix: false
+  project:
+    name: esp_terreo_test.dev
+    version: "dev"
+  min_version: 2025.11.0
+
+esp32:
+  board: esp32dev
+
+
+# ============================================
+# LOGGER
+# ============================================
+logger:
+  level: DEBUG
+  logs:
+    binary_sensor: DEBUG
+    mcp23017: DEBUG
+
+# ============================================
+# API HOME ASSISTANT
+# ============================================
+api:
+  reboot_timeout: 0s
+
+# ============================================
+# OTA UPDATES
+# ============================================
+ota:
+  - platform: esphome
+
+# ============================================
+# WEB SERVER V3
+# ============================================
+web_server:
+  #version: 3
+  #local: true
+
+# ============================================
+# WIFI
+# ============================================
+wifi:
+  ssid: Guilas-iot
+  password: Soeuseiguilas
+  # ap:
+  #   ssid: "Guilas-Automacao"
+  #   password: "camilaegui"
+  # reboot_timeout: 0s
+
+# ============================================
+# I2C BUS
+# ============================================
+i2c:
+  sda: 14
+  scl: 15
+  scan: true
+
+# ============================================
+# MCP23017 - GPIO EXPANDERS
+# ============================================
+mcp23017:
+  # Chip 1: 0x20 - INPUT (16 entradas)
+  - id: 'mcp23_hub1_IN'
+    address: 0x20
+  
+  # Chip 2: 0x21 - OUTPUT (8 relés: pinos 8-15)
+  - id: 'mcp23_hub1_OUT'
+    address: 0x21
+  
+  # Chip 3: 0x25 - OUTPUT (8 relés: pinos 8-15)
+  - id: 'mcp23_hub2_OUT'
+    address: 0x25
+  
+  # Chip 4: 0x26 - INPUT (16 entradas)
+  - id: 'mcp23_hub3_IN'
+    address: 0x26
+
+# ============================================
+# BUTTON - RESTART
+# ============================================
+button:
+  - platform: restart
+    name: "Restart"
+
+# ============================================
+# ENTRADAS - 24 CIRCUITOS LUMINOTÉCNICOS
+# ============================================
+binary_sensor:
+  # ==========================================
+  # CHIP 1 (0x20) - 16 ENTRADAS
+  # ==========================================
+  - platform: gpio
+    name: "Circ 01"
+    pin:
+      mcp23xxx: mcp23_hub1_IN
+      number: 0
+      mode: INPUT
+      inverted: true
+    id: circ_01
+    on_press:
+      - light.toggle: out_2L
+
+  - platform: gpio
+    name: "Circ 02"
+    pin:
+      mcp23xxx: mcp23_hub1_IN
+      number: 1
+      mode: INPUT
+      inverted: true
+    id: circ_02
+    on_press:
+      - light.toggle: out_2M
+
+  - platform: gpio
+    name: "Circ 03"
+    pin:
+      mcp23xxx: mcp23_hub1_IN
+      number: 2
+      mode: INPUT
+      inverted: true
+    id: circ_03
+
+  - platform: gpio
+    name: "Circ 04"
+    pin:
+      mcp23xxx: mcp23_hub1_IN
+      number: 3
+      mode: INPUT
+      inverted: true
+    id: circ_04
+
+  - platform: gpio
+    name: "Circ 05"
+    pin:
+      mcp23xxx: mcp23_hub1_IN
+      number: 4
+      mode: INPUT
+      inverted: true
+    id: circ_05
+
+  - platform: gpio
+    name: "Circ 07"
+    pin:
+      mcp23xxx: mcp23_hub1_IN
+      number: 5
+      mode: INPUT
+      inverted: true
+    id: circ_07
+
+  - platform: gpio
+    name: "Circ 08"
+    pin:
+      mcp23xxx: mcp23_hub1_IN
+      number: 6
+      mode: INPUT
+      inverted: true
+    id: circ_08
+
+  - platform: gpio
+    name: "Circ 09"
+    pin:
+      mcp23xxx: mcp23_hub1_IN
+      number: 7
+      mode: INPUT
+      inverted: true
+    id: circ_09
+
+  - platform: gpio
+    name: "Circ 10"
+    pin:
+      mcp23xxx: mcp23_hub1_IN
+      number: 8
+      mode: INPUT
+      inverted: true
+    id: circ_10
+    on_press:
+      - light.toggle: out_2H
+
+  - platform: gpio
+    name: "Circ 11"
+    pin:
+      mcp23xxx: mcp23_hub1_IN
+      number: 9
+      mode: INPUT
+      inverted: true
+    id: circ_11
+    on_press:
+      - light.toggle: out_2Z
+
+  - platform: gpio
+    name: "Circ 12"
+    pin:
+      mcp23xxx: mcp23_hub1_IN
+      number: 10
+      mode: INPUT
+      inverted: true
+    id: circ_12
+
+  - platform: gpio
+    name: "Circ 13"
+    pin:
+      mcp23xxx: mcp23_hub1_IN
+      number: 11
+      mode: INPUT
+      inverted: true
+    id: circ_13
+    on_press:
+      - light.toggle: out_1V
+
+  - platform: gpio
+    name: "Circ 14"
+    pin:
+      mcp23xxx: mcp23_hub1_IN
+      number: 12
+      mode: INPUT
+      inverted: true
+    id: circ_14
+    on_press:
+      - light.toggle: out_1W
+
+  - platform: gpio
+    name: "Circ 15"
+    pin:
+      mcp23xxx: mcp23_hub1_IN
+      number: 13
+      mode: INPUT
+      inverted: true
+    id: circ_15
+    on_press:
+      - light.toggle: out_1T
+
+  - platform: gpio
+    name: "Circ 16"
+    pin:
+      mcp23xxx: mcp23_hub1_IN
+      number: 14
+      mode: INPUT
+      inverted: true
+    id: circ_16
+
+  - platform: gpio
+    name: "Circ 17"
+    pin:
+      mcp23xxx: mcp23_hub1_IN
+      number: 15
+      mode: INPUT
+      inverted: true
+    id: circ_17
+    on_press:
+      - light.toggle: out_1Q
+
+  # ==========================================
+  # CHIP 4 (0x26) - 8 ENTRADAS RESTANTES
+  # ==========================================
+  - platform: gpio
+    name: "Circ 18"
+    pin:
+      mcp23xxx: mcp23_hub3_IN
+      number: 0
+      mode: INPUT
+      inverted: true
+    id: circ_18
+    on_press:
+      - light.toggle: out_1O
+
+  - platform: gpio
+    name: "Circ 19"
+    pin:
+      mcp23xxx: mcp23_hub3_IN
+      number: 1
+      mode: INPUT
+      inverted: true
+    id: circ_19
+    on_press:
+      - light.toggle: out_1P
+
+  - platform: gpio
+    name: "Circ 20"
+    pin:
+      mcp23xxx: mcp23_hub3_IN
+      number: 2
+      mode: INPUT
+      inverted: true
+    id: circ_20
+
+  - platform: gpio
+    name: "Circ 21"
+    pin:
+      mcp23xxx: mcp23_hub3_IN
+      number: 3
+      mode: INPUT
+      inverted: true
+    id: circ_21
+    on_press:
+      - light.toggle: out_1N
+
+  - platform: gpio
+    name: "Circ 22"
+    pin:
+      mcp23xxx: mcp23_hub3_IN
+      number: 4
+      mode: INPUT
+      inverted: true
+    id: circ_22
+    on_press:
+      - light.toggle: out_1C
+
+  - platform: gpio
+    name: "Circ 50"
+    pin:
+      mcp23xxx: mcp23_hub3_IN
+      number: 5
+      mode: INPUT
+      inverted: true
+    id: circ_50
+    on_press:
+      - light.toggle: out_churras
+
+# ============================================
+# SAÍDAS - 13 CIRCUITOS 220V (LIGHTS)
+# ============================================
+light:
+  # ==========================================
+  # CHIP 2 (0x21) - 8 RELÉS (pinos 8-15)
+  # ==========================================
+  - platform: binary
+    name: "Iluminação Escritório"
+    output: relay_2L
+    id: out_2L
+
+  - platform: binary
+    name: "Pendente Escritório"
+    output: relay_2M
+    id: out_2M
+
+  - platform: binary
+    name: "Iluminação Hall Serviço"
+    output: relay_2H
+    id: out_2H
+
+  - platform: binary
+    name: "Iluminação Banho Serviço"
+    output: relay_2Z
+    id: out_2Z
+
+  - platform: binary
+    name: "Ilha Cozinha"
+    output: relay_1V
+    id: out_1V
+
+  - platform: binary
+    name: "Iluminação Cozinha"
+    output: relay_1W
+    id: out_1W
+
+  - platform: binary
+    name: "Iluminação Jantar"
+    output: relay_1T
+    id: out_1T
+
+  - platform: binary
+    name: "Iluminação Living"
+    output: relay_1Q
+    id: out_1Q
+
+  # ==========================================
+  # CHIP 3 (0x25) - 5 RELÉS (pinos 8-12)
+  # ==========================================
+  - platform: binary
+    name: "Extra"
+    output: relay_1O
+    id: out_1O
+
+  - platform: binary
+    name: "Iluminação TV"
+    output: relay_1P
+    id: out_1P
+
+  - platform: binary
+    name: "Iluminação Hall Principal"
+    output: relay_1N
+    id: out_1N
+
+  - platform: binary
+    name: "Iluminação Degraus"
+    output: relay_1C
+    id: out_1C
+
+  - platform: binary
+    name: "Iluminação Churrasqueira"
+    output: relay_churras
+    id: out_churras
+
+# ============================================
+# OUTPUTS (Relés GPIO)
+# ============================================
+output:
+  # ==========================================
+  # CHIP 2 (0x21) - 8 RELÉS (pinos 8-15)
+  # ==========================================
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp23_hub1_OUT
+      number: 8
+      mode: OUTPUT
+      inverted: false
+    id: relay_2L
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp23_hub1_OUT
+      number: 9
+      mode: OUTPUT
+      inverted: false
+    id: relay_2M
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp23_hub1_OUT
+      number: 10
+      mode: OUTPUT
+      inverted: false
+    id: relay_2H
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp23_hub1_OUT
+      number: 11
+      mode: OUTPUT
+      inverted: false
+    id: relay_2Z
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp23_hub1_OUT
+      number: 12
+      mode: OUTPUT
+      inverted: false
+    id: relay_1V
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp23_hub1_OUT
+      number: 13
+      mode: OUTPUT
+      inverted: false
+    id: relay_1W
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp23_hub1_OUT
+      number: 14
+      mode: OUTPUT
+      inverted: false
+    id: relay_1T
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp23_hub1_OUT
+      number: 15
+      mode: OUTPUT
+      inverted: false
+    id: relay_1Q
+
+  # ==========================================
+  # CHIP 3 (0x25) - 5 RELÉS (pinos 8-12)
+  # ==========================================
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp23_hub2_OUT
+      number: 8
+      mode: OUTPUT
+      inverted: false
+    id: relay_1O
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp23_hub2_OUT
+      number: 9
+      mode: OUTPUT
+      inverted: false
+    id: relay_1P
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp23_hub2_OUT
+      number: 10
+      mode: OUTPUT
+      inverted: false
+    id: relay_1N
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp23_hub2_OUT
+      number: 11
+      mode: OUTPUT
+      inverted: false
+    id: relay_1C
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp23_hub2_OUT
+      number: 12
+      mode: OUTPUT
+      inverted: false
+    id: relay_churras
+
+# ============================================
+# NOTAS FINAIS
+# ============================================
+# 
+# CONFIGURAÇÃO ATUAL:
+# - 24 entradas (circuitos luminotécnicos)
+# - 13 saídas 220V (relés pinos 8-15 de cada chip)
+# - LEDs 24V serão configurados futuramente
+#
+# CHIPS I2C:
+# - 0x20: INPUT - 16 entradas (chip1)
+# - 0x21: OUTPUT - 8 relés pinos 8-15 (chip2)
+# - 0x25: OUTPUT - 5 relés pinos 8-12 (chip3)
+# - 0x26: INPUT - 8 entradas (chip4)
+#
+# PRÓXIMAS ETAPAS:
+# - Configurar LEDs 24V (11 circuitos via Shelly RGBW2)
+# - Ajustar lógica de múltiplos cliques se necessário
+# - Adicionar cenas e automações
+#
+# ============================================

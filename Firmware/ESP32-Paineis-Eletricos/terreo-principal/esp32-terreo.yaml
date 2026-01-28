@@ -1,0 +1,531 @@
+# ESPHome Configuration - Painel Terreo Principal
+# Casa Le Parc - Automacao Residencial
+# Hardware: ESP32 + 4x MCP23017 I2C
+# Versao: 2026.1.x
+
+# ============================================
+# SUBSTITUTIONS - NOMES DOS CIRCUITOS
+# ============================================
+substitutions:
+  # Dispositivo
+  device_name: "esp-terreo-principal"
+  friendly_name: "Painel Terreo Principal"
+
+  # Circuitos 220V - Nomes por saida (chip_pino)
+  # CHIP OUTPUT 1 (0x21) - pinos 8-15
+  out1_08_nome: "Iluminacao Escritorio"
+  out1_09_nome: "Pendente Escritorio"
+  out1_10_nome: "Iluminacao Hall Servico"
+  out1_11_nome: "Iluminacao Banho Servico"
+  out1_12_nome: "Ilha Cozinha"
+  out1_13_nome: "Iluminacao Cozinha"
+  out1_14_nome: "Iluminacao Jantar"
+  out1_15_nome: "Iluminacao Living"
+
+  # CHIP OUTPUT 2 (0x25) - pinos 8-12
+  out2_08_nome: "Extra"
+  out2_09_nome: "Iluminacao TV"
+  out2_10_nome: "Iluminacao Hall Principal"
+  out2_11_nome: "Iluminacao Degraus"
+  out2_12_nome: "Iluminacao Churrasqueira"
+
+# ============================================
+# ESPHOME BASE
+# ============================================
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  name_add_mac_suffix: false
+  project:
+    name: guilas.terreo_principal
+    version: "1.0.0"
+  min_version: 2025.11.0
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+    version: recommended
+
+# ============================================
+# LOGGER
+# ============================================
+logger:
+  level: INFO
+
+# ============================================
+# API HOME ASSISTANT
+# ============================================
+api:
+
+# ============================================
+# OTA UPDATES
+# ============================================
+ota:
+  - platform: esphome
+
+# ============================================
+# WEB SERVER
+# ============================================
+web_server:
+
+# ============================================
+# WIFI
+# ============================================
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+# ============================================
+# I2C BUS
+# ============================================
+i2c:
+  sda: 14
+  scl: 15
+  scan: true
+
+# ============================================
+# MCP23017 - GPIO EXPANDERS
+# ============================================
+mcp23017:
+  - id: mcp_input_1
+    address: 0x20
+
+  - id: mcp_output_1
+    address: 0x21
+
+  - id: mcp_output_2
+    address: 0x25
+
+  - id: mcp_input_2
+    address: 0x26
+
+# ============================================
+# BUTTON - RESTART
+# ============================================
+button:
+  - platform: restart
+    name: "Restart"
+
+# ============================================
+# ENTRADAS - CIRCUITOS LUMINOTECNICOS
+# ============================================
+binary_sensor:
+  # ------------------------------------------
+  # CHIP INPUT 1 (0x20) - 16 ENTRADAS
+  # ------------------------------------------
+  - platform: gpio
+    name: "Entrada ${out1_08_nome}"
+    pin:
+      mcp23xxx: mcp_input_1
+      number: 0
+      mode: INPUT
+      inverted: true
+    id: entrada_in1_00
+    on_press:
+      - light.toggle: luz_out1_08
+
+  - platform: gpio
+    name: "Entrada ${out1_09_nome}"
+    pin:
+      mcp23xxx: mcp_input_1
+      number: 1
+      mode: INPUT
+      inverted: true
+    id: entrada_in1_01
+    on_press:
+      - light.toggle: luz_out1_09
+
+  - platform: gpio
+    name: "Entrada Reservada IN1-02"
+    pin:
+      mcp23xxx: mcp_input_1
+      number: 2
+      mode: INPUT
+      inverted: true
+    id: entrada_in1_02
+
+  - platform: gpio
+    name: "Entrada Reservada IN1-03"
+    pin:
+      mcp23xxx: mcp_input_1
+      number: 3
+      mode: INPUT
+      inverted: true
+    id: entrada_in1_03
+
+  - platform: gpio
+    name: "Entrada Reservada IN1-04"
+    pin:
+      mcp23xxx: mcp_input_1
+      number: 4
+      mode: INPUT
+      inverted: true
+    id: entrada_in1_04
+
+  - platform: gpio
+    name: "Entrada Reservada IN1-05"
+    pin:
+      mcp23xxx: mcp_input_1
+      number: 5
+      mode: INPUT
+      inverted: true
+    id: entrada_in1_05
+
+  - platform: gpio
+    name: "Entrada Reservada IN1-06"
+    pin:
+      mcp23xxx: mcp_input_1
+      number: 6
+      mode: INPUT
+      inverted: true
+    id: entrada_in1_06
+
+  - platform: gpio
+    name: "Entrada Reservada IN1-07"
+    pin:
+      mcp23xxx: mcp_input_1
+      number: 7
+      mode: INPUT
+      inverted: true
+    id: entrada_in1_07
+
+  - platform: gpio
+    name: "Entrada ${out1_10_nome}"
+    pin:
+      mcp23xxx: mcp_input_1
+      number: 8
+      mode: INPUT
+      inverted: true
+    id: entrada_in1_08
+    on_press:
+      - light.toggle: luz_out1_10
+
+  - platform: gpio
+    name: "Entrada ${out1_11_nome}"
+    pin:
+      mcp23xxx: mcp_input_1
+      number: 9
+      mode: INPUT
+      inverted: true
+    id: entrada_in1_09
+    on_press:
+      - light.toggle: luz_out1_11
+
+  - platform: gpio
+    name: "Entrada Reservada IN1-10"
+    pin:
+      mcp23xxx: mcp_input_1
+      number: 10
+      mode: INPUT
+      inverted: true
+    id: entrada_in1_10
+
+  - platform: gpio
+    name: "Entrada ${out1_12_nome}"
+    pin:
+      mcp23xxx: mcp_input_1
+      number: 11
+      mode: INPUT
+      inverted: true
+    id: entrada_in1_11
+    on_press:
+      - light.toggle: luz_out1_12
+
+  - platform: gpio
+    name: "Entrada ${out1_13_nome}"
+    pin:
+      mcp23xxx: mcp_input_1
+      number: 12
+      mode: INPUT
+      inverted: true
+    id: entrada_in1_12
+    on_press:
+      - light.toggle: luz_out1_13
+
+  - platform: gpio
+    name: "Entrada ${out1_14_nome}"
+    pin:
+      mcp23xxx: mcp_input_1
+      number: 13
+      mode: INPUT
+      inverted: true
+    id: entrada_in1_13
+    on_press:
+      - light.toggle: luz_out1_14
+
+  - platform: gpio
+    name: "Entrada Reservada IN1-14"
+    pin:
+      mcp23xxx: mcp_input_1
+      number: 14
+      mode: INPUT
+      inverted: true
+    id: entrada_in1_14
+
+  - platform: gpio
+    name: "Entrada ${out1_15_nome}"
+    pin:
+      mcp23xxx: mcp_input_1
+      number: 15
+      mode: INPUT
+      inverted: true
+    id: entrada_in1_15
+    on_press:
+      - light.toggle: luz_out1_15
+
+  # ------------------------------------------
+  # CHIP INPUT 2 (0x26) - 6 ENTRADAS
+  # ------------------------------------------
+  - platform: gpio
+    name: "Entrada ${out2_08_nome}"
+    pin:
+      mcp23xxx: mcp_input_2
+      number: 0
+      mode: INPUT
+      inverted: true
+    id: entrada_in2_00
+    on_press:
+      - light.toggle: luz_out2_08
+
+  - platform: gpio
+    name: "Entrada ${out2_09_nome}"
+    pin:
+      mcp23xxx: mcp_input_2
+      number: 1
+      mode: INPUT
+      inverted: true
+    id: entrada_in2_01
+    on_press:
+      - light.toggle: luz_out2_09
+
+  - platform: gpio
+    name: "Entrada Reservada IN2-02"
+    pin:
+      mcp23xxx: mcp_input_2
+      number: 2
+      mode: INPUT
+      inverted: true
+    id: entrada_in2_02
+
+  - platform: gpio
+    name: "Entrada ${out2_10_nome}"
+    pin:
+      mcp23xxx: mcp_input_2
+      number: 3
+      mode: INPUT
+      inverted: true
+    id: entrada_in2_03
+    on_press:
+      - light.toggle: luz_out2_10
+
+  - platform: gpio
+    name: "Entrada ${out2_11_nome}"
+    pin:
+      mcp23xxx: mcp_input_2
+      number: 4
+      mode: INPUT
+      inverted: true
+    id: entrada_in2_04
+    on_press:
+      - light.toggle: luz_out2_11
+
+  - platform: gpio
+    name: "Entrada ${out2_12_nome}"
+    pin:
+      mcp23xxx: mcp_input_2
+      number: 5
+      mode: INPUT
+      inverted: true
+    id: entrada_in2_05
+    on_press:
+      - light.toggle: luz_out2_12
+
+# ============================================
+# SAIDAS - 13 CIRCUITOS 220V (LIGHTS)
+# ============================================
+light:
+  # ------------------------------------------
+  # CHIP OUTPUT 1 (0x21) - 8 RELES
+  # ------------------------------------------
+  - platform: binary
+    name: "${out1_08_nome}"
+    output: relay_out1_08
+    id: luz_out1_08
+
+  - platform: binary
+    name: "${out1_09_nome}"
+    output: relay_out1_09
+    id: luz_out1_09
+
+  - platform: binary
+    name: "${out1_10_nome}"
+    output: relay_out1_10
+    id: luz_out1_10
+
+  - platform: binary
+    name: "${out1_11_nome}"
+    output: relay_out1_11
+    id: luz_out1_11
+
+  - platform: binary
+    name: "${out1_12_nome}"
+    output: relay_out1_12
+    id: luz_out1_12
+
+  - platform: binary
+    name: "${out1_13_nome}"
+    output: relay_out1_13
+    id: luz_out1_13
+
+  - platform: binary
+    name: "${out1_14_nome}"
+    output: relay_out1_14
+    id: luz_out1_14
+
+  - platform: binary
+    name: "${out1_15_nome}"
+    output: relay_out1_15
+    id: luz_out1_15
+
+  # ------------------------------------------
+  # CHIP OUTPUT 2 (0x25) - 5 RELES
+  # ------------------------------------------
+  - platform: binary
+    name: "${out2_08_nome}"
+    output: relay_out2_08
+    id: luz_out2_08
+
+  - platform: binary
+    name: "${out2_09_nome}"
+    output: relay_out2_09
+    id: luz_out2_09
+
+  - platform: binary
+    name: "${out2_10_nome}"
+    output: relay_out2_10
+    id: luz_out2_10
+
+  - platform: binary
+    name: "${out2_11_nome}"
+    output: relay_out2_11
+    id: luz_out2_11
+
+  - platform: binary
+    name: "${out2_12_nome}"
+    output: relay_out2_12
+    id: luz_out2_12
+
+# ============================================
+# OUTPUTS (RELES GPIO)
+# ============================================
+output:
+  # ------------------------------------------
+  # CHIP OUTPUT 1 (0x21) - 8 RELES (pinos 8-15)
+  # ------------------------------------------
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp_output_1
+      number: 8
+      mode: OUTPUT
+      inverted: false
+    id: relay_out1_08
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp_output_1
+      number: 9
+      mode: OUTPUT
+      inverted: false
+    id: relay_out1_09
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp_output_1
+      number: 10
+      mode: OUTPUT
+      inverted: false
+    id: relay_out1_10
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp_output_1
+      number: 11
+      mode: OUTPUT
+      inverted: false
+    id: relay_out1_11
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp_output_1
+      number: 12
+      mode: OUTPUT
+      inverted: false
+    id: relay_out1_12
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp_output_1
+      number: 13
+      mode: OUTPUT
+      inverted: false
+    id: relay_out1_13
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp_output_1
+      number: 14
+      mode: OUTPUT
+      inverted: false
+    id: relay_out1_14
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp_output_1
+      number: 15
+      mode: OUTPUT
+      inverted: false
+    id: relay_out1_15
+
+  # ------------------------------------------
+  # CHIP OUTPUT 2 (0x25) - 5 RELES (pinos 8-12)
+  # ------------------------------------------
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp_output_2
+      number: 8
+      mode: OUTPUT
+      inverted: false
+    id: relay_out2_08
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp_output_2
+      number: 9
+      mode: OUTPUT
+      inverted: false
+    id: relay_out2_09
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp_output_2
+      number: 10
+      mode: OUTPUT
+      inverted: false
+    id: relay_out2_10
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp_output_2
+      number: 11
+      mode: OUTPUT
+      inverted: false
+    id: relay_out2_11
+
+  - platform: gpio
+    pin:
+      mcp23xxx: mcp_output_2
+      number: 12
+      mode: OUTPUT
+      inverted: false
+    id: relay_out2_12

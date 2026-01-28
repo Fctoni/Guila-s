@@ -9,6 +9,10 @@
 
 ## 📊 Tabela Completa de Circuitos (Expandida)
 
+> **Tabelas Refatoradas por Tipo:**
+> - [terreo-220.md](terreo-220.md) - 13 circuitos 220V (organizados por Circ Belman)
+> - [terreo-24.md](terreo-24.md) - 12 circuitos LED 24V (organizados por Circ Belman)
+
 | Ambiente | Int | Circ Lum | Circ Belm | Acende Onde | Tipo Iluminação | Potência | Nome Falado |
 |----------|-----|----------|-----------|-------------|-----------------|----------|-------------|
 | Garagem | 32 | 4 | 2A | Garagem | Fita LED 24V | 228 W | Iluminação Garagem |

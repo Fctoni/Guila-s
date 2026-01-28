@@ -23,69 +23,73 @@ Este documento foi criado com informações parciais. As seguintes pendências p
 
 ## 📊 Tabela Completa de Circuitos
 
+> **Tabelas Refatoradas por Tipo:**
+> - [superior-220.md](superior-220.md) - 17 circuitos 220V (organizados por Circ Belman)
+> - [superior-24.md](superior-24.md) - 14 circuitos LED 24V (organizados por Circ Belman)
+
 **Total de linhas**: 59 (conforme CSV)
 **Total de interruptores únicos**: 16
 
-| Ambiente | Int | Circ Lum | Circ Belm | Acende Onde | Tipo Iluminação | Potência | Nome Falado |
-|----------|:---:|:--------:|:---------:|-------------|-----------------|:--------:|-------------|
-| Hall Superior | 13 | 22 | 1C | Balizadores Degraus | Balizador Embutido | ? W | Iluminação Degraus |
-| Hall Superior | 13 | 22 | 99Z | Móvel | Tensoflex LED 24V | **80 W** ⚠️ | Iluminação Frigobar |
-| Hall Superior | 13 | 23 | 6H | Hall Superior | Embutido Picco | ? W | Iluminação Escada |
-| Hall Superior | 12 | 23 | 6H | Hall Superior | Embutido Picco | ? W | Iluminação Escada |
-| Hall Superior | 12 | 23 | 99Z | Móvel | Tensoflex LED 24V | **80 W** ⚠️ | Iluminação Frigobar |
-| Hall Superior | 11 | 23 | 6H | Hall Superior | Embutido Picco | ? W | Iluminação Escada |
-| Hall Superior | 11 | 23 | 99Z | Móvel | Tensoflex LED 24V | **80 W** ⚠️ | Iluminação Frigobar |
-| Suíte 1 Frente | 16 | 24 | 6A | Quarto | Embutido Picco | ? W | Iluminação Suíte 1 |
-| Suíte 1 Frente | 16 | 25 | 6C | Arandela Escrivaninha | Indefinida | ? W | Escrivaninha Suíte 1 |
-| Suíte 1 Frente | 16 | 27 | 6B | Prateleiras Decorativas | LED 24V | ⚠️ MEDIR | Prateleiras Suíte 1 |
-| Suíte 1 Frente | 14 | 24 | 6A | Quarto | Embutido Picco | ? W | Iluminação Suíte 1 |
-| Suíte 1 Frente | 14 | 26 | 6D | Arandela Cabeceira | Indefinida | ? W | Cabeceira Suíte 1 |
-| Suíte 1 Frente | 14 | 27 | 6B | Prateleiras Decorativas | LED 24V | ⚠️ MEDIR | Prateleiras Suíte 1 |
-| Suíte 1 Frente | 15 | 24 | 6A | Quarto | Embutido Picco | ? W | Iluminação Suíte 1 |
-| Suíte 1 Frente | 15 | 26 | 6D | Arandela Cabeceira | Indefinida | ? W | Cabeceira Suíte 1 |
-| Suíte 1 Frente | 15 | 27 | 6B | Prateleiras Decorativas | LED 24V | ⚠️ MEDIR | Prateleiras Suíte 1 |
-| Banheiro Suíte 1 | 19 | 28 | 6F | Iluminação Geral | Embutido Picco | ? W | Iluminação Banho 1 |
-| Banheiro Suíte 1 | 19 | 29 | 6G | Bancada Linear | LED 24V | ⚠️ MEDIR | Bancada Banho 1 |
-| Banheiro Suíte 1 | 19 | 30 | 6E | Sanca Chuveiro | LED 24V | ⚠️ MEDIR | Chuveiro Banho 1 |
-| Banheiro Suíte 1 | 20 | 28 | 6F | Iluminação Geral | Embutido Picco | ? W | Iluminação Banho 1 |
-| Banheiro Suíte 1 | 20 | 29 | 6G | Bancada Linear | LED 24V | ⚠️ MEDIR | Bancada Banho 1 |
-| Suíte 2 Fundos | 9 | 31 | 6P | Quarto | Embutido Picco | ? W | Iluminação Suíte 2 ⚠️ Joel verificar PICCO 24V |
-| Suíte 2 Fundos | 9 | 33 | 6Q | Sanca Cortineiro | LED 24V | ⚠️ MEDIR | Cortineiro Suíte 2 |
-| Suíte 2 Fundos | 9 | 34 | 6L | Prateleiras Decorativas | LED 24V | ⚠️ MEDIR | Prateleiras Suíte 2 |
-| Suíte 2 Fundos | 8 | 31 | 6P | Quarto | Embutido Picco | ? W | Iluminação Suíte 2 ⚠️ Joel verificar PICCO 24V |
-| Suíte 2 Fundos | 8 | 33 | 6Q | Sanca Cortineiro | LED 24V | ⚠️ MEDIR | Cortineiro Suíte 2 |
-| Suíte 2 Fundos | 8 | 35 | 6M | Arandela Cabeceira | Indefinida | ? W | Cabeceira Suíte 2 |
-| Suíte 2 Fundos | 7 | 31 | 6P | Quarto | Embutido Picco | ? W | Iluminação Suíte 2 ⚠️ Joel verificar PICCO 24V |
-| Suíte 2 Fundos | 7 | 33 | 6Q | Sanca Cortineiro | LED 24V | ⚠️ MEDIR | Cortineiro Suíte 2 |
-| Suíte 2 Fundos | 7 | 35 | 6M | Arandela Cabeceira | Indefinida | ? W | Cabeceira Suíte 2 |
-| Banheiro Suíte 2 | 10 | 36 | 6F | Iluminação Geral | Embutido Picco | ? W | Iluminação Banho 2 |
-| Banheiro Suíte 2 | 10 | 37 | 6G | Bancada Linear | LED 24V | ⚠️ MEDIR | Bancada Banho 2 |
-| Banheiro Suíte 2 | 10 | 38 | 6E | Sanca Chuveiro | LED 24V | ⚠️ MEDIR | Chuveiro Banho 2 |
-| Suíte Master | 18 | 42 | 6R | Balizadores | Balizador Embutido | ? W | Balizadores Master |
-| Suíte Master | 18 | 45 | 7S | Entrada Master | Embutido Picco | ? W | Entrada Master |
-| Suíte Master | 18 | 46 | 7A1 | Sanca Cortineiro | LED 24V | ⚠️ MEDIR | Cortineiro Master |
-| Suíte Master | 18 | 49 | 7U | Quarto | Embutido Picco | ? W | Iluminação Master |
-| Suíte Master | 5 | 42 | 7R | Balizadores | Balizador Embutido | ? W | Balizadores Master |
-| Suíte Master | 5 | 46 | 7A1 | Sanca Cortineiro | LED 24V | ⚠️ MEDIR | Cortineiro Master |
-| Suíte Master | 5 | 47 | 7T | Pendente Cabeceira | Pendente | ? W | Pendente Master ⚠️ Joel verificar nome |
-| Suíte Master | 5 | 48 | 7R | Sapateira Master | LED 24V | ⚠️ MEDIR | Sapateira Master |
-| Suíte Master | 5 | 49 | 7U | Quarto | Embutido Picco | ? W | Iluminação Master |
-| Suíte Master | 6 | 42 | 7R | Balizadores | Balizador Embutido | ? W | Balizadores Master |
-| Suíte Master | 6 | 46 | 7A1 | Sanca Cortineiro | LED 24V | ⚠️ MEDIR | Cortineiro Master |
-| Suíte Master | 6 | 47 | 7T | Pendente Cabeceira | Pendente | ? W | Pendente Master ⚠️ Joel verificar nome |
-| Suíte Master | 6 | 48 | 7R | Sapateira Master | LED 24V | ⚠️ MEDIR | Sapateira Master |
-| Suíte Master | 6 | 49 | 7U | Quarto | Embutido Picco | ? W | Iluminação Master |
-| Suíte Master | 1 | 46 | 7A1 | Sanca Cortineiro | LED 24V | ⚠️ MEDIR | Cortineiro Master |
-| Suíte Master | 1 | 48 | 7R | Sapateira Master | Indefinida | ? W | Sapateira Master |
-| Suíte Master | 1 | 49 | 7U | Quarto | Embutido Picco | ? W | Iluminação Master |
-| Closet Master | 17 | 50 | 7V | Closet | Tensoflex LED 24V | ⚠️ MEDIR | Tensoflex Closet |
-| Closet Master | 17 | 42 | 7R | Balizadores | Balizador Embutido | ? W | Balizadores Master |
-| Banho Master | 4 | 39 | 7W | Banho Master | Embutido Picco | ? W | Iluminação Banho Master |
-| Banho Master | 4 | 40 | 7X | Tensoflex Master | Tensoflex LED | ⚠️ MEDIR | Tensoflex Master |
-| Banho Master | 4 | 43 | 7D1 | Sanitário Master | Embutido Picco | ? W | Sanitário Master |
-| Banho Master | 2 | 40 | 7W | Tensoflex Master | Tensoflex LED | ⚠️ MEDIR | Tensoflex Master ⚠️ Verificar duplicação |
-| Banho Master | 2 | 41 | 7L1/7Z | Sanca Chuveiro | Fita LED 24V | ⚠️ MEDIR | Sanca Master |
-| Banho Master | 2 | 44 | 7Y | Chuveiro Master | Embutido Picco | ? W | Chuveiro Master |
+| Ambiente         | Int | Circ Lum | Circ Belm | Acende Onde             | Tipo Iluminação    | Potência    | Nome Falado                                    |
+| ---------------- | :-: | :------: | :-------: | ----------------------- | ------------------ | :---------: | ---------------------------------------------- |
+| Hall Superior    | 13  | 22       | 1C        | Balizadores Degraus     | Balizador Embutido | ? W         | Iluminação Degraus                             |
+| Hall Superior    | 13  | 22       | 99Z       | Móvel                   | Tensoflex LED 24V  | **80 W** ⚠️ | Iluminação Frigobar                            |
+| Hall Superior    | 13  | 23       | 6H        | Hall Superior           | Embutido Picco     | ? W         | Iluminação Escada                              |
+| Hall Superior    | 12  | 23       | 6H        | Hall Superior           | Embutido Picco     | ? W         | Iluminação Escada                              |
+| Hall Superior    | 12  | 23       | 99Z       | Móvel                   | Tensoflex LED 24V  | **80 W** ⚠️ | Iluminação Frigobar                            |
+| Hall Superior    | 11  | 23       | 6H        | Hall Superior           | Embutido Picco     | ? W         | Iluminação Escada                              |
+| Hall Superior    | 11  | 23       | 99Z       | Móvel                   | Tensoflex LED 24V  | **80 W** ⚠️ | Iluminação Frigobar                            |
+| Suíte 1 Frente   | 16  | 24       | 6A        | Quarto                  | Embutido Picco     | ? W         | Iluminação Suíte 1                             |
+| Suíte 1 Frente   | 16  | 25       | 6C        | Arandela Escrivaninha   | Indefinida         | ? W         | Escrivaninha Suíte 1                           |
+| Suíte 1 Frente   | 16  | 27       | 6B        | Prateleiras Decorativas | LED 24V            | ⚠️ MEDIR    | Prateleiras Suíte 1                            |
+| Suíte 1 Frente   | 14  | 24       | 6A        | Quarto                  | Embutido Picco     | ? W         | Iluminação Suíte 1                             |
+| Suíte 1 Frente   | 14  | 26       | 6D        | Arandela Cabeceira      | Indefinida         | ? W         | Cabeceira Suíte 1                              |
+| Suíte 1 Frente   | 14  | 27       | 6B        | Prateleiras Decorativas | LED 24V            | ⚠️ MEDIR    | Prateleiras Suíte 1                            |
+| Suíte 1 Frente   | 15  | 24       | 6A        | Quarto                  | Embutido Picco     | ? W         | Iluminação Suíte 1                             |
+| Suíte 1 Frente   | 15  | 26       | 6D        | Arandela Cabeceira      | Indefinida         | ? W         | Cabeceira Suíte 1                              |
+| Suíte 1 Frente   | 15  | 27       | 6B        | Prateleiras Decorativas | LED 24V            | ⚠️ MEDIR    | Prateleiras Suíte 1                            |
+| Banheiro Suíte 1 | 19  | 28       | 6F        | Iluminação Geral        | Embutido Picco     | ? W         | Iluminação Banho 1                             |
+| Banheiro Suíte 1 | 19  | 29       | 6G        | Bancada Linear          | LED 24V            | ⚠️ MEDIR    | Bancada Banho 1                                |
+| Banheiro Suíte 1 | 19  | 30       | 6E        | Sanca Chuveiro          | LED 24V            | ⚠️ MEDIR    | Chuveiro Banho 1                               |
+| Banheiro Suíte 1 | 20  | 28       | 6F        | Iluminação Geral        | Embutido Picco     | ? W         | Iluminação Banho 1                             |
+| Banheiro Suíte 1 | 20  | 29       | 6G        | Bancada Linear          | LED 24V            | ⚠️ MEDIR    | Bancada Banho 1                                |
+| Suíte 2 Fundos   | 9   | 31       | 6P        | Quarto                  | Embutido Picco     | ? W         | Iluminação Suíte 2 ⚠️ Joel verificar PICCO 24V |
+| Suíte 2 Fundos   | 9   | 33       | 6Q        | Sanca Cortineiro        | LED 24V            | ⚠️ MEDIR    | Cortineiro Suíte 2                             |
+| Suíte 2 Fundos   | 9   | 34       | 6L        | Prateleiras Decorativas | LED 24V            | ⚠️ MEDIR    | Prateleiras Suíte 2                            |
+| Suíte 2 Fundos   | 8   | 31       | 6P        | Quarto                  | Embutido Picco     | ? W         | Iluminação Suíte 2 ⚠️ Joel verificar PICCO 24V |
+| Suíte 2 Fundos   | 8   | 33       | 6Q        | Sanca Cortineiro        | LED 24V            | ⚠️ MEDIR    | Cortineiro Suíte 2                             |
+| Suíte 2 Fundos   | 8   | 35       | 6M        | Arandela Cabeceira      | Indefinida         | ? W         | Cabeceira Suíte 2                              |
+| Suíte 2 Fundos   | 7   | 31       | 6P        | Quarto                  | Embutido Picco     | ? W         | Iluminação Suíte 2 ⚠️ Joel verificar PICCO 24V |
+| Suíte 2 Fundos   | 7   | 33       | 6Q        | Sanca Cortineiro        | LED 24V            | ⚠️ MEDIR    | Cortineiro Suíte 2                             |
+| Suíte 2 Fundos   | 7   | 35       | 6M        | Arandela Cabeceira      | Indefinida         | ? W         | Cabeceira Suíte 2                              |
+| Banheiro Suíte 2 | 10  | 36       | 6F        | Iluminação Geral        | Embutido Picco     | ? W         | Iluminação Banho 2                             |
+| Banheiro Suíte 2 | 10  | 37       | 6G        | Bancada Linear          | LED 24V            | ⚠️ MEDIR    | Bancada Banho 2                                |
+| Banheiro Suíte 2 | 10  | 38       | 6E        | Sanca Chuveiro          | LED 24V            | ⚠️ MEDIR    | Chuveiro Banho 2                               |
+| Suíte Master     | 18  | 42       | 6R        | Balizadores             | Balizador Embutido | ? W         | Balizadores Master                             |
+| Suíte Master     | 18  | 45       | 7S        | Entrada Master          | Embutido Picco     | ? W         | Entrada Master                                 |
+| Suíte Master     | 18  | 46       | 7A1       | Sanca Cortineiro        | LED 24V            | ⚠️ MEDIR    | Cortineiro Master                              |
+| Suíte Master     | 18  | 49       | 7U        | Quarto                  | Embutido Picco     | ? W         | Iluminação Master                              |
+| Suíte Master     | 5   | 42       | 7R        | Balizadores             | Balizador Embutido | ? W         | Balizadores Master                             |
+| Suíte Master     | 5   | 46       | 7A1       | Sanca Cortineiro        | LED 24V            | ⚠️ MEDIR    | Cortineiro Master                              |
+| Suíte Master     | 5   | 47       | 7T        | Pendente Cabeceira      | Pendente           | ? W         | Pendente Master ⚠️ Joel verificar nome         |
+| Suíte Master     | 5   | 48       | 7R        | Sapateira Master        | LED 24V            | ⚠️ MEDIR    | Sapateira Master                               |
+| Suíte Master     | 5   | 49       | 7U        | Quarto                  | Embutido Picco     | ? W         | Iluminação Master                              |
+| Suíte Master     | 6   | 42       | 7R        | Balizadores             | Balizador Embutido | ? W         | Balizadores Master                             |
+| Suíte Master     | 6   | 46       | 7A1       | Sanca Cortineiro        | LED 24V            | ⚠️ MEDIR    | Cortineiro Master                              |
+| Suíte Master     | 6   | 47       | 7T        | Pendente Cabeceira      | Pendente           | ? W         | Pendente Master ⚠️ Joel verificar nome         |
+| Suíte Master     | 6   | 48       | 7R        | Sapateira Master        | LED 24V            | ⚠️ MEDIR    | Sapateira Master                               |
+| Suíte Master     | 6   | 49       | 7U        | Quarto                  | Embutido Picco     | ? W         | Iluminação Master                              |
+| Suíte Master     | 1   | 46       | 7A1       | Sanca Cortineiro        | LED 24V            | ⚠️ MEDIR    | Cortineiro Master                              |
+| Suíte Master     | 1   | 48       | 7R        | Sapateira Master        | Indefinida         | ? W         | Sapateira Master                               |
+| Suíte Master     | 1   | 49       | 7U        | Quarto                  | Embutido Picco     | ? W         | Iluminação Master                              |
+| Closet Master    | 17  | 50       | 7V        | Closet                  | Tensoflex LED 24V  | ⚠️ MEDIR    | Tensoflex Closet                               |
+| Closet Master    | 17  | 42       | 7R        | Balizadores             | Balizador Embutido | ? W         | Balizadores Master                             |
+| Banho Master     | 4   | 39       | 7W        | Banho Master            | Embutido Picco     | ? W         | Iluminação Banho Master                        |
+| Banho Master     | 4   | 40       | 7X        | Tensoflex Master        | Tensoflex LED      | ⚠️ MEDIR    | Tensoflex Master                               |
+| Banho Master     | 4   | 43       | 7D1       | Sanitário Master        | Embutido Picco     | ? W         | Sanitário Master                               |
+| Banho Master     | 2   | 40       | 7W        | Tensoflex Master        | Tensoflex LED      | ⚠️ MEDIR    | Tensoflex Master ⚠️ Verificar duplicação       |
+| Banho Master     | 2   | 41       | 7L1/7Z    | Sanca Chuveiro          | Fita LED 24V       | ⚠️ MEDIR    | Sanca Master                                   |
+| Banho Master     | 2   | 44       | 7Y        | Chuveiro Master         | Embutido Picco     | ? W         | Chuveiro Master                                |
 
 ---
 

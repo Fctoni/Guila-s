@@ -1,0 +1,36 @@
+# Circuitos 220V - Terreo Principal
+
+**Projeto**: Casa Le Parc - Automacao Residencial
+**Fonte**: Extraido de terreo-principal.md
+**Data**: 2026-01-28
+
+---
+
+## Tabela de Circuitos 220V
+
+| Circ Belman | Circ Lum | Nome Falado              | Interruptores  | Tipo                | Potencia |
+|:-----------:|:--------:|--------------------------|:--------------:|---------------------|:--------:|
+| 1           | 50       | Iluminacao Churrasqueira | 26             | Incandescente       | -        |
+| 1C          | 22       | Iluminacao Degraus       | 35             | Balizador Embutido  | -        |
+| 1N          | 21       | Iluminacao Hall Principal| 35, 30         | Embutido Picco      | -        |
+| 1O          | 18       | -                        | 35, 30         | Extra               | -        |
+| 1P          | 19       | Iluminacao TV            | 35, 30         | Embutido Picco      | -        |
+| 1Q          | 17       | Iluminacao Living        | 35, 30, 26, 22 | Embutido Picco      | -        |
+| 1T/1S       | 15       | Iluminacao Jantar        | 29, 26, 22     | Embutido + Pendente | -        |
+| 1V          | 13       | Ilha Cozinha             | 29, 26, 22     | Embutido Picco      | -        |
+| 1W          | 14       | Iluminacao Cozinha       | 29, 26, 22     | Embutido Picco      | -        |
+| 2H          | 10       | Iluminacao Hall Servico  | 23             | Embutido Picco      | -        |
+| 2L          | 1        | Iluminacao Escritorio    | 34             | Embutido Picco      | -        |
+| 2M          | 2        | Pendente Escritorio      | 34             | Pendente            | -        |
+| 2Z          | 11       | Iluminacao Banho Servico | 24             | Embutido Picco      | -        |
+
+---
+
+**Total**: 13 circuitos 220V
+
+---
+
+## Referencias
+
+- [terreo-principal.md](terreo-principal.md) - Documento completo com analise de hardware
+- [terreo-24.md](terreo-24.md) - Circuitos LED 24V
